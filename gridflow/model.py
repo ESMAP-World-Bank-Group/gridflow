@@ -73,6 +73,7 @@ class country:
     def create_network(self):
         self.grid.create_lines(self.regions)
 
+
 class network:
     def __init__(self, path):
         # The country this network is in
@@ -94,6 +95,25 @@ class network:
             ridx = regions[mask].index
             self.lines.at[i, "regions"] = ridx
             
+    def _get_line_capacity(self, line):
+        # This is a preliminary model mapping line parameters from openinframaps
+        # to line capacities. This model could be significantly enhanced based on
+        # engineering rules of thumb or operational data.
+        if ~isinstance(line, gpd.GeoDataFrame):
+            line = gpd.GeoDataFrame(line).T
+        length = line.to_crs(epsg=3857).geometry.length / 1e3
+        voltage = float(line["voltages"])
+        circuits = float(line["circuits"]) if pd.notna(line["circuits"]) else 1
+        cables = float(line["cables"]) if pd.notna(line["cables"]) else 1
+        
+        if cables <= 1:
+            z = 400
+        else:
+            z = 300
+        # Surge Impedance Loading in MW
+        sil_mw = (voltage**2 / z) / 1e6
+
+
 class regiondata:
     def __init__(self, name, path, agg):
         self.path = path
