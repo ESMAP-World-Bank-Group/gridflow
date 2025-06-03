@@ -26,7 +26,9 @@ class country:
             "pv" : regiondata("pv", data_path + "/pv/pv.tif", "mean"),
             "wind" : regiondata("wind", data_path + "/wind.tif", "mean"),
             "population" : regiondata("population", data_path + "/pop.tif", "sum")}
-        self.infpath = data_path + "/grid.gpkg"
+        # Empty grid
+        self.grid = network(data_path + "/grid.gpkg")
+        self.grid.country = self
         
         # Empty regions
         self.regions = gpd.GeoDataFrame(geometry=[])
@@ -69,10 +71,28 @@ class country:
         return gdf
     
     def create_network(self):
-        # Load the list of power lines
-        lux_grid = gpd.read_file(data_path, layer="power_line")
-        
+        self.grid.create_lines(self.regions)
 
+class network:
+    def __init__(self, path):
+        # The country this network is in
+        self.country = None
+        # Path to the network data file
+        self.path = path
+        # No lines between regions created
+        self.lines = None
+        
+    def create_lines(self, regions):
+        # Load the list of power lines
+        self.lines = gpd.read_file(self.path, layer="power_line")
+        # Add a column in the lines dataframe for the regions
+        self.lines["regions"] = None
+        nlines = len(self.lines)
+        for i in range(nlines):
+            line = self.lines.loc[i].geometry
+            mask = regions.geometry.intersects(line)
+            ridx = regions[mask].index
+            self.lines.at[i, "regions"] = ridx
             
 class regiondata:
     def __init__(self, name, path, agg):
