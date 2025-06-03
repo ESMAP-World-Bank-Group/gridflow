@@ -1,0 +1,123 @@
+# Standard packages
+import geopandas as gpd
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import warnings
+
+# Raster data packages
+import rasterio
+from rasterio.features import shapes
+from rasterio.mask import mask
+
+import rioxarray
+from rasterstats import zonal_stats
+# For segmenting rasters
+from skimage.segmentation import slic
+from shapely.geometry import shape, mapping
+
+
+class country:
+    def __init__(self, name, data_path=""):
+        self.name = name
+        
+        # Load the data for the country
+        self.region_data = [
+            regiondata("pv", data_path + "/pv/pv.tif", "mean"),
+            regiondata("wind", data_path + "/wind.tif", "mean"),
+            regiondata("population", data_path + "/pop.tif", "sum")]
+        self.pvpath = data_path + "/pv/pv.tif"
+        self.infpath = data_path + "/grid.gpkg"
+        
+        # Empty regions
+        self.regions = gpd.GeoDataFrame(geometry=[])
+    
+    def create_regions(self, n=10, method="pv"):
+        if method=="pv":
+            # Open the solar potential raster
+            ras = rioxarray.open_rasterio(self.pvpath, masked=True)
+        else:
+            # Open the wind potential raster
+            ras = rioxarray.open_rasterio(self.windpath, masked=True)
+
+        data = ras.sel(band=1).values
+        ### Create regions through segmentation
+        # Create a nan mask
+        mask = ~np.isnan(data)
+        # Remove nans
+        data[np.isnan(data)] = 0
+        seg = slic(data, n_segments=n, compactness=0.01,
+                   enforce_connectivity=True, mask=mask)
+        
+        # Generate region boundaries from raster segmention
+        # Use rasterio to extract polygons
+        poly = (
+            {'properties': {'label': v}, 'geometry': s}
+            for s, v in shapes(seg.astype(np.int32), mask=mask, transform=ras.rio.transform())
+        )
+        gdf = gpd.GeoDataFrame.from_features(list(poly), crs=ras.rio.crs)
+        
+        ### Generate statistics for each region
+        regionstats = pd.DataFrame(index=gdf.index)
+        for data in self.region_data:
+            regionstats = data.get_region_value(gdf, regionstats=regionstats)
+        
+        gdf = gdf.join(regionstats)
+        self.regions = gdf
+        
+        return gdf
+    
+    def create_network(self):
+        # Load the list of power lines
+        lux_grid = gpd.read_file(data_path, layer="power_line")
+        
+
+            
+class regiondata:
+    def __init__(self, name, path, agg):
+        self.path = path
+        self.agg = agg
+        self.name = name
+    
+    def aggregate(self, data):
+        if self.agg=="mean":
+            return np.mean(data)
+        elif self.agg=="sum":
+            return np.sum(data)
+    
+    def get_region_value(self, regions, regionstats=None):
+        # Iterate through regions dataframe and obtain aggregate data for each region
+        ras = rasterio.open(self.path)
+        regions = regions.to_crs(ras.crs)
+        
+        # Create the empty dataframe to store the results
+        if regionstats is None:
+            regionstats = pd.DataFrame(index=regions.index)
+            regionstats[self.name] = 0
+        
+        for idx in regions.index:
+            geom = regions.loc[idx].geometry
+            try:
+                # Mask the raster based on the region geometry
+                out_ras, out_transform = mask(ras, [mapping(geom)], crop=True)
+                # Get valid raster values
+                data = out_ras[0]
+                data = _clean_raster(data, ras.nodata)
+                # Aggregate the data and fill in the results dataframe
+                rez = self.aggregate(data) if data.size > 0 else np.nan
+            except Exception as e:
+                rez = np.nan
+                #warnings.warn("Error when getting region statistics")
+
+            regionstats.loc[idx, self.name] = rez
+        return regionstats
+
+    
+def _clean_raster(ras, nodata):
+    if np.isnan(nodata):
+        ras = ras[~np.isnan(ras)]
+    else:
+        ras = ras[ras != nodata]
+    return ras
+        
+        
