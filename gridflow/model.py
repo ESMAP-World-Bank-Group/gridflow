@@ -22,11 +22,10 @@ class country:
         self.name = name
         
         # Load the data for the country
-        self.region_data = [
-            regiondata("pv", data_path + "/pv/pv.tif", "mean"),
-            regiondata("wind", data_path + "/wind.tif", "mean"),
-            regiondata("population", data_path + "/pop.tif", "sum")]
-        self.pvpath = data_path + "/pv/pv.tif"
+        self.region_data = {
+            "pv" : regiondata("pv", data_path + "/pv/pv.tif", "mean"),
+            "wind" : regiondata("wind", data_path + "/wind.tif", "mean"),
+            "population" : regiondata("population", data_path + "/pop.tif", "sum")}
         self.infpath = data_path + "/grid.gpkg"
         
         # Empty regions
@@ -35,10 +34,12 @@ class country:
     def create_regions(self, n=10, method="pv"):
         if method=="pv":
             # Open the solar potential raster
-            ras = rioxarray.open_rasterio(self.pvpath, masked=True)
+            pvpath = self.region_data["pv"].path
+            ras = rioxarray.open_rasterio(pvpath, masked=True)
         else:
             # Open the wind potential raster
-            ras = rioxarray.open_rasterio(self.windpath, masked=True)
+            windpath = self.region_data["wind"].path
+            ras = rioxarray.open_rasterio(windpath, masked=True)
 
         data = ras.sel(band=1).values
         ### Create regions through segmentation
@@ -59,7 +60,7 @@ class country:
         
         ### Generate statistics for each region
         regionstats = pd.DataFrame(index=gdf.index)
-        for data in self.region_data:
+        for data in self.region_data.values():
             regionstats = data.get_region_value(gdf, regionstats=regionstats)
         
         gdf = gdf.join(regionstats)
