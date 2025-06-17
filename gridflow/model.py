@@ -104,7 +104,9 @@ class network:
     def create_flow_model(self):
         nregions = len(self.country.regions)
         regidx = self.country.regions.index
-        flow_mat = pd.DataFrame()
+        flow_mat = pd.DataFrame(index = regidx, 
+                                columns = regidx)
+        
             
     def _get_line_capacity(self, lines):
         # This is a preliminary model mapping line parameters from openinframaps
