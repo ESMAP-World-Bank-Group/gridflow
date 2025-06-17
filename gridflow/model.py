@@ -16,6 +16,8 @@ from rasterstats import zonal_stats
 from skimage.segmentation import slic
 from shapely.geometry import shape, mapping
 
+from gridflow.data_readers import oim_reader
+
 
 class country:
     def __init__(self, name, data_path=""):
@@ -82,36 +84,43 @@ class network:
         self.path = path
         # No lines between regions created
         self.lines = None
+        # No flow model
+        self.flow = None
         
     def create_lines(self, regions):
         # Load the list of power lines
-        self.lines = gpd.read_file(self.path, layer="power_line")
-        # Add a column in the lines dataframe for the regions
+        self.lines = oim_reader.read_line_data(self.path)
+        # Add columns in the lines dataframe for regions and capacities
         self.lines["regions"] = None
+        self.lines["capacity"] = None
         nlines = len(self.lines)
         for i in range(nlines):
-            line = self.lines.loc[i].geometry
-            mask = regions.geometry.intersects(line)
+            linepath = self.lines.loc[i].geometry
+            mask = regions.geometry.intersects(linepath)
             ridx = regions[mask].index
             self.lines.at[i, "regions"] = ridx
+        self.lines["capacity"] = self._get_line_capacity(self.lines)
+    
+    def create_flow_model(self):
+        nregions = len(self.country.regions)
+        regidx = self.country.regions.index
+        flow_mat = pd.DataFrame()
             
-    def _get_line_capacity(self, line):
+    def _get_line_capacity(self, lines):
         # This is a preliminary model mapping line parameters from openinframaps
         # to line capacities. This model could be significantly enhanced based on
         # engineering rules of thumb or operational data.
-        if ~isinstance(line, gpd.GeoDataFrame):
-            line = gpd.GeoDataFrame(line).T
-        length = line.to_crs(epsg=3857).geometry.length / 1e3
-        voltage = float(line["voltages"])
-        circuits = float(line["circuits"]) if pd.notna(line["circuits"]) else 1
-        cables = float(line["cables"]) if pd.notna(line["cables"]) else 1
+
+        lines = lines.to_crs(epsg=3857)
+        length = lines.geometry.length / 1e3
+        z = pd.Series(name="z", index=lines.index)
+        z.loc[lines.index[lines.cables <= 1]] = 400
+        z.loc[lines.index[lines.cables > 1]] = 300
         
-        if cables <= 1:
-            z = 400
-        else:
-            z = 300
         # Surge Impedance Loading in MW
-        sil_mw = (voltage**2 / z) / 1e6
+        sil_mw = (lines.voltage**2 / z) / 1e6
+        return sil_mw
+        
 
 
 class regiondata:
