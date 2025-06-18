@@ -95,10 +95,12 @@ class network:
         self.lines["regions"] = None
         self.lines["capacity"] = None
         nlines = len(self.lines)
+        # Determine the sequence of regions the line traverses
         for i in range(nlines):
             linepath = self.lines.loc[i].geometry
             ridx = self._get_line_regions(linepath, regions)
             self.lines.at[i, "regions"] = ridx
+        # Get the capacity of the line
         self.lines["capacity"] = self._get_line_capacity(self.lines)
     
     def create_flow_model(self):
@@ -106,6 +108,9 @@ class network:
         regidx = self.country.regions.index
         flow_mat = pd.DataFrame(index = regidx, 
                                 columns = regidx)
+        for line in self.lines:
+            n = 1
+        
         
     def _get_line_capacity(self, lines):
         # This is a preliminary model mapping line parameters from openinframaps
@@ -145,6 +150,8 @@ class network:
             int_dist.append(min(line.project(pt[0]), line.project(pt[1])))
 
         order_regions = [int_regions[idx] for idx in np.argsort(int_dist)]
+        # [r1, r1, r3, r5, r5, r1] => [r1, r3, r5, r1]
+        order_regions = _streamline(order_regions)
         return order_regions
         
 
@@ -196,4 +203,14 @@ def _clean_raster(ras, nodata):
         ras = ras[ras != nodata]
     return ras
         
+def _streamline(seq):
+    if len(seq) == 0:
+        return seq
+    else:
+        slseq = [seq[0]]
+        for i in range(1, len(seq)):
+            if seq[i] != seq[i-1]:
+                slseq.append(seq[i])
+    return slseq
+    
         
