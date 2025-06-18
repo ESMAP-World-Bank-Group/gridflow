@@ -102,15 +102,24 @@ class network:
             self.lines.at[i, "regions"] = ridx
         # Get the capacity of the line
         self.lines["capacity"] = self._get_line_capacity(self.lines)
+        # Create the flow model representation of the network
+        # for the lines created
+        self.flow = self.get_flow_model()
     
-    def create_flow_model(self):
+    def get_flow_model(self):
         nregions = len(self.country.regions)
         regidx = self.country.regions.index
-        flow_mat = pd.DataFrame(index = regidx, 
+        flow_mat = pd.DataFrame(data=np.zeros([nregions, nregions]),
+                                index = regidx, 
                                 columns = regidx)
-        for line in self.lines:
-            n = 1
-        
+        for _, line in self.lines.iterrows():
+            rpath = line.regions
+            npath = len(rpath)
+            capmw = line.capacity
+            if npath > 1:
+                for i in range(1, npath):
+                    flow_mat.iloc[rpath[i-1], rpath[i]] += capmw
+        return flow_mat
         
     def _get_line_capacity(self, lines):
         # This is a preliminary model mapping line parameters from openinframaps
