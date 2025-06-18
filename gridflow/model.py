@@ -15,6 +15,7 @@ from rasterstats import zonal_stats
 # For segmenting rasters
 from skimage.segmentation import slic
 from shapely.geometry import shape, mapping
+from shapely.geometry import MultiLineString, LineString, Point
 
 from gridflow.data_readers import oim_reader
 
@@ -106,7 +107,6 @@ class network:
         flow_mat = pd.DataFrame(index = regidx, 
                                 columns = regidx)
         
-            
     def _get_line_capacity(self, lines):
         # This is a preliminary model mapping line parameters from openinframaps
         # to line capacities. This model could be significantly enhanced based on
@@ -123,7 +123,29 @@ class network:
         return sil_mw
     
     def _get_line_regions(self, line, regions):
-        return 0
+        # This obtains an ordered sequence of regions traversed by a line.
+        # Generalizes to non-convex regions and complex line pathways.
+        int_points = []
+        int_regions = []
+        int_dist = []
+
+        onpath = regions[regions.intersects(line)].copy()
+        onpath["intersect"] = onpath.geometry.apply(lambda r: r.intersection(line))
+        for ridx, intersection in onpath.iterrows():
+            seg = intersection.intersect
+            if isinstance(seg, MultiLineString):
+                for el in seg.geoms:
+                    int_regions.append(ridx)
+                    int_points.append([Point(el.coords[0]), Point(el.coords[-1])]);
+            elif isinstance(seg, LineString):
+                int_regions.append(ridx)
+                int_points.append([Point(seg.coords[0]), Point(seg.coords[-1])]);
+
+        for pt in int_points:
+            int_dist.append(min(line.project(pt[0]), line.project(pt[1])))
+
+        order_regions = [int_regions[idx] for idx in np.argsort(int_dist)]
+        return order_regions
         
 
 
