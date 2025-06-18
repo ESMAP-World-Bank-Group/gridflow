@@ -96,8 +96,7 @@ class network:
         nlines = len(self.lines)
         for i in range(nlines):
             linepath = self.lines.loc[i].geometry
-            mask = regions.geometry.intersects(linepath)
-            ridx = regions[mask].index
+            ridx = self._get_line_regions(linepath, regions)
             self.lines.at[i, "regions"] = ridx
         self.lines["capacity"] = self._get_line_capacity(self.lines)
     
@@ -122,6 +121,9 @@ class network:
         # Surge Impedance Loading in MW
         sil_mw = (lines.voltage**2 / z) / 1e6
         return sil_mw
+    
+    def _get_line_regions(self, line, regions):
+        return 0
         
 
 
