@@ -59,7 +59,6 @@ class region:
         # The subregions -- start out empty
         self.subregions = gpd.GeoDataFrame(geometry=[])
 
-        # Demand projection at the region level.
     
     def create_subregions(self, n=10, method="pv"):
         """Segments region into subregions. 
@@ -124,6 +123,15 @@ class region:
         """
 
         self.grid.create_lines(self.subregions)
+
+    def generate_epm_inputs(raw_inputs_path):
+        """Prepare inputs to EPM based on raw inputs and model.
+
+        EPM input files -- consisting of a large set of csvs -- are
+        generated based on the regionalized model. 
+        """
+        
+
 
 
 class network:
