@@ -278,7 +278,9 @@ class regiondata:
             outputdf.loc[idx, self.name] = rez
         return outputdf
 
-    
+
+"""Helper Functions"""
+
 def _clean_raster(ras, nodata):
     if np.isnan(nodata):
         ras = ras[~np.isnan(ras)]
