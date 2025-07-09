@@ -54,10 +54,12 @@ class region:
 
         # The transmission system -- starts out empty
         self.grid = network(data_path + "/grid.gpkg")
-        self.grid.country = self
+        self.grid.region = self
         
         # The subregions -- start out empty
         self.subregions = gpd.GeoDataFrame(geometry=[])
+
+        # Demand projection at the region level.
     
     def create_subregions(self, n=10, method="pv"):
         """Segments region into subregions. 
@@ -114,13 +116,45 @@ class region:
         return gdf
     
     def create_network(self):
+        """Create the network flow models for defined subregions.
+
+        After region has been segmented into subregions, we can define
+        the routes of lines through subregions and accordingly estimate the
+        flow representation of the network. 
+        """
+
         self.grid.create_lines(self.subregions)
 
 
 class network:
+    """
+    Holds network data for the full region. 
+
+    After subregions have been defined, this class' methods will determine
+    the subregions traversed by individual lines and then aggregate individual
+    lines into a flow model that captures total capacities between subregions.
+
+    Attributes
+    ----------
+    region : region object
+       The region to which this network belongs. 
+
+    path : str
+       Path to network data from open infrastructure maps.
+
+    lines : GeoDataFrame
+       Set of lines from open infrastructure maps.
+
+    flow : numpy matrix
+       A square matrix representing the flow model. Dimensions are number of
+       subregions; values are estimated total interconnect capacity between
+       regions. 
+
+    """
+
     def __init__(self, path):
-        # The country this network is in
-        self.country = None
+        # The region this network is in
+        self.region = None
         # Path to the network data file
         self.path = path
         # No lines between regions created
@@ -147,8 +181,8 @@ class network:
         self.flow = self.get_flow_model()
     
     def get_flow_model(self):
-        nsubregions = len(self.country.subregions)
-        regidx = self.country.subregions.index
+        nsubregions = len(self.region.subregions)
+        regidx = self.region.subregions.index
         flow_mat = pd.DataFrame(data=np.zeros([nsubregions, nsubregions]),
                                 index = regidx, 
                                 columns = regidx)
