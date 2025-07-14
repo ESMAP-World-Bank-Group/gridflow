@@ -61,58 +61,80 @@ class region:
 
     
     def create_subregions(self, n=10, method="pv"):
-        """Segments region into subregions. 
-
-        Number of subregions is specified by modeller. Eventually will
-        support multiple segmentation methods of varied complexity. 
-
+        """
+        Generate EPM inputs with subregion modifications.
+        
+        This function processes CSV files by:
+        1. Replicating data for each spatially-defined subregion
+        2. Adding a 'subregion' column with actual subregion identifiers
+        
         Parameters
         ----------
-        n : int
-            Number of subregions to create.
-
-        method : string
-            Name of segmentation method to use. Options include:
-            pv - Segment based on pv potential map
-            wind - Segment based on wind potential map
+        raw_inputs_path : str or Path
+            Path to the raw inputs directory containing CSV files
+        
+        Returns
+        -------
+        dict
+            Dictionary containing processed dataframes for EPM
         """
-
-        if method=="pv":
-            # Open the solar potential raster
-            pvpath = self.region_data["pv"].path
-            ras = rioxarray.open_rasterio(pvpath, masked=True)
-        else:
-            # Open the wind potential raster
-            windpath = self.region_data["wind"].path
-            ras = rioxarray.open_rasterio(windpath, masked=True)
-
-        data = ras.sel(band=1).values
-        ### Create subregions through segmentation
-        # Create a nan mask
-        mask = ~np.isnan(data)
-        # Remove nans
-        data[np.isnan(data)] = 0
-        seg = slic(data, n_segments=n, compactness=0.5,
-                   enforce_connectivity=True, mask=mask, channel_axis=None)
+        import pandas as pd
+        from pathlib import Path
         
-        # Generate subregion boundaries from raster segmention
-        # Use rasterio to extract polygons
-        poly = (
-            {'properties': {'label': v}, 'geometry': s}
-            for s, v in shapes(seg.astype(np.int32), mask=mask, transform=ras.rio.transform())
-        )
-        gdf = gpd.GeoDataFrame.from_features(list(poly), crs=ras.rio.crs)
+        raw_inputs_path = Path(raw_inputs_path)
+        epm_inputs = {}
         
-        ### Generate statistics for each subregion
-        # Iterate through datasets, and obtain aggregate subregion statistics
-        subregionstats = pd.DataFrame(index=gdf.index)
-        for data in self.region_data.values():
-            subregionstats = data.get_subregion_value(gdf, outputdf=subregionstats)
+        # Check if subregions have been created
+        if self.subregions is None or len(self.subregions) == 0:
+            raise ValueError("Subregions must be created first using create_subregions()")
         
-        gdf = gdf.join(subregionstats)
-        self.subregions = gdf
+        # Get actual subregion identifiers from the spatial segmentation
+        subregion_ids = self.subregions.index.tolist()
+        n_subregions = len(subregion_ids)
+        print(f"Using {n_subregions} spatially-defined subregions")
         
-        return gdf
+        # Process all CSV files
+        for csv_file in raw_inputs_path.glob('*.csv'):
+            print(f"\nProcessing {csv_file.name}...")
+            
+            # Read the original CSV
+            df_original = pd.read_csv(csv_file)
+            print(f"  Original shape: {df_original.shape}")
+            
+            # Check if zone column exists
+            if 'zone' in df_original.columns:
+                # Create list to store replicated dataframes
+                dfs_list = []
+                
+                # Replicate data for each subregion
+                for subregion_id in subregion_ids:
+                    # Create a copy of the original dataframe
+                    df_copy = df_original.copy()
+                    
+                    # Add the subregion column with actual subregion identifier
+                    df_copy['subregion'] = subregion_id
+                    
+                    # Add to list
+                    dfs_list.append(df_copy)
+                
+                # Concatenate all dataframes
+                df_final = pd.concat(dfs_list, ignore_index=True)
+                
+                # Reorder columns to put subregion after zone
+                cols = df_final.columns.tolist()
+                cols.remove('subregion')
+                zone_idx = cols.index('zone')
+                cols.insert(zone_idx + 1, 'subregion')
+                df_final = df_final[cols]
+                
+                print(f"  Final shape: {df_final.shape} ({n_subregions} subregions × {len(df_original)} original rows)")
+                epm_inputs[csv_file.stem] = df_final
+            else:
+                # If no zone column, just store original
+                print(f"  No 'zone' column found, keeping original data")
+                epm_inputs[csv_file.stem] = df_original
+        
+        return epm_inputs
     
     def create_network(self):
         """Create the network flow models for defined subregions.
