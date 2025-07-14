@@ -92,8 +92,8 @@ class region:
         mask = ~np.isnan(data)
         # Remove nans
         data[np.isnan(data)] = 0
-        seg = slic(data, n_segments=n, compactness=0.01,
-                   enforce_connectivity=True, mask=mask)
+        seg = slic(data, n_segments=n, compactness=0.5,
+                   enforce_connectivity=True, mask=mask, channel_axis=None)
         
         # Generate subregion boundaries from raster segmention
         # Use rasterio to extract polygons
@@ -124,13 +124,62 @@ class region:
 
         self.grid.create_lines(self.subregions)
 
-    def generate_epm_inputs(raw_inputs_path):
+    def generate_epm_inputs(self, raw_inputs_path):
         """Prepare inputs to EPM based on raw inputs and model.
 
         EPM input files -- consisting of a large set of csvs -- are
         generated based on the regionalized model. 
         """
+        import pandas as pd
+        from pathlib import Path
         
+        raw_inputs_path = Path(raw_inputs_path)
+        epm_inputs = {}
+        
+        # Check if subregions have been created
+        if self.subregions is None or len(self.subregions) == 0:
+            raise ValueError("Subregions must be created first using create_subregions()")
+        
+        # Get actual subregion identifiers from the spatial segmentation
+        subregion_ids = self.subregions.index.tolist()
+        n_subregions = len(subregion_ids)
+        print(f"Using {n_subregions} spatially-defined subregions")
+        
+        # Process all CSV files
+        for csv_file in raw_inputs_path.glob('*.csv'):
+            print(f"\nProcessing {csv_file.name}...")
+            
+            # Read the original CSV
+            df_original = pd.read_csv(csv_file)
+            print(f"  Original shape: {df_original.shape}")
+            
+            # Check if zone column exists
+            if 'zone' in df_original.columns:
+                # Create list to store replicated dataframes
+                dfs_list = []
+                
+                # Replicate data for each subregion
+                for subregion_id in subregion_ids:
+                    # Create a copy of the original dataframe
+                    df_copy = df_original.copy()
+                    
+                    # Replace the zone column with the subregion index
+                    df_copy['zone'] = subregion_id
+                    
+                    # Add to list
+                    dfs_list.append(df_copy)
+                
+                # Concatenate all dataframes
+                df_final = pd.concat(dfs_list, ignore_index=True)
+                
+                print(f"  Final shape: {df_final.shape} ({n_subregions} subregions × {len(df_original)} original rows)")
+                epm_inputs[csv_file.stem] = df_final
+            else:
+                # If no zone column, just store original
+                print(f"  No 'zone' column found, keeping original data")
+                epm_inputs[csv_file.stem] = df_original
+        
+        return epm_inputs
 
 
 
