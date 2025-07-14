@@ -92,7 +92,7 @@ class region:
         mask = ~np.isnan(data)
         # Remove nans
         data[np.isnan(data)] = 0
-        seg = slic(data, n_segments=n, compactness=0.01,
+        seg = slic(data, n_segments=n, compactness=0.5,
                    enforce_connectivity=True, mask=mask, channel_axis=None)
         
         # Generate subregion boundaries from raster segmention
