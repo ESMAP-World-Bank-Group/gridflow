@@ -125,99 +125,99 @@ class region:
         self.grid.create_lines(self.subregions)
 
     def generate_epm_inputs(self, raw_inputs_path, n_subregions=None):
-    """
-    Generate EPM inputs with subregion modifications.
-    
-    This function processes CSV files by:
-    1. Replicating data for each subregion
-    2. Adding a 'subregion' column
-    3. Adding a 'region' column (previous zone)
-    
-    Parameters
-    ----------
-    raw_inputs_path : str or Path
-        Path to the raw inputs directory containing CSV files
-    n_subregions : int, optional
-        Number of subregions to create. If None, defaults to 4.
-    
-    Returns
-    -------
-    dict
-        Dictionary containing processed dataframes for EPM
-    """
-    import pandas as pd
-    from pathlib import Path
-    
-    raw_inputs_path = Path(raw_inputs_path)
-    epm_inputs = {}
-    
-    # Determine number of subregions
-    if n_subregions is not None:
-        # User-specified number of subregions
-        subregion_names = [f"subregion_{i}" for i in range(n_subregions)]
-        print(f"Using user-specified {n_subregions} subregions")
-    else:
-        # Default to 4 subregions
-        n_subregions = 4
-        subregion_names = [f"subregion_{i}" for i in range(n_subregions)]
-        print(f"No subregions specified, defaulting to {n_subregions}")
-    
-    # Process all CSV files
-    for csv_file in raw_inputs_path.glob('*.csv'):
-        print(f"\nProcessing {csv_file.name}...")
+        """
+        Generate EPM inputs with subregion modifications.
         
-        # Read the original CSV
-        df_original = pd.read_csv(csv_file)
-        print(f"  Original shape: {df_original.shape}")
+        This function processes CSV files by:
+        1. Replicating data for each subregion
+        2. Adding a 'subregion' column
+        3. Adding a 'region' column (previous zone)
         
-        # Check if zone column exists
-        if 'zone' in df_original.columns:
-            # Get unique zones for region mapping
-            zones = df_original['zone'].unique().tolist()
-            
-            # Create region mapping (previous zone)
-            region_map = {}
-            for i, zone in enumerate(zones):
-                prev_idx = (i - 1) % len(zones)
-                region_map[zone] = zones[prev_idx]
-            
-            # Create list to store replicated dataframes
-            dfs_list = []
-            
-            # Replicate data for each subregion
-            for subregion in subregion_names:
-                # Create a copy of the original dataframe
-                df_copy = df_original.copy()
-                
-                # Add the subregion column
-                df_copy['subregion'] = subregion
-                
-                # Add the region column
-                df_copy['region'] = df_copy['zone'].map(region_map)
-                
-                # Add to list
-                dfs_list.append(df_copy)
-            
-            # Concatenate all dataframes
-            df_final = pd.concat(dfs_list, ignore_index=True)
-            
-            # Reorder columns to put subregion and region after zone
-            cols = df_final.columns.tolist()
-            cols.remove('subregion')
-            cols.remove('region')
-            zone_idx = cols.index('zone')
-            cols.insert(zone_idx + 1, 'region')
-            cols.insert(zone_idx + 2, 'subregion')
-            df_final = df_final[cols]
-            
-            print(f"  Final shape: {df_final.shape} ({n_subregions} subregions × {len(df_original)} original rows)")
-            epm_inputs[csv_file.stem] = df_final
+        Parameters
+        ----------
+        raw_inputs_path : str or Path
+            Path to the raw inputs directory containing CSV files
+        n_subregions : int, optional
+            Number of subregions to create. If None, defaults to 4.
+        
+        Returns
+        -------
+        dict
+            Dictionary containing processed dataframes for EPM
+        """
+        import pandas as pd
+        from pathlib import Path
+        
+        raw_inputs_path = Path(raw_inputs_path)
+        epm_inputs = {}
+        
+        # Determine number of subregions
+        if n_subregions is not None:
+            # User-specified number of subregions
+            subregion_names = [f"subregion_{i}" for i in range(n_subregions)]
+            print(f"Using user-specified {n_subregions} subregions")
         else:
-            # If no zone column, just store original
-            print(f"  No 'zone' column found, keeping original data")
-            epm_inputs[csv_file.stem] = df_original
-    
-    return epm_inputs
+            # Default to 4 subregions
+            n_subregions = 4
+            subregion_names = [f"subregion_{i}" for i in range(n_subregions)]
+            print(f"No subregions specified, defaulting to {n_subregions}")
+        
+        # Process all CSV files
+        for csv_file in raw_inputs_path.glob('*.csv'):
+            print(f"\nProcessing {csv_file.name}...")
+            
+            # Read the original CSV
+            df_original = pd.read_csv(csv_file)
+            print(f"  Original shape: {df_original.shape}")
+            
+            # Check if zone column exists
+            if 'zone' in df_original.columns:
+                # Get unique zones for region mapping
+                zones = df_original['zone'].unique().tolist()
+                
+                # Create region mapping (previous zone)
+                region_map = {}
+                for i, zone in enumerate(zones):
+                    prev_idx = (i - 1) % len(zones)
+                    region_map[zone] = zones[prev_idx]
+                
+                # Create list to store replicated dataframes
+                dfs_list = []
+                
+                # Replicate data for each subregion
+                for subregion in subregion_names:
+                    # Create a copy of the original dataframe
+                    df_copy = df_original.copy()
+                    
+                    # Add the subregion column
+                    df_copy['subregion'] = subregion
+                    
+                    # Add the region column
+                    df_copy['region'] = df_copy['zone'].map(region_map)
+                    
+                    # Add to list
+                    dfs_list.append(df_copy)
+                
+                # Concatenate all dataframes
+                df_final = pd.concat(dfs_list, ignore_index=True)
+                
+                # Reorder columns to put subregion and region after zone
+                cols = df_final.columns.tolist()
+                cols.remove('subregion')
+                cols.remove('region')
+                zone_idx = cols.index('zone')
+                cols.insert(zone_idx + 1, 'region')
+                cols.insert(zone_idx + 2, 'subregion')
+                df_final = df_final[cols]
+                
+                print(f"  Final shape: {df_final.shape} ({n_subregions} subregions × {len(df_original)} original rows)")
+                epm_inputs[csv_file.stem] = df_final
+            else:
+                # If no zone column, just store original
+                print(f"  No 'zone' column found, keeping original data")
+                epm_inputs[csv_file.stem] = df_original
+        
+        return epm_inputs
         
 class network:
     """
