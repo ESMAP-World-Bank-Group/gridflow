@@ -93,7 +93,7 @@ class region:
         # Remove nans
         data[np.isnan(data)] = 0
         seg = slic(data, n_segments=n, compactness=0.01,
-                   enforce_connectivity=True, mask=mask)
+                   enforce_connectivity=True, mask=mask, channel_axis=None)
         
         # Generate subregion boundaries from raster segmention
         # Use rasterio to extract polygons
