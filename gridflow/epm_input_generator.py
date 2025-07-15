@@ -13,9 +13,6 @@ def zone_to_subregion_copy_data(self, csv_file_path, verbose=False):
     Takes a CSV file with a 'zone' column and replicates the data
     for each subregion defined in the model.
     """
-    import pandas as pd
-    from pathlib import Path
-    
     csv_file_path = Path(csv_file_path)
     
     # Check if subregions have been created
