@@ -9,6 +9,7 @@ to support gridflow processing.
 """
 
 import pandas as pd
+import numpy as np
 from pathlib import Path
 
 def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
@@ -30,8 +31,13 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     toprocess = {
     	"pDemandProfile" : {
     		"path" : "load/pDemandProfile.csv",
-    		"func" : "subregion_replicates",
+    		"func" : "subregion_replicate",
     		"args" : []
+    	},
+    	"pDemandForecast" : {
+    	 	"path" : "load/pDemandForecast.csv",
+    	 	"func" : "subregion_distribute",
+    	 	"args" : [["zone", "type"]]
     	}
     }
 
@@ -44,7 +50,7 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
 
     return None
 
-def subregion_replicates(region, input_path, output_path, verbose=False):
+def subregion_replicate(region, input_path, output_path, verbose=False):
     """Replicate input data for each subregion.
 
     Takes a CSV file with a 'zone' column and replicates the data
@@ -70,6 +76,44 @@ def subregion_replicates(region, input_path, output_path, verbose=False):
             for subregion_id in subregion_ids
         ], ignore_index=True)
         
+        if verbose:
+            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_subregions} zones.")
+    else:
+        raise ValueError("The input data is not zonal.")
+    
+    df_final.to_csv(output_path)
+
+
+def subregion_distribute(region, input_path, output_path, exclude_cols=[], 
+	                       scaleby="population", verbose=False):
+    """Proportionally distribute input data to each subregion. 
+
+    Takes a CSV file with a 'zone' column and distributes the specified
+    time series quantities to each subregion proportionally.
+    """
+
+    # Check if subregions have been created
+    if region.subregions.empty:
+        raise ValueError("The region contains no subregions.")
+    
+    # Get subregion identifiers
+    subregion_ids = region.subregions.index.tolist()
+    n_subregions = len(subregion_ids)
+    # Get the scalars for each subregion
+    scale = region.subregions[scaleby] / np.sum(region.subregions[scaleby])
+    
+    # Read the original CSV
+    df_original = pd.read_csv(input_path)
+ 
+
+    if 'zone' in df_original.columns:
+        # Replicate and scale data for each subregion
+        df_final = []
+        for sr in subregion_ids:
+            df = df_original.assign(zone=sr)
+            df[df.columns.difference(exclude_cols)] *= scale.loc[sr]
+            df_final.append(df)
+        df_final = pd.concat(df_final, ignore_index=True)
         if verbose:
             print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_subregions} zones.")
     else:
