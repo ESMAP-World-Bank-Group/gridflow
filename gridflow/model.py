@@ -116,7 +116,7 @@ class region:
         flow representation of the network. 
         """
 
-        self.grid.create_lines(self.zones)
+        return self.grid.create_lines(self.zones)
 
 
 class network:
@@ -157,13 +157,15 @@ class network:
         
     def create_lines(self, zones):
         # Load the list of power lines
-        self.lines = read_line_data(self.path)
+        self.lines = read_line_data(self.path, self.region)
         # Add columns in the lines dataframe for regions and capacities
         self.lines["zones"] = None
         self.lines["capacity"] = None
         nlines = len(self.lines)
+        return self.lines
         # Determine the sequence of zones the line traverses
         for i in range(nlines):
+            print(str(i) + " of " + str(nlines))
             linepath = self.lines.loc[i].geometry
             zidx = self._get_line_zones(linepath, zones)
             self.lines.at[i, "zones"] = zidx
@@ -203,7 +205,7 @@ class network:
         sil_mw = (lines.voltage**2 / z) / 1e6
         return sil_mw
     
-    def _get_line_regions(self, line, zones):
+    def _get_line_zones(self, line, zones):
         # This obtains an ordered sequence of zones traversed by a line.
         # Generalizes to non-convex regions and complex line pathways.
         int_points = []
