@@ -9,10 +9,18 @@ from rasterio.windows import from_bounds
 import rioxarray
 
 # Reader functions for openinframaps data
-def read_line_data(path):
-    # Load and prepare line data
-    linepd = gpd.read_file(path, layer="power_line")
-    linepd[["circuits", "cables"]] = linepd[["circuits", "cables"]].astype(float).fillna(1)
+def read_line_data(path, region):
+    # Get CRS of line data
+    with fiona.open(path, layer="power_line") as src:
+        crs = src.crs
+    # Get bounding box of region
+    minx, miny, maxx, maxy = get_country_bb(region.countries, crs=crs)
+    # Get lines that intersect bounding box
+    linepd = gpd.read_file(path, layer="power_line",
+                           bbox=(minx, miny, maxx, maxy))
+    # Clean and prepare line data
+    cols = ["circuits", "cables"]
+    linepd[cols] = linepd[cols].apply(lambda col: pd.to_numeric(col, errors='coerce').fillna(1))
     # We will use the max voltage of the line as the operating voltage
     linepd = linepd.rename(columns={"max_voltage" : "voltage"})
     linepd["voltage"] = linepd["voltage"].astype(float).fillna(0)
@@ -38,7 +46,7 @@ def get_country_raster(country, raster_path):
     with rasterio.open(raster_path) as src:
         raster_crs = src.crs
 
-    minx, miny, maxx, maxy = get_country_bb(country, raster_crs)
+    minx, miny, maxx, maxy = get_country_bb(country, crs=raster_crs)
     ras = rioxarray.open_rasterio(raster_path, chunks=True)
     ras = ras.rio.clip_box(minx=minx, miny=miny,
                            maxx=maxx, maxy=maxy)
@@ -46,10 +54,11 @@ def get_country_raster(country, raster_path):
     return ras
     
 
-def get_country_bb(countries, raster_crs, buffer_degrees=0.1):
+def get_country_bb(countries, crs=None, buffer_degrees=0.1):
     #Get the bounding box for a country or set of countries.
     
-    countries = countries.to_crs(raster_crs)
+    if crs is not None:
+        countries = countries.to_crs(crs)
     minx, miny, maxx, maxy = countries.total_bounds
 
     minx -= buffer_degrees
