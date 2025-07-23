@@ -4,20 +4,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import warnings
+import yaml
 
 # Raster data packages
 import rasterio
 from rasterio.features import shapes
 from rasterio.mask import mask
-
 import rioxarray
 from rasterstats import zonal_stats
+
 # For segmenting rasters
 from skimage.segmentation import slic
 from shapely.geometry import shape, mapping
 from shapely.geometry import MultiLineString, LineString, Point
 
-from gridflow.data_readers import oim_reader
+from gridflow.data_readers import *
 
 
 class region:
@@ -25,84 +26,76 @@ class region:
     Top-level class wrapping full modeled system and all parameters.
 
     This class represents the country or set of countries over which we are
-    conducting capacity expansion planning. The region posses subregions --
+    conducting capacity expansion planning. The region possesses zones --
     the spatial resolution at which the region is being modelled -- and a
     network -- the flow model of the current transmission network.
 
 
     Attributes
     ----------
-    region_data : dict
-        Contains spatial data for the country; used to define subregions,
-        disaggregate load, etc.
-
     grid : network object
         Transmission network representation for the region. 
 
-    subregions : GeoDataFrame
-        Dataframe containing list of subregions within region.
+    zone_data : dict
+        Contains zonal data.
+        1. zone_list - geopandas df with basic zone data
+        2. zone_demand - demand profiles by zone
+        3. zone_re - renewable profiles by zone
     """
 
-    def __init__(self, name, data_path=""):
-        self.name = name
-        
-        # Define paths of necessary spatial datasets for the region
-        self.region_data = {
-            "pv" : regiondata("pv", data_path + "/pv/pv.tif", "mean"),
-            "wind" : regiondata("wind", data_path + "/wind.tif", "mean"),
-            "population" : regiondata("population", data_path + "/pop.tif", "sum")}
+    def __init__(self, countries, global_data_path):
+        self.countries = read_borders(global_data_path + "/borders/WB_GAD_ADM0_complete.shp",
+                                      countries)
 
         # The transmission system -- starts out empty
-        self.grid = network(data_path + "/grid.gpkg")
+        self.grid = network(global_data_path + "/grid.gpkg")
         self.grid.region = self
         
-        # The subregions -- start out empty
-        self.subregions = gpd.GeoDataFrame(geometry=[])
+        # The zones -- start out empty
+        self.zones = gpd.GeoDataFrame(geometry=[])
+        
+        # Paths to necessary global datasets
+        self.global_pv = global_data_path + "/pv.tif"
+        self.global_wind = global_data_path + "/wind.tif"
 
     
-    def create_subregions(self, n=10, method="pv"):
-        """Segments region into subregions. 
+    def create_zones(self, n=10, method="pv"):
+        """Segments region into zones. 
 
-        Number of subregions is specified by modeller. Eventually will
+        Number of zones is specified by modeller. Eventually will
         support multiple segmentation methods of varied complexity. 
 
         Parameters
         ----------
         n : int
-            Number of subregions to create.
+            Number of zones per country to create.
 
         method : string
             Name of segmentation method to use. Options include:
             pv - Segment based on pv potential map
             wind - Segment based on wind potential map
         """
+        all_zones = []
+        for idx in range(len(self.countries)):
+            country = self.countries.iloc[[idx]]
 
-        if method=="pv":
-            # Open the solar potential raster
-            pvpath = self.region_data["pv"].path
-            ras = rioxarray.open_rasterio(pvpath, masked=True)
-        else:
-            # Open the wind potential raster
-            windpath = self.region_data["wind"].path
-            ras = rioxarray.open_rasterio(windpath, masked=True)
+            if method=="pv":
+                # Open the solar potential raster
+                ras = get_country_raster(country, self.global_pv)
+            else:
+                # Open the wind potential raster
+                ras = get_country_raster(country, self.global_wind)
+            # Segment raster
+            zones = _segment_raster(ras, n=n)
+            # Assign country to zones
+            zones["country"] = country["ISO_A3"].iloc[0]
+            all_zones.append(zones)
+ 
+        self.zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
+                                      geometry="geometry",
+                                      crs=all_zones[0].crs).drop(columns=["label"])
 
-        data = ras.sel(band=1).values
-        ### Create subregions through segmentation
-        # Create a nan mask
-        mask = ~np.isnan(data)
-        # Remove nans
-        data[np.isnan(data)] = 0
-        seg = slic(data, n_segments=n, compactness=0.5,
-                   enforce_connectivity=True, mask=mask, channel_axis=None)
-        
-        # Generate subregion boundaries from raster segmention
-        # Use rasterio to extract polygons
-        poly = (
-            {'properties': {'label': v}, 'geometry': s}
-            for s, v in shapes(seg.astype(np.int32), mask=mask, transform=ras.rio.transform())
-        )
-        gdf = gpd.GeoDataFrame.from_features(list(poly), crs=ras.rio.crs)
-        
+        """
         ### Generate statistics for each subregion
         # Iterate through datasets, and obtain aggregate subregion statistics
         subregionstats = pd.DataFrame(index=gdf.index)
@@ -111,8 +104,9 @@ class region:
         
         gdf = gdf.join(subregionstats)
         self.subregions = gdf
+        """
         
-        return gdf
+        return 1
     
     def create_network(self):
         """Create the network flow models for defined subregions.
@@ -122,7 +116,7 @@ class region:
         flow representation of the network. 
         """
 
-        self.grid.create_lines(self.subregions)
+        self.grid.create_lines(self.zones)
 
 
 class network:
@@ -156,23 +150,23 @@ class network:
         self.region = None
         # Path to the network data file
         self.path = path
-        # No lines between regions created
+        # No lines between zones yet
         self.lines = None
         # No flow model
         self.flow = None
         
-    def create_lines(self, subregions):
+    def create_lines(self, zones):
         # Load the list of power lines
-        self.lines = oim_reader.read_line_data(self.path)
+        self.lines = read_line_data(self.path)
         # Add columns in the lines dataframe for regions and capacities
-        self.lines["subregions"] = None
+        self.lines["zones"] = None
         self.lines["capacity"] = None
         nlines = len(self.lines)
-        # Determine the sequence of subregions the line traverses
+        # Determine the sequence of zones the line traverses
         for i in range(nlines):
             linepath = self.lines.loc[i].geometry
-            ridx = self._get_line_regions(linepath, subregions)
-            self.lines.at[i, "subregions"] = ridx
+            zidx = self._get_line_zones(linepath, zones)
+            self.lines.at[i, "zones"] = zidx
         # Get the capacity of the line
         self.lines["capacity"] = self._get_line_capacity(self.lines)
         # Create the flow model representation of the network
@@ -180,18 +174,18 @@ class network:
         self.flow = self.get_flow_model()
     
     def get_flow_model(self):
-        nsubregions = len(self.region.subregions)
-        regidx = self.region.subregions.index
-        flow_mat = pd.DataFrame(data=np.zeros([nsubregions, nsubregions]),
-                                index = regidx, 
-                                columns = regidx)
+        nzones = len(self.region.zones)
+        zidx = self.region.zones.index
+        flow_mat = pd.DataFrame(data=np.zeros([nzones, nzones]),
+                                index = zidx, 
+                                columns = zidx)
         for _, line in self.lines.iterrows():
-            rpath = line.subregions
-            npath = len(rpath)
+            zpath = line.zones
+            npath = len(zpath)
             capmw = line.capacity
             if npath > 1:
                 for i in range(1, npath):
-                    flow_mat.iloc[rpath[i-1], rpath[i]] += capmw
+                    flow_mat.iloc[zpath[i-1], zpath[i]] += capmw
         return flow_mat
         
     def _get_line_capacity(self, lines):
@@ -209,33 +203,32 @@ class network:
         sil_mw = (lines.voltage**2 / z) / 1e6
         return sil_mw
     
-    def _get_line_regions(self, line, subregions):
-        # This obtains an ordered sequence of regions traversed by a line.
+    def _get_line_regions(self, line, zones):
+        # This obtains an ordered sequence of zones traversed by a line.
         # Generalizes to non-convex regions and complex line pathways.
         int_points = []
-        int_subregions = []
+        int_zones = []
         int_dist = []
 
-        onpath = subregions[subregions.intersects(line)].copy()
+        onpath = zones[zones.intersects(line)].copy()
         onpath["intersect"] = onpath.geometry.apply(lambda r: r.intersection(line))
-        for ridx, intersection in onpath.iterrows():
+        for zidx, intersection in onpath.iterrows():
             seg = intersection.intersect
             if isinstance(seg, MultiLineString):
                 for el in seg.geoms:
-                    int_subregions.append(ridx)
+                    int_zones.append(zidx)
                     int_points.append([Point(el.coords[0]), Point(el.coords[-1])]);
             elif isinstance(seg, LineString):
-                int_subregions.append(ridx)
+                int_zones.append(zidx)
                 int_points.append([Point(seg.coords[0]), Point(seg.coords[-1])]);
 
         for pt in int_points:
             int_dist.append(min(line.project(pt[0]), line.project(pt[1])))
 
-        order_subregions = [int_subregions[idx] for idx in np.argsort(int_dist)]
+        order_zones = [int_zones[idx] for idx in np.argsort(int_dist)]
         # [r1, r1, r3, r5, r5, r1] => [r1, r3, r5, r1]
-        order_subregions = _streamline(order_subregions)
-        return order_subregions
-        
+        order_zones = _streamline(order_zones)
+        return order_zones
 
 
 class regiondata:
@@ -296,5 +289,25 @@ def _streamline(seq):
             if seq[i] != seq[i-1]:
                 slseq.append(seq[i])
     return slseq
-    
+
+def _segment_raster(ras, n=10):
+    """Segment a raster into n segments"""
+    data = ras.sel(band=1).values
+    ### Create subregions through segmentation
+    # Create a nan mask
+    mask = ~np.isnan(data)
+    # Replace nans by means
+    data[np.isnan(data)] = np.nanmean(data)
+    seg = slic(data, n_segments=n, compactness=0.1,
+               enforce_connectivity=True, mask=mask, channel_axis=None)
+
+    # Generate subregion boundaries from raster segmention
+    # Use rasterio to extract polygons
+    poly = (
+        {'properties': {'label': v}, 'geometry': s}
+        for s, v in shapes(seg.astype(np.int32), mask=mask, transform=ras.rio.transform())
+    )
+    gdf = gpd.GeoDataFrame.from_features(list(poly), crs=ras.rio.crs)
+    gdf = gdf.dissolve(by="label", as_index=False)
+    return gdf
         
