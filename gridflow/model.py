@@ -105,8 +105,6 @@ class region:
         gdf = gdf.join(subregionstats)
         self.subregions = gdf
         """
-        
-        return 1
     
     def create_network(self):
         """Create the network flow models for defined subregions.
@@ -116,7 +114,7 @@ class region:
         flow representation of the network. 
         """
 
-        return self.grid.create_lines(self.zones)
+        self.grid.create_lines(self.zones)
 
 
 class network:
@@ -155,20 +153,21 @@ class network:
         # No flow model
         self.flow = None
         
-    def create_lines(self, zones):
-        # Load the list of power lines
-        self.lines = read_line_data(self.path, self.region)
+    def create_lines(self, zones, minkm=5):
+        # Load the list of power lines - filter short lines
+        self.lines = read_line_data(self.path, self.region, minkm=5)
+        
         # Add columns in the lines dataframe for regions and capacities
         self.lines["zones"] = None
         self.lines["capacity"] = None
-        nlines = len(self.lines)
-        return self.lines
+
         # Determine the sequence of zones the line traverses
+        nlines = len(self.lines)
         for i in range(nlines):
-            print(str(i) + " of " + str(nlines))
             linepath = self.lines.loc[i].geometry
             zidx = self._get_line_zones(linepath, zones)
             self.lines.at[i, "zones"] = zidx
+
         # Get the capacity of the line
         self.lines["capacity"] = self._get_line_capacity(self.lines)
         # Create the flow model representation of the network

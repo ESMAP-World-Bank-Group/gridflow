@@ -9,7 +9,7 @@ from rasterio.windows import from_bounds
 import rioxarray
 
 # Reader functions for openinframaps data
-def read_line_data(path, region):
+def read_line_data(path, region, minkm=0):
     # Get CRS of line data
     with fiona.open(path, layer="power_line") as src:
         crs = src.crs
@@ -19,12 +19,16 @@ def read_line_data(path, region):
     linepd = gpd.read_file(path, layer="power_line",
                            bbox=(minx, miny, maxx, maxy))
     # Clean and prepare line data
+    # Filter short lines
+    linepd["km"] = linepd.to_crs(epsg=32633).geometry.length / 1000
+    linepd = linepd[linepd["km"] > minkm]
+    # Clean some columns
     cols = ["circuits", "cables"]
     linepd[cols] = linepd[cols].apply(lambda col: pd.to_numeric(col, errors='coerce').fillna(1))
     # We will use the max voltage of the line as the operating voltage
     linepd = linepd.rename(columns={"max_voltage" : "voltage"})
     linepd["voltage"] = linepd["voltage"].astype(float).fillna(0)
-    return linepd
+    return linepd.reset_index(drop=True)
 
 
 # Reader functions for country borders
