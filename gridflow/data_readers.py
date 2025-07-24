@@ -1,3 +1,6 @@
+import requests
+import yaml
+
 # Various data readers
 import geopandas as gpd
 import pandas as pd
@@ -62,7 +65,55 @@ def get_country_raster(country, raster_path):
 
 # Data queries to renewablesninja
 
-def get_zonal_re(zone):
-    return 0
-
+def get_zonal_re(zone, type="pv", 
+                 start_date="2024-01-01", end_date="2024-12-31"):
+    """Get hourly time series of renewable potential by zone."""
     
+
+def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
+    """Query renewables time series for a given point location from renewablesninja"""
+    # A whole bunch of constants for the query - doubtful users will want to change.
+    dataset = "merra2"
+    capacity = 1
+    system_loss = 0.1
+    height = 100
+    tracking = 0
+    tilt = 35
+    azim = 180
+    turbine = "Gamesa+G114+2000"
+    local_time = "true"
+
+    # Get the API key from config if not passed
+    if api_key is None:
+        api_key = get_config_data("renewables_ninja", "api_key")
+
+    base_url = "https://www.renewables.ninja/api/data/"
+    header = {"Authorization": f"Token {api_key}"}
+
+    lat, lon = location.geometry.x[0], location.geometry.y[0]
+    if type=="pv":
+        query = (f"{base_url}pv?lat={lat}&lon={lon}&date_from={start_date}&date_to={end_date}"
+                 f"&dataset={dataset}&capacity={capacity}&system_loss={system_loss}&tracking={tracking}"
+                 f"&tilt={tilt}&azim={azim}&local_time={local_time}&format=json")
+    elif type=="wind":
+        query = (f"{base_url}wind?lat={lat}&lon={lon}&date_from={start_date}&date_to={end_date}&dataset={dataset}"
+                 f"&capacity={capacity}&height={height}&turbine={turbine}&local_time={local_time}&format=json")
+        
+    response = requests.get(query, headers=header, verify=False)
+
+    if response.status_code != 200:
+        raise Exception(f"Error querying data at ({lat}, {lon}): {response.status_code}")
+    
+    data = response.json()["data"]
+    # Convert to dataframe - local time as index, electricity as value
+    df = pd.DataFrame.from_dict(data, orient="index")
+    df["local_time"] = pd.to_datetime(df["local_time"])
+    df.set_index("local_time", inplace=True)
+    return df
+
+# Read from config file
+def get_config_data(category, key):
+    path = "config.yaml"
+    with open(path, 'r') as file:
+        data = yaml.safe_load(file)
+    return data[category][key]
