@@ -8,13 +8,16 @@ import rasterio
 from rasterio.windows import from_bounds
 import rioxarray
 
+# Gridflow imports
+from gridflow import utils
+
 # Reader functions for openinframaps data
 def read_line_data(path, region, minkm=0):
     # Get CRS of line data
     with fiona.open(path, layer="power_line") as src:
         crs = src.crs
     # Get bounding box of region
-    minx, miny, maxx, maxy = get_country_bb(region.countries, crs=crs)
+    minx, miny, maxx, maxy = utils.get_bb(region.countries, crs=crs)
     # Get lines that intersect bounding box
     linepd = gpd.read_file(path, layer="power_line",
                            bbox=(minx, miny, maxx, maxy))
@@ -50,24 +53,16 @@ def get_country_raster(country, raster_path):
     with rasterio.open(raster_path) as src:
         raster_crs = src.crs
 
-    minx, miny, maxx, maxy = get_country_bb(country, crs=raster_crs)
+    minx, miny, maxx, maxy = utils.get_bb(country, crs=raster_crs)
     ras = rioxarray.open_rasterio(raster_path, chunks=True)
     ras = ras.rio.clip_box(minx=minx, miny=miny,
                            maxx=maxx, maxy=maxy)
     ras = ras.rio.clip(country.geometry, country.crs)
     return ras
+
+# Data queries to renewablesninja
+
+def get_zonal_re(zone):
+    return 0
+
     
-
-def get_country_bb(countries, crs=None, buffer_degrees=0.1):
-    #Get the bounding box for a country or set of countries.
-    
-    if crs is not None:
-        countries = countries.to_crs(crs)
-    minx, miny, maxx, maxy = countries.total_bounds
-
-    minx -= buffer_degrees
-    miny -= buffer_degrees
-    maxx += buffer_degrees
-    maxy += buffer_degrees
-
-    return minx, miny, maxx, maxy
