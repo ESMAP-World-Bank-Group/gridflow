@@ -69,9 +69,13 @@ def get_country_raster(country, raster_path):
 def get_zonal_re(zone, type="pv", 
                  start_date="2024-01-01", end_date="2024-12-31"):
     """Get hourly time series of renewable potential by zone."""
-    pts = utils.get_random_points(zone, n=5)
-
-    
+    pts = utils.get_random_points(zone, n=2)
+    all_re_series = []
+    for idx in range(len(pts)):
+        pt = pts.iloc[[idx]]
+        re = get_reninja_data(pt, start_date, end_date, type=type)
+        all_re_series.append(re)
+    return pd.concat(all_re_series, axis=1).mean(axis=1)
 
 def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
     """Query renewables time series for a given point location from renewablesninja"""
@@ -93,7 +97,7 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
     base_url = "https://www.renewables.ninja/api/data/"
     header = {"Authorization": f"Token {api_key}"}
 
-    lat, lon = location.geometry.x[0], location.geometry.y[0]
+    lat, lon = location.geometry.x.iloc[0], location.geometry.y.iloc[0]
     if type=="pv":
         query = (f"{base_url}pv?lat={lat}&lon={lon}&date_from={start_date}&date_to={end_date}"
                  f"&dataset={dataset}&capacity={capacity}&system_loss={system_loss}&tracking={tracking}"
