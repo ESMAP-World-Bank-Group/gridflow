@@ -1,30 +1,31 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def country_viz(terr):
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+def country_viz(reg):
+    fig, ax = plt.subplots(1, 1, figsize=(15, 10))
 
-    subregions_p = terr.subregions.to_crs(epsg=3857)
-    lines_p = terr.grid.lines.to_crs(epsg=3857)
-    subregions_p["centers"] = subregions_p.geometry.centroid
+    zones_p = reg.zones.to_crs(epsg=3857)
+    lines_p = reg.grid.lines.to_crs(epsg=3857)
+    zones_p["centers"] = zones_p.geometry.centroid
 
-    subregions_p.plot(edgecolor="black", color="lightblue", ax=ax)
-    lines_p.plot(color="pink", ax=ax)
+    zones_p.plot(edgecolor="black", color="lightgrey", linewidth=2, ax=ax)
+    lines_p.plot(color="mediumseagreen", linewidth=1, ax=ax, alpha=1)
 
-    for idx, r in subregions_p.iterrows():
-        x, y = r.centers.x, r.centers.y
+    for idx, z in zones_p.iterrows():
+        x, y = z.centers.x, z.centers.y
         ax.text(x, y, idx, fontsize=22)
 
     # Flow model overlay
     # Get the maximum capacity in the flow model
-    maxmw = np.max(np.max(terr.grid.flow))
-    maxlw = 5
+    maxmw = np.max(np.max(reg.grid.flow))
+    maxlw = 9
 
-    ridx = subregions_p.index
-    for i in ridx:
-        for j in ridx:
-            ci = subregions_p.centers.loc[i]
-            cj = subregions_p.centers.loc[j]
-            capmw = terr.grid.flow.loc[i, j]
+    zidx = zones_p.index
+    for i in zidx:
+        for j in zidx:
+            ci = zones_p.centers.loc[i]
+            cj = zones_p.centers.loc[j]
+            capmw = reg.grid.flow.loc[i, j]
             plt.plot([ci.x, cj.x], [ci.y, cj.y], 
-                     linewidth=(capmw/maxmw)*maxlw)
+                     linewidth=(capmw/maxmw)*maxlw,
+                     color="darkolivegreen")
