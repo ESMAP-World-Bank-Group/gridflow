@@ -53,6 +53,11 @@ class region:
         
         # The zones -- start out empty
         self.zones = gpd.GeoDataFrame(geometry=[])
+        self.zone_stats = pd.DataFrame()
+        # Define the zonal statistics
+        self.zone_stat_specs = {
+            "population" : zonedata("population", global_data_path + "/population_2020.tif", "sum")
+        }
         
         # Paths to necessary global datasets
         self.global_pv = global_data_path + "/pv.tif"
@@ -95,16 +100,14 @@ class region:
                                       geometry="geometry",
                                       crs=all_zones[0].crs).drop(columns=["label"])
 
-        """
+    
         ### Generate statistics for each subregion
         # Iterate through datasets, and obtain aggregate subregion statistics
-        subregionstats = pd.DataFrame(index=gdf.index)
-        for data in self.region_data.values():
-            subregionstats = data.get_subregion_value(gdf, outputdf=subregionstats)
+        zstats = pd.DataFrame(index=self.zones.index)
+        for zdata in self.zone_stat_specs.values():
+            zstats = zdata.get_zone_values(self, outputdf=zstats)
         
-        gdf = gdf.join(subregionstats)
-        self.subregions = gdf
-        """
+        self.zone_stats = zstats
     
     def create_network(self):
         """Create the network flow models for defined subregions.
@@ -232,7 +235,7 @@ class network:
         return order_zones
 
 
-class regiondata:
+class zonedata:
     def __init__(self, name, path, agg):
         self.path = path
         self.agg = agg
@@ -244,42 +247,38 @@ class regiondata:
         elif self.agg=="sum":
             return np.sum(data)
     
-    def get_subregion_value(self, subregions, outputdf=None):
-        # Iterate through regions dataframe and obtain aggregate data for each region
-        ras = rasterio.open(self.path)
-        subregions = subregions.to_crs(ras.crs)
+    def get_zone_values(self, region, outputdf=None):
+        # Read in the segment of the raster corresponding to the region
+        ras = get_country_raster(region.countries, self.path)
+        zones = region.zones.to_crs(ras.rio.crs)
         
         # Create dataframe to store the results -- intialize with zeros
         if outputdf is None:
-            outputdf= pd.DataFrame(index=subregions.index)
+            outputdf= pd.DataFrame(index=zones.index)
             outputdf[self.name] = 0
         
-        for idx in subregions.index:
-            geom = subregions.loc[idx].geometry
-            try:
-                # Mask the raster based on the region geometry
-                out_ras, out_transform = mask(ras, [mapping(geom)], crop=True)
-                # Get valid raster values
-                data = out_ras[0]
-                data = _clean_raster(data, ras.nodata)
-                # Aggregate the data and fill in the results dataframe
-                rez = self.aggregate(data) if data.size > 0 else np.nan
-            except Exception as e:
-                rez = np.nan
-                #warnings.warn("Error when getting region statistics")
+        for idx in zones.index:
+            geom = zones.loc[idx].geometry
 
+            # Clip the raster to the zone geometry
+            zoneras = ras.rio.clip([geom], zones.crs)
+            # Get valid raster values
+            data = _get_ras_values(zoneras, zoneras.rio.nodata)
+            # Aggregate the data and fill in the results dataframe
+            rez = self.aggregate(data) if data.size > 0 else np.nan
             outputdf.loc[idx, self.name] = rez
         return outputdf
 
 
 """Helper Functions"""
 
-def _clean_raster(ras, nodata):
+def _get_ras_values(ras, nodata):
+    data = ras.values
     if np.isnan(nodata):
-        ras = ras[~np.isnan(ras)]
+        data = data[~np.isnan(data)]
     else:
-        ras = ras[ras != nodata]
-    return ras
+        data = data[data != nodata]
+    return data
         
 def _streamline(seq):
     if len(seq) == 0:
