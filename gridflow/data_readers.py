@@ -58,6 +58,7 @@ def get_country_raster(country, raster_path):
 
     minx, miny, maxx, maxy = utils.get_bb(country, crs=raster_crs)
     ras = rioxarray.open_rasterio(raster_path, chunks=True)
+
     ras = ras.rio.clip_box(minx=minx, miny=miny,
                            maxx=maxx, maxy=maxy)
     ras = ras.rio.clip(country.geometry, country.crs)
@@ -68,6 +69,8 @@ def get_country_raster(country, raster_path):
 def get_zonal_re(zone, type="pv", 
                  start_date="2024-01-01", end_date="2024-12-31"):
     """Get hourly time series of renewable potential by zone."""
+    pts = utils.get_random_points(zone, n=5)
+
     
 
 def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
