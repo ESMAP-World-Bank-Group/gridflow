@@ -1,0 +1,47 @@
+Geospatial Data Documentation  
+Last Updated: 2025-07-29  
+Note: The following links will give the global full datasets to download. However, this test global datasets named "global_datasets" currently only contain data for Luxemburg. All the data are filtered to Luxemburg.
+
+------------------------------------------------------------
+
+1. Global Wind Atlas Data  
+File name: wind.tif  
+Original file: power_density_cog_50m.tif  
+Source link: https://globalwindatlas.info/en/download/gis-files  
+Documentation: https://globalwindatlas.info/en/about/KeyFeatures  
+Note:  
+The data is 1-kilometer resolution to align with the Global Solar Atlas dataset.  
+The resulting file is saved as "pv.tif".
+
+------------------------------------------------------------
+
+2. Global Solar Atlas Data  
+File name: pv.tif  
+Source link: https://globalsolaratlas.info/download  
+Documentation: https://documents1.worldbank.org/curated/en/529431592893043403/pdf/Global-Solar-Atlas-2-0-Technical-Report.pdf  
+Note:  
+This dataset provides photovoltaic power output estimates at 1-kilometer spatial resolution.  
+It is designed for compatibility with other renewable energy datasets including the resampled Global Wind Atlas data.
+
+------------------------------------------------------------
+
+3. World Bank Official Boundaries  
+Folder name: borders
+File name: 
+- WB_GAD_ADM0_complete.shx
+- WB_GAD_ADM0_complete.shp
+- WB_GAD_ADM0_complete.prj
+- WB_GAD_ADM0_complete.dbf
+- WB_GAD_ADM0_complete.cpg
+Source link: https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries  
+Note:  
+This shapefile contains globally recognized national boundaries (ADM0 level) used for consistent spatial reference across World Bank projects and geospatial analyses.
+
+------------------------------------------------------------
+
+4. World Population 
+File name: population_2020.tif
+Source Link: https://data.ghg.center/browseui/index.html#sedac-popdensity-yeargrid5yr-v4.11/
+Note:  
+Only download the population data for the year of 2020.
+------------------------------------------------------------
