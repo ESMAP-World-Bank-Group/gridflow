@@ -1,47 +1,59 @@
-Geospatial Data Documentation  
+Data Documentation  
 Last Updated: 2025-07-29  
-Note: The following links will give the global full datasets to download. However, this test global datasets named "global_datasets" currently only contain data for Luxemburg. All the data are filtered to Luxemburg.
+
+Note: The links below point to the global datasets that are required to run gridflow for an arbitrary region. 
+The public repository includes a reduced dataset that allows the package to be tried out without downloading
+large global data files - this reduced dataset corresponds to the country of Luxembourg.
+
+For World Bank internal users, the full datasets are available in the format required by gridflow on an internal 
+drive. For access, please reach out to Mohini Bariya, mbariya@worldbank.org.
 
 ------------------------------------------------------------
 
 1. Global Wind Atlas Data  
 File name: wind.tif  
-Original file: power_density_cog_50m.tif  
-Source link: https://globalwindatlas.info/en/download/gis-files  
+Original source file: power_density_cog_50m.tif  
+Source: https://globalwindatlas.info/en/download/gis-files  
 Documentation: https://globalwindatlas.info/en/about/KeyFeatures  
+
 Note:  
-The data is 1-kilometer resolution to align with the Global Solar Atlas dataset.  
-The resulting file is saved as "pv.tif".
+This dataset represents wind power density at a 1-kilometer spatial resolution, resampled to match the Global Solar Atlas data.
 
 ------------------------------------------------------------
 
 2. Global Solar Atlas Data  
 File name: pv.tif  
-Source link: https://globalsolaratlas.info/download  
+Source: https://globalsolaratlas.info/download  
 Documentation: https://documents1.worldbank.org/curated/en/529431592893043403/pdf/Global-Solar-Atlas-2-0-Technical-Report.pdf  
+
 Note:  
-This dataset provides photovoltaic power output estimates at 1-kilometer spatial resolution.  
-It is designed for compatibility with other renewable energy datasets including the resampled Global Wind Atlas data.
+This dataset provides photovoltaic (PV) power output estimates at a 1-kilometer spatial resolution.
 
 ------------------------------------------------------------
 
 3. World Bank Official Boundaries  
-Folder name: borders
-File name: 
-- WB_GAD_ADM0_complete.shx
-- WB_GAD_ADM0_complete.shp
-- WB_GAD_ADM0_complete.prj
-- WB_GAD_ADM0_complete.dbf
-- WB_GAD_ADM0_complete.cpg
-Source link: https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries  
+Folder name: borders  
+File names:  
+- WB_GAD_ADM0_complete.shp  
+- WB_GAD_ADM0_complete.shx  
+- WB_GAD_ADM0_complete.prj  
+- WB_GAD_ADM0_complete.dbf  
+- WB_GAD_ADM0_complete.cpg  
+
+Source: https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries  
+
 Note:  
-This shapefile contains globally recognized national boundaries (ADM0 level) used for consistent spatial reference across World Bank projects and geospatial analyses.
+This shapefile includes internationally recognized country boundaries (ADM0 level).  
+It is used as a reference layer for spatial standardization across World Bank geospatial projects.
 
 ------------------------------------------------------------
 
-4. World Population 
-File name: population_2020.tif
-Source Link: https://data.ghg.center/browseui/index.html#sedac-popdensity-yeargrid5yr-v4.11/
+4. World Population Data  
+File name: population_2020.tif  
+Source: https://data.ghg.center/browseui/index.html#sedac-popdensity-yeargrid5yr-v4.11/  
+
 Note:  
-Only download the population data for the year of 2020.
+Only the 2020 population raster is included in this dataset.  
+The data represents estimated population density per square kilometer.
+
 ------------------------------------------------------------
