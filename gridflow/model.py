@@ -189,7 +189,10 @@ class network:
             capmw = line.capacity
             if npath > 1:
                 for i in range(1, npath):
+                    # Add capacity to (both) of the corresponding entries
+                    # in the flow model matrix
                     flow_mat.iloc[zpath[i-1], zpath[i]] += capmw
+                    flow_mat.iloc[zpath[i], zpath[i-1]] += capmw
         return flow_mat
         
     def _get_line_capacity(self, lines):
