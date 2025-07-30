@@ -1,0 +1,8 @@
+grid_params:
+    countries: ["LUX"]
+
+input_data:
+    global_datasets: "data/global"
+
+renewables_ninja:
+    api_key: "your_api_key"
