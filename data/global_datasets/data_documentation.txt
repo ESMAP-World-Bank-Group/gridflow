@@ -1,5 +1,5 @@
 Data Documentation  
-Last Updated: 2025-07-29  
+Last Updated: 2025-07-30  
 
 Note: The links below point to the global datasets that are required to run gridflow for an arbitrary region. 
 The public repository includes a reduced dataset that allows the package to be tried out without downloading
@@ -57,3 +57,10 @@ Only the 2020 population raster is included in this dataset.
 The data represents estimated population density per square kilometer.
 
 ------------------------------------------------------------
+
+5. Open Infrastructure Map (OpenInfraMap)
+File Name: grid.gpkg
+Source: https://openinframap.org/ 
+
+Note:
+Open infrastructure map provides the data of Luxembourg free of charge. We only provides the data of Luxembourg to respect the police for public attempts.
