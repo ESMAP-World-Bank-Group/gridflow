@@ -49,12 +49,11 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     }
 
     for a, b in toprocess.items():
-    	if verbose:
-    		print(f"Processing {a}")
-    	in_path = input_base_dir + "/" + b["path"]
-    	out_path = output_base_dir + "/" + b["path"]
-    	globals()[b["func"]](region, in_path, out_path, *b["args"], verbose=verbose)
-
+        if verbose:
+            print(f"Processing {a}")
+        in_path = input_base_dir + "/" + b["path"]
+        out_path = output_base_dir + "/" + b["path"]
+        globals()[b["func"]](region, in_path, out_path, *b["args"], verbose=verbose)
     return None
 
 def subregion_replicate(region, input_path, output_path, verbose=False):
