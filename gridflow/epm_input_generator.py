@@ -11,6 +11,7 @@ to support gridflow processing.
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import shutil
 
 def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     """Master function to process all EPM input files.
@@ -29,6 +30,12 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     None
     """
     toprocess = {
+    # Top-level files
+        "config" : {
+            "path" : "config.csv",
+            "func" : "noop",
+            "args" : []
+        },
     # Load data
     	"pDemandProfile" : {
     		"path" : "load/pDemandProfile.csv",
@@ -55,6 +62,10 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
         out_path = output_base_dir + "/" + b["path"]
         globals()[b["func"]](region, in_path, out_path, *b["args"], verbose=verbose)
     return None
+
+def noop(region, input_path, output_path, verbose=False):
+    """Do nothing."""
+    shutil.copyfile(input_path, output_path)
 
 def subregion_replicate(region, input_path, output_path, verbose=False):
     """Replicate input data for each subregion.
