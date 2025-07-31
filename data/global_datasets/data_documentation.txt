@@ -1,5 +1,5 @@
 Data Documentation  
-Last Updated: 2025-07-29  
+Last Updated: 2025-07-31  
 
 Note: The links below point to the global datasets that are required to run gridflow for an arbitrary region. 
 The public repository includes a reduced dataset that allows the package to be tried out without downloading
@@ -55,5 +55,16 @@ Source: https://data.ghg.center/browseui/index.html#sedac-popdensity-yeargrid5yr
 Note:  
 Only the 2020 population raster is included in this dataset.  
 The data represents estimated population density per square kilometer.
+
+------------------------------------------------------------
+
+5. Global Power Line Data  
+File name: grid.gpkg 
+Source: https://www.infrageomatics.com/products/osm-export 
+
+Note:  
+OpenInfraMaps provides a global dataset containing information on varied infrastructure. The gridflow package uses a subset of this data
+consisting only of power lines. The test dataset on Github is further filtered down to Luxembourg, which corresponds to the freely available
+data sample downloadable from the OpenInfraMaps website.
 
 ------------------------------------------------------------
