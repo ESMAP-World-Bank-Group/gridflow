@@ -67,9 +67,9 @@ def get_country_raster(country, raster_path):
 # Data queries to renewablesninja
 
 def get_zonal_re(zone, type="pv", 
-                 start_date="2024-01-01", end_date="2024-12-31"):
+                 start_date="2024-01-01", end_date="2024-12-31", n=2):
     """Get hourly time series of renewable potential by zone."""
-    pts = utils.get_random_points(zone, n=2)
+    pts = utils.get_random_points(zone, n=n)
     all_re_series = []
     for idx in range(len(pts)):
         pt = pts.iloc[[idx]]

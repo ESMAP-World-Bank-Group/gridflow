@@ -53,11 +53,15 @@ class region:
         
         # The zones -- start out empty
         self.zones = gpd.GeoDataFrame(geometry=[])
-        self.zone_stats = pd.DataFrame()
+
         # Define the zonal statistics
         self.zone_stat_specs = {
             "population" : zonedata("population", global_data_path + "/population_2020.tif", "sum")
         }
+        # Empty dataframe for zone statistics
+        self.zone_stats = pd.DataFrame()
+        # Empty dataframe for zone RE profiles
+        self.zone_re = pd.DataFrame()
         
         # Paths to necessary global datasets
         self.global_pv = global_data_path + "/pv.tif"
@@ -101,6 +105,7 @@ class region:
                                       crs=all_zones[0].crs).drop(columns=["label"])
 
     
+    def set_zone_data(self):
         ### Generate statistics for each subregion
         # Iterate through datasets, and obtain aggregate subregion statistics
         zstats = pd.DataFrame(index=self.zones.index)
@@ -108,7 +113,16 @@ class region:
             zstats = zdata.get_zone_values(self, outputdf=zstats)
         
         self.zone_stats = zstats
-    
+
+        # Get renewables profiles for each zone
+        for zidx in range(1): #TODO: len(self.zones)
+            zone = self.zones.iloc[[zidx]]
+            if zidx == 0:
+                self.zone_re = get_zonal_re(zone)
+            else:
+                self.zone_re = pd.concat([self.zone_re, get_zonal_re(zone)], axis=1)
+
+
     def create_network(self):
         """Create the network flow models for defined subregions.
 
