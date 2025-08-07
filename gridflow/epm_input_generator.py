@@ -67,20 +67,20 @@ def noop(region, input_path, output_path, verbose=False):
     """Do nothing."""
     shutil.copyfile(input_path, output_path)
 
-def subregion_replicate(region, input_path, output_path, verbose=False):
-    """Replicate input data for each subregion.
+def zone_replicate(region, input_path, output_path, verbose=False):
+    """Replicate input data for each zone.
 
     Takes a CSV file with a 'zone' column and replicates the data
-    for each subregion defined in the model.
+    for each zone defined in the model.
     """
     
     # Check if subregions have been created
-    if region.subregions.empty:
-        raise ValueError("The region contains no subregions.")
+    if region.zones.empty:
+        raise ValueError("The region contains no zones.")
     
-    # Get subregion identifiers
-    subregion_ids = region.subregions.index.tolist()
-    n_subregions = len(subregion_ids)
+    # Get zone identifiers
+    zone_ids = region.zones.index.tolist()
+    n_zones = len(zone_ids)
     
     # Read the original CSV
     df_original = pd.read_csv(input_path)
@@ -89,35 +89,35 @@ def subregion_replicate(region, input_path, output_path, verbose=False):
     if 'zone' in df_original.columns:
         # Replicate data for each subregion
         df_final = pd.concat([
-            df_original.assign(zone=subregion_id) 
-            for subregion_id in subregion_ids
+            df_original.assign(zone=zone_id) 
+            for zone_id in zone_ids
         ], ignore_index=True)
         
         if verbose:
-            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_subregions} zones.")
+            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
     else:
         raise ValueError("The input data is not zonal.")
     
     df_final.to_csv(output_path)
 
 
-def subregion_distribute(region, input_path, output_path, exclude_cols=[], 
-	                       scaleby="population", verbose=False):
-    """Proportionally distribute input data to each subregion. 
+def zone_distribute(region, input_path, output_path, exclude_cols=[], 
+	                scaleby="population", verbose=False):
+    """Proportionally distribute input data to each zone. 
 
     Takes a CSV file with a 'zone' column and distributes the specified
-    time series quantities to each subregion proportionally.
+    time series quantities to each zone proportionally.
     """
 
     # Check if subregions have been created
-    if region.subregions.empty:
-        raise ValueError("The region contains no subregions.")
+    if region.zones.empty:
+        raise ValueError("The region contains no zones.")
     
     # Get subregion identifiers
-    subregion_ids = region.subregions.index.tolist()
-    n_subregions = len(subregion_ids)
+    zone_ids = region.zones.index.tolist()
+    n_zones = len(zone_ids)
     # Get the scalars for each subregion
-    scale = region.subregions[scaleby] / np.sum(region.subregions[scaleby])
+    scale = region.zones[scaleby] / np.sum(region.zones[scaleby])
     
     # Read the original CSV
     df_original = pd.read_csv(input_path)
@@ -126,13 +126,13 @@ def subregion_distribute(region, input_path, output_path, exclude_cols=[],
     if 'zone' in df_original.columns:
         # Replicate and scale data for each subregion
         df_final = []
-        for sr in subregion_ids:
-            df = df_original.assign(zone=sr)
-            df[df.columns.difference(exclude_cols)] *= scale.loc[sr]
+        for z in zone_ids:
+            df = df_original.assign(zone=z)
+            df[df.columns.difference(exclude_cols)] *= scale.loc[z]
             df_final.append(df)
         df_final = pd.concat(df_final, ignore_index=True)
         if verbose:
-            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_subregions} zones.")
+            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
     else:
         raise ValueError("The input data is not zonal.")
     
