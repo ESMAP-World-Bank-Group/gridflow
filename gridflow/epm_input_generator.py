@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import shutil
+import os
 
 from gridflow.utils import *
 
@@ -102,6 +103,7 @@ def zone_replicate(region, input_path, output_path, verbose=False):
     else:
         raise ValueError("The input data is not zonal.")
     
+    os.makedirs(output_path.rsplit("/", 1)[0], exist_ok=True)
     df_final.to_csv(output_path)
 
 
