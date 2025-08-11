@@ -68,3 +68,11 @@ consisting only of power lines. The test dataset on Github is further filtered d
 data sample downloadable from the OpenInfraMaps website.
 
 ------------------------------------------------------------
+
+6. Country names and codes 
+File name: country_names.csv
+Source: https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv
+
+Note:
+Country english names and ISO 2 and 3 codes. This data is used to map between the differences in country naming between gridflow, which prefers
+ISO codes, and EPM, which uses full names.
