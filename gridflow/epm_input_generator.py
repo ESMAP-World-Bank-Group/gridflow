@@ -13,6 +13,10 @@ import numpy as np
 from pathlib import Path
 import shutil
 
+from gridflow.utils import *
+
+cc = country_code_map()
+
 def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     """Master function to process all EPM input files.
     
@@ -127,7 +131,8 @@ def zone_distribute(region, input_path, output_path, exclude_cols=[],
         # Replicate and scale data for each subregion
         df_final = []
         for z in zone_ids:
-            df = df_original.assign(zone=z)
+            country = cc.iso3_to_name(region.zones.loc[z, "country"])
+            df = df_original[df_original["country"]==country].assign(zone=z)
             df[df.columns.difference(exclude_cols)] *= scale.loc[z]
             df_final.append(df)
         df_final = pd.concat(df_final, ignore_index=True)
