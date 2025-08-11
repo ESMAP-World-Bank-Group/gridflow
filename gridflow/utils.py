@@ -47,3 +47,10 @@ def get_bb(gpdf, crs=None, buffer_degrees=0.1):
     maxy += buffer_degrees
 
     return minx, miny, maxx, maxy
+
+class country_code_map:
+    def __init__(self, code_path="data/global_datasets/country_names.csv"):
+        self.codes = pd.read_csv(code_path)
+
+    def iso3_to_name(self, iso3):
+        return self.codes[self.codes["alpha-3"]==iso3]["name"].iloc[0]
