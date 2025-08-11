@@ -39,18 +39,18 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     # Load data
     	"pDemandProfile" : {
     		"path" : "load/pDemandProfile.csv",
-    		"func" : "subregion_replicate",
+    		"func" : "zone_replicate",
     		"args" : []
     	},
     	"pDemandForecast" : {
     	 	"path" : "load/pDemandForecast.csv",
-    	 	"func" : "subregion_distribute",
+    	 	"func" : "zone_distribute",
     	 	"args" : [["zone", "type"]]
     	},
     # Supply data
         "pGenDataExcelDefault" : {
             "path" : "supply/pGenDataExcelDefault.csv",
-            "func" : "subregion_replicate",
+            "func" : "zone_replicate",
             "args" : []
         }
     }
