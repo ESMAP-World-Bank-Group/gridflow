@@ -12,7 +12,6 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import shutil
-import os
 
 from gridflow.utils import *
 
@@ -103,7 +102,6 @@ def old_zone_replicate(region, input_path, output_path, verbose=False):
     else:
         raise ValueError("The input data is not zonal.")
     
-    os.makedirs(output_path.rsplit("/", 1)[0], exist_ok=True)
     df_final.to_csv(output_path)
 
 
@@ -158,7 +156,7 @@ def zone_replicate(region, input_path, output_path, verbose=False):
     df_original = pd.read_csv(input_path)
  
     
-    df_final = []
+    df_final = pd.Dataframe()
     while not (df_original.empty):
         #create new dataframe file with just the rows with the same country name as the first row
         country_name = df_original.loc[0,"zone"]
@@ -169,7 +167,7 @@ def zone_replicate(region, input_path, output_path, verbose=False):
         #create list of zones from chosen country
         country_zones = []
         for zone_id in zone_ids:
-            if country_name in zone_id["country"]:
+            if cc.name_to_iso3(country_name) in zone_id["country"]:
                 country_zones.append(zone_id)
                 
         #run normal replicate function on new dataframe file and zone list
