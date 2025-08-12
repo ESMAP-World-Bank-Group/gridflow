@@ -16,7 +16,7 @@ cc = country_code_map()
 
 def synth_region(countries, zones_per_country=2):
     global_data_path = "data/global_datasets"
-    sregion = model.region(countries, global_data_path=global_data_path)
+    sregion = region(countries, global_data_path=global_data_path)
     # Create zones
     zdf = pd.DataFrame(columns=["geometry", "country"])
     zdf["geometry"] = None
