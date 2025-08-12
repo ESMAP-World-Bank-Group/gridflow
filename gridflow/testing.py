@@ -10,8 +10,21 @@ import os
 import calendar
 
 from gridflow.utils import *
+from gridflow.model import *
 
 cc = country_code_map()
+
+def synth_region(countries, zones_per_country=2):
+    global_data_path = "data/global_datasets"
+    sregion = region(countries, global_data_path=global_data_path)
+    # Create zones
+    zdf = pd.DataFrame(columns=["geometry", "country"])
+    zdf["geometry"] = None
+    zdf["country"] = countries * zones_per_country
+    zdf = zdf.sort_values("country")
+
+    sregion.zones = zdf
+    return sregion
 
 def synth_data(countries, path="data/test/epm_inputs_raw"):
     n = len(countries)
@@ -46,7 +59,6 @@ def synth_data(countries, path="data/test/epm_inputs_raw"):
     df = pd.concat(df_list, ignore_index=True).set_index("zone")
     df.to_csv(load_path + "/pDemandProfile.csv")
 
-    return df
 
 def _get_annual_matrix(leap=False):
     if leap:
@@ -54,7 +66,7 @@ def _get_annual_matrix(leap=False):
         y = 2000 # Use some leap year to get monthly counts from calendar.
     else:
         ndays = 365
-        y = 2001
+        y = 2001 # Some non leap year
 
     df = pd.DataFrame(data=np.random.uniform(low=0, high=1, size=[ndays, 24]),
                       columns=[f"t{h}" for h in range(1, 25)])
