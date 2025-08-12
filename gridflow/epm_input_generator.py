@@ -71,7 +71,7 @@ def noop(region, input_path, output_path, verbose=False):
     """Do nothing."""
     shutil.copyfile(input_path, output_path)
 
-def zone_replicate(region, input_path, output_path, verbose=False):
+def old_zone_replicate(region, input_path, output_path, verbose=False):
     """Replicate input data for each zone.
 
     Takes a CSV file with a 'zone' column and replicates the data
@@ -143,3 +143,50 @@ def zone_distribute(region, input_path, output_path, exclude_cols=[],
     
     df_final.to_csv(output_path)
 
+#trying to write for multiple zones
+def zone_replicate(region, input_path, output_path, verbose=False):
+    # Check if subregions have been created
+    if region.zones.empty:
+        raise ValueError("The region contains no zones.")
+    
+    # Get zone identifiers
+    zone_ids = region.zones.index.tolist()
+    n_zones = len(zone_ids)
+        # Read the original CSV
+    df_original = pd.read_csv(input_path)
+ 
+    
+    df_final = []
+    while not (df_original.empty):
+        #create new dataframe file with just the rows with the same country name as the first row
+        country_name = df_original.loc[0,"zone"]
+        country = df_original[df_original["zone"] == country_name]
+        df_original = df_original[df_original["zone"] != country_name]
+        df_original = df_original.reset_index(drop=True)
+
+        #create list of zones from chosen country
+        country_zones = []
+        for zone_id in zone_ids:
+            if country_name in zone_id["country"]:
+                country_zones.append(zone_id)
+                
+        #run normal replicate function on new dataframe file and zone list
+        df_final = pd.concat([df_final, single_zone_replicate(country, country_zones)], ignore_index=True)
+
+    if verbose:
+            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+        
+    df_final.to_csv(output_path)
+def single_zone_replicate(df_original, zone_ids):
+    
+
+    if 'zone' in df_original.columns:
+        # Replicate data for each subregion
+        df_final = pd.concat([
+            df_original.assign(zone=zone_id) for zone_id in zone_ids], ignore_index=True)
+        
+        
+    else:
+        raise ValueError("The input data is not zonal.")
+    
+    return df_final
