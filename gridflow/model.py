@@ -115,7 +115,7 @@ class region:
         self.zone_stats = zstats
 
         # Get renewables profiles for each zone
-        for zidx in range(1): #TODO: len(self.zones)
+        for zidx in range(len(self.zones)):
             zone = self.zones.iloc[[zidx]]
             if zidx == 0:
                 self.zone_re = get_zonal_re(zone)

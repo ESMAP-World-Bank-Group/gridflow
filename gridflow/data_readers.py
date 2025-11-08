@@ -67,7 +67,7 @@ def get_country_raster(country, raster_path):
 # Data queries to renewablesninja
 
 def get_zonal_re(zone, type="pv", 
-                 start_date="2024-01-01", end_date="2024-12-31", n=2):
+                 start_date="2024-01-01", end_date="2024-12-31", n=1):
     """Get hourly time series of renewable potential by zone."""
     pts = utils.get_random_points(zone, n=n)
     all_re_series = []
@@ -93,6 +93,8 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
     # Get the API key from config if not passed
     if api_key is None:
         api_key = get_config_data("renewables_ninja", "api_key")
+        if api_key == "your_api_key":
+            raise ValueError("Missing reninja API key in config.yaml")
 
     base_url = "https://www.renewables.ninja/api/data/"
     header = {"Authorization": f"Token {api_key}"}
