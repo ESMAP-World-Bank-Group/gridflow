@@ -23,6 +23,8 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     
     Parameters
     ----------
+    region : gridflow.model.region
+        Region object containing the zone definitions used for expansion
     input_base_dir : str or Path
         Base directory containing subdirectories with input files
     output_base_dir : str or Path
@@ -34,38 +36,78 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
     -------
     None
     """
+    input_base_dir = Path(input_base_dir)
+    output_base_dir = Path(output_base_dir)
+
     toprocess = {
-    # Top-level files
-        "config" : {
-            "path" : "config.csv",
-            "func" : "noop",
-            "args" : []
+        # Hourly demand profile is assumed identical for every zone carved out of a country
+        "pDemandProfile": {
+            "path": "load/pDemandProfile.csv",
+            "func": "zone_replicate",
+            "args": []
         },
-    # Load data
-    	"pDemandProfile" : {
-    		"path" : "load/pDemandProfile.csv",
-    		"func" : "zone_replicate",
-    		"args" : []
-    	},
-    	"pDemandForecast" : {
-    	 	"path" : "load/pDemandForecast.csv",
-    	 	"func" : "zone_distribute",
-    	 	"args" : [["zone", "type"]]
-    	},
-    # Supply data
-        "pGenDataExcelDefault" : {
-            "path" : "supply/pGenDataExcelDefault.csv",
-            "func" : "zone_replicate",
-            "args" : []
+        # Annual demand forecast must be split across zones according to the selected scaling metric
+        "pDemandForecast": {
+            "path": "load/pDemandForecast.csv",
+            "func": "zone_distribute",
+            "args": [["zone", "type"]]
+        },
+        # Raw chronological demand traces are duplicated so each zone inherits its country's series
+        "pDemandData": {
+            "path": "load/pDemandData.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # Technology-specific availability assumptions are copied to every zone within the same country
+        "pAvailabilityDefault": {
+            "path": "supply/pAvailabilityDefault.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # Default generator parameter table is cloned for each zone to preserve consistent tech data
+        "pGenDataInputDefault": {
+            "path": "supply/pGenDataInputDefault.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # Capital expenditure trajectories stay uniform inside a country, so replicate per zone
+        "pCapexTrajectoriesDefault": {
+            "path": "supply/pCapexTrajectoriesDefault.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # Fuel price assumptions are defined at the country level and copied to all constituent zones
+        "pFuelPrice": {
+            "path": "supply/pFuelPrice.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # VRE profiles are replicated so each zone created within a country shares the same profile
+        "pVREProfile": {
+            "path": "supply/pVREProfile.csv",
+            "func": "zone_replicate",
+            "args": []
+        },
+        # Fuel use caps are imposed per country, so duplicate them to every derived zone
+        "pMaxFuellimit": {
+            "path": "constraint/pMaxFuellimit.csv",
+            "func": "zone_replicate",
+            "args": []
         }
     }
+
+    processed_rel_paths = set()
 
     for a, b in toprocess.items():
         if verbose:
             print(f"Processing {a}")
-        in_path = input_base_dir + "/" + b["path"]
-        out_path = output_base_dir + "/" + b["path"]
-        globals()[b["func"]](region, in_path, out_path, *b["args"], verbose=verbose)
+        rel_path = Path(b["path"])
+        processed_rel_paths.add(rel_path.as_posix())
+        in_path = input_base_dir / rel_path
+        out_path = output_base_dir / rel_path
+        globals()[b["func"]](region, str(in_path), str(out_path), *b["args"], verbose=verbose)
+
+    _copy_remaining_inputs(input_base_dir, output_base_dir, processed_rel_paths)
     return None
 
 def noop(region, input_path, output_path, verbose=False):
@@ -78,6 +120,9 @@ def zone_replicate(region, input_path, output_path, verbose=False):
     Takes a CSV file with a 'zone' column and replicates the data
     for each zone defined in the model.
     """
+
+    input_path = Path(input_path)
+    output_path = Path(output_path)
     
     # Check if subregions have been created
     if region.zones.empty:
@@ -103,7 +148,7 @@ def zone_replicate(region, input_path, output_path, verbose=False):
     else:
         raise ValueError("The input data is not zonal.")
     
-    os.makedirs(output_path.rsplit("/", 1)[0], exist_ok=True)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
 
 
@@ -114,6 +159,9 @@ def zone_distribute(region, input_path, output_path, exclude_cols=[],
     Takes a CSV file with a 'zone' column and distributes the specified
     time series quantities to each zone proportionally.
     """
+
+    input_path = Path(input_path)
+    output_path = Path(output_path)
 
     # Check if subregions have been created
     if region.zones.empty:
@@ -143,5 +191,27 @@ def zone_distribute(region, input_path, output_path, exclude_cols=[],
     else:
         raise ValueError("The input data is not zonal.")
     
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
 
+
+def _copy_remaining_inputs(input_base_dir, output_base_dir, handled_rel_paths):
+    """Copy inputs that do not require zonal processing and guard against omissions."""
+    for src in input_base_dir.rglob("*.csv"):
+        rel_path = src.relative_to(input_base_dir).as_posix()
+        if rel_path in handled_rel_paths:
+            continue
+
+        try:
+            columns = pd.read_csv(src, nrows=0).columns
+        except pd.errors.EmptyDataError:
+            columns = []
+        lower_cols = {str(col).strip().lower() for col in columns}
+        if {"zone", "z"} & lower_cols:
+            raise ValueError(
+                f"File '{rel_path}' contains zonal data but is not explicitly processed."
+            )
+
+        destination = output_base_dir / rel_path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, destination)
