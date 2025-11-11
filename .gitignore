@@ -38,3 +38,5 @@ htmlcov/
 *.tmp
 *.bak
 
+# Generated EPM outputs
+data/epm_inputs/
