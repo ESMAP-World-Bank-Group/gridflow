@@ -50,7 +50,7 @@ def generate_epm_inputs(region, input_base_dir, output_base_dir, verbose=False):
         "pDemandForecast": {
             "path": "load/pDemandForecast.csv",
             "func": "zone_distribute",
-            "args": [["zone", "type"]]
+            "args": [["zone", "type", "country"]]
         },
         # Raw chronological demand traces are duplicated so each zone inherits its country's series
         "pDemandData": {
