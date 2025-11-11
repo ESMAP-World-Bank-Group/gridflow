@@ -68,7 +68,7 @@ class region:
         self.global_wind = global_data_path + "/wind.tif"
 
     
-    def create_zones(self, n=10, method="pv"):
+    def create_zones(self, n=10, method="pv", verbose=False):
         """Segments region into zones. 
 
         Number of zones is specified by modeller. Eventually will
@@ -84,6 +84,9 @@ class region:
             pv - Segment based on pv potential map
             wind - Segment based on wind potential map
         """
+        if verbose:
+            print(f"Segmenting zones using method '{method}'.")
+
         all_zones = []
         for idx in range(len(self.countries)):
             country = self.countries.iloc[[idx]]
@@ -91,9 +94,14 @@ class region:
             if method=="pv":
                 # Open the solar potential raster
                 ras = get_country_raster(country, self.global_pv)
-            else:
+            elif method=='wind':
                 # Open the wind potential raster
                 ras = get_country_raster(country, self.global_wind)
+            else:
+                raise ValueError(
+                    f"Unknown segmentation method '{method}'. "
+                    "Use 'pv' or 'wind'."
+                )
             # Segment raster
             zones = _segment_raster(ras, n=n)
             # Assign country to zones
