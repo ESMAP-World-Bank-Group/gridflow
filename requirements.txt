@@ -13,10 +13,10 @@ rasterstats==0.20.0        # Zonal statistics on raster data
 scikit-image==0.19.3       # Image segmentation (e.g., SLIC algorithm)
 xarray==0.20.2             # N-dimensional labeled arrays
 
-# spatial indexing, coordination transformations
-Rtree==0.9.3               # Spatial index support (used by GeoPandas)
-pyproj==3.2.1              # Coordinate reference systems and transformations
-
 # utilities
 PyYAML==6.0                # YAML configuration file parsing
 requests==2.27.1           # HTTP requests and API interactions
+
+# spatial indexing, coordination transformations
+Rtree==0.9.3               # Spatial index support (used by GeoPandas)
+pyproj==3.2.1              # Coordinate reference systems and transformations
