@@ -5,26 +5,17 @@ The `gridflow` library uses geospatial data to build out a network flow model fo
 
 ## Installation
 
-> **Important:** The pinned dependencies in `requirements.txt` target Python 3.9. Using newer interpreters (e.g., 3.12) will trigger build failures for packages like `numpy==1.19.5`.
+> **Important:** Use the pinned environment definition to lock dependencies to Python 3.9 and the matching native libraries.
 
-1. Create a dedicated conda environment with Python 3.9:
+1. Create and configure the environment from the provided `environment.yml`:
    ```
-   conda create -n gridflow_env python=3.9
+   conda env create -f environment.yml
    ```
 2. Activate the environment before working on the project:
    ```
    conda activate gridflow_env
    ```
-3. Install the native geospatial libraries (GDAL provides `gdal-config`, Rtree bundles libspatialindex, and PyProj adds PROJ binaries):
-   ```
-   conda install -c conda-forge gdal rtree pyproj
-   ```
-4. Install the project dependencies from the repository root:
-   ```
-   pip install -r requirements.txt
-   ```
-   *Already installed everything (including transitive deps such as NumPy/Pandas) via conda? Use `pip install --no-deps -r requirements.txt` to avoid pip attempting to resolve them again.*
-5. (Optional) Verify the installation by importing `gridflow` in a Python shell or running `pip list`.
+3. (Optional) Verify the installation by importing `gridflow` in a Python shell or running `conda list`/`pip list`.
 
 ## Run
 
