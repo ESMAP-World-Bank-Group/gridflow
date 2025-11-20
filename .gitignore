@@ -42,3 +42,13 @@ htmlcov/
 
 # Generated EPM outputs
 data/epm_inputs/
+
+# Global datasets: ignore everything except tracked core files/folders
+data/global_datasets/*
+!data/global_datasets/borders/
+!data/global_datasets/country_names.csv
+!data/global_datasets/data_documentation.txt
+!data/global_datasets/grid.gpkg
+!data/global_datasets/population_2020.tif
+!data/global_datasets/pv.tif
+!data/global_datasets/wind.tif
