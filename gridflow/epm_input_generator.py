@@ -127,7 +127,8 @@ def noop(region, input_path, output_path, verbose=False):
     """Do nothing."""
     shutil.copyfile(input_path, output_path)
 
-def zone_replicate(region, input_path, output_path, verbose=True):
+def zone_replicate(region, input_path, output_path,
+                   originally_countries=False, verbose=True):
     """Replicate input data for each zone.
 
     Takes a CSV file with a 'zone' column and replicates the data
@@ -137,31 +138,53 @@ def zone_replicate(region, input_path, output_path, verbose=True):
     input_path = Path(input_path)
     output_path = Path(output_path)
     
-    # Check if subregions have been created
+    # Check if zones have been created
     if region.zones.empty:
         raise ValueError("The region contains no zones.")
     
-    # Get zone identifiers
-    zone_ids = region.zones.index.tolist()
-    n_zones = len(zone_ids)
-    
-    # Read the original CSV
-    if verbose:
-        print(f"[zone_replicate] Reading input file: {input_path}")
-        
-    df_epm_original = pd.read_csv(input_path)
- 
-    if 'zone' in df_epm_original.columns:
-        # Replicate data for each subregion
-        df_final = pd.concat([
-            df_epm_original.assign(zone=zone_id) 
-            for zone_id in zone_ids
-        ], ignore_index=True)
-        
-        if verbose:
-            print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+    if originally_countries:
+        # Inputs are country specific, with country
+        # specified in the "zone" column
+        countries = df_epm_original.zone.unique()
+        # Add a "country" column to the original dataframe
+        df_epm_original["country"] = df_epm_original["zone"]
+
+        # Iterate through countries, get rows for country, and replicate
+        # rows by number of zones for the country
+        new_rows = []
+        for country in countries:
+            # gridflow zone ids for this country
+            zone_ids = region.zones[region.zones.country == country].index.tolist()
+            # rows for this country
+            country_rows = df_epm_original[df_epm_original.zone == country]
+            # replicate rows by number of country zones
+            new_rows.extend([
+                country_rows.assign(zone=zone_id)
+                for zone_id in zone_ids])
+
+        df_final = pd.concat(new_rows, ignore_index=True)
     else:
-        raise ValueError("The input data is not zonal.")
+        # Get zone identifiers
+        zone_ids = region.zones.index.tolist()
+        n_zones = len(zone_ids)
+        
+        # Read the original CSV
+        if verbose:
+            print(f"[zone_replicate] Reading input file: {input_path}")
+            
+        df_epm_original = pd.read_csv(input_path)
+    
+        if 'zone' in df_epm_original.columns:
+            # Replicate data for each zone
+            df_final = pd.concat([
+                df_epm_original.assign(zone=zone_id) 
+                for zone_id in zone_ids
+            ], ignore_index=True)
+            
+            if verbose:
+                print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+        else:
+            raise ValueError("The input data is not zonal.")
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
