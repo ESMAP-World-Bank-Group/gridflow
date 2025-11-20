@@ -131,10 +131,7 @@ class region:
             zones = self.segment_re_zones(n=n, method=method, verbose=verbose)
         elif method == "admin":
             # load global boundary data
-            boundaries = gpd.read_file(self.global_admin, 
-                                       layer="globalADM1")
-            # filter to our countries
-            boundaries = boundaries[boundaries.shapeGroup.isin(self.countries.ISO_A3.to_list())]
+            boundaries = read_boundaries(self.global_admin, self.countries.ISO_A3.to_list())
             zones = boundaries[["shapeName", "shapeGroup", "geometry"]]
             zones = zones.rename({"shapeName" : "zone_name", "shapeGroup" : "country"},
                                  axis = 1)
