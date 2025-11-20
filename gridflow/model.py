@@ -43,7 +43,19 @@ class region:
         3. zone_re - renewable profiles by zone
     """
 
-    def __init__(self, countries, global_data_path):
+    def __init__(self, countries, global_data_path, zone_stats_to_load=None):
+        """
+        Parameters
+        ----------
+        countries : list of str
+            ISO3 codes for the countries to model.
+        global_data_path : str
+            Path to the folder containing borders, rasters, and grid data.
+        zone_stats_to_load : list of str, optional
+            Subset of zone statistics to compute. Defaults to all available stats
+            (currently: ["population"]). Pass a list like ["population"] to pick
+            specific datasets.
+        """
         self.countries = read_borders(global_data_path + "/borders/WB_GAD_ADM0_complete.shp",
                                       countries)
 
@@ -54,10 +66,22 @@ class region:
         # The zones -- start out empty
         self.zones = gpd.GeoDataFrame(geometry=[])
 
-        # Define the zonal statistics
-        self.zone_stat_specs = {
-            "population" : zonedata("population", global_data_path + "/population_2020.tif", "sum")
+        # Define the zonal statistics; allow users to pick a subset to keep setup simple.
+        available_zone_stats = {
+            "population": zonedata("population", global_data_path + "/population_2020.tif", "sum")
         }
+        if zone_stats_to_load is None:
+            selected_stats = list(available_zone_stats.keys())
+        else:
+            invalid = [z for z in zone_stats_to_load if z not in available_zone_stats]
+            if invalid:
+                raise ValueError(
+                    f"Unknown zone stats {invalid}. "
+                    f"Options are {list(available_zone_stats.keys())}."
+                )
+            selected_stats = zone_stats_to_load
+
+        self.zone_stat_specs = {k: available_zone_stats[k] for k in selected_stats}
         # Empty dataframe for zone statistics
         self.zone_stats = pd.DataFrame()
         # Empty dataframe for zone RE profiles
@@ -113,22 +137,40 @@ class region:
                                       crs=all_zones[0].crs).drop(columns=["label"])
 
     
-    def set_zone_data(self):
+    def set_zone_data(self, verbose=False):
+        """
+        Compute zonal statistics and renewables profiles.
+
+        Parameters
+        ----------
+        verbose : bool
+            If True, print which datasets are loaded and where they are stored.
+        """
         ### Generate statistics for each subregion
         # Iterate through datasets, and obtain aggregate subregion statistics
         zstats = pd.DataFrame(index=self.zones.index)
         for zdata in self.zone_stat_specs.values():
+            if verbose:
+                print(f"Loading zone stat '{zdata.name}' from {zdata.path}")
             zstats = zdata.get_zone_values(self, outputdf=zstats)
         
         self.zone_stats = zstats
+        if verbose:
+            print(f"Saved stats to region.zone_stats with columns: {list(self.zone_stats.columns)}")
 
         # Get renewables profiles for each zone
+        if verbose:
+            print("Loading renewables profiles for each zone from renewables.ninja (default: pv).")
         for zidx in range(len(self.zones)):
             zone = self.zones.iloc[[zidx]]
+            if verbose:
+                print(f"  - Querying zone {zidx}")
             if zidx == 0:
                 self.zone_re = get_zonal_re(zone)
             else:
                 self.zone_re = pd.concat([self.zone_re, get_zonal_re(zone)], axis=1)
+        if verbose:
+            print("Saved renewables profiles to region.zone_re")
 
 
     def create_network(self):

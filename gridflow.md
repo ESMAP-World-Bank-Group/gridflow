@@ -40,6 +40,8 @@ Refer to `data/global_datasets/data_documentation.txt` for the detailed provenan
   - `grid.gpkg`: OpenInfraMap transmission lines filtered to the target region with layer `power_line`.
   - `pv.tif`, `wind.tif`, `population_2020.tif`: global raster layers used for zone segmentation, renewable profiles, and population statistics.
   - `country_names.csv`: ISO3-to-country name mapping referenced by the EPM generator.
+  - (Optional) `gdp/` GeoTIFF stack from the high-resolution global GDP product described in [Li et al. 2022](https://www.nature.com/articles/s41597-022-01300-x) (Zenodo record: https://zenodo.org/records/5880037); useful when cross-checking demand distributions against an economic activity proxy. Use the `SSP2_1km` variant as the baseline if projecting to future years.
+  - (Optional) `population_projections/` GeoTIFFs from the gridded 1-km population projection dataset in [Huang et al. 2022](https://www.nature.com/articles/s41597-022-01675-x) (Figshare: https://figshare.com/articles/dataset/19608594/2); helpful if demand scaling needs future-year spatial allocation consistent with SSPs.
   - `data_documentation.txt`: authoritative dataset descriptions and download sources.
 - `data/epm_inputs_raw/`: template CSV folders (`load/`, `supply/`, `constraint/`, etc.) that get processed into `output_base_dir` by `generate_epm_inputs`.
 
@@ -53,6 +55,8 @@ Refer to `data/global_datasets/data_documentation.txt` for the detailed provenan
 | `population_2020.tif` | Gridded 2020 population density | GeoTIFF raster (people per km²) |
 | `grid.gpkg` | OpenInfraMap transmission lines | GeoPackage with `power_line` layer |
 | `country_names.csv` | ISO2/ISO3 to country-name mapping | CSV (sourced from ISO-3166 repo) |
+| `population_projections/` (optional) | 1 km global population projections (2010–2100, 10-year steps) harmonized to SSP scenarios using night-time lights and ancillary drivers ([Huang et al. 2022](https://www.nature.com/articles/s41597-022-01675-x); Figshare https://figshare.com/articles/dataset/19608594/2) | GeoTIFF stack; not bundled |
+| `gdp/` (optional) | Annual 1 km gridded GDP PPP estimates (1992–2020) derived from harmonized night-time lights and ancillary socioeconomic predictors ([Li et al. 2022](https://www.nature.com/articles/s41597-022-01300-x); Zenodo https://zenodo.org/records/5880037); use `SSP2_1km` as the baseline variant for forward projections | GeoTIFF stack, one band per year; not bundled due to size |
 
 ## Workflow summary
 1. Configure `config.yaml` and ensure `data/global_datasets` contains the desired countries’ rasters/grids.

@@ -77,8 +77,24 @@ def get_zonal_re(zone, type="pv",
         all_re_series.append(re)
     return pd.concat(all_re_series, axis=1).mean(axis=1)
 
-def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
-    """Query renewables time series for a given point location from renewablesninja"""
+def get_reninja_data(location, start_date, end_date, api_key=None, type="pv", verify_ssl=True, ca_bundle=None):
+    """Query renewables time series for a given point location from renewablesninja.
+
+    Parameters
+    ----------
+    location : GeoDataFrame row
+        Point geometry to query.
+    start_date, end_date : str
+        Date range (YYYY-MM-DD).
+    api_key : str, optional
+        Renewables.ninja API key. If None, pulled from config.yaml.
+    type : {"pv", "wind"}
+        What dataset to query.
+    verify_ssl : bool
+        Verify HTTPS certificates (recommended; defaults to True).
+    ca_bundle : str, optional
+        Path to a certificate bundle. If not provided, tries to use certifi.
+    """
     # A whole bunch of constants for the query - doubtful users will want to change.
     dataset = "merra2"
     capacity = 1
@@ -108,7 +124,18 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv"):
         query = (f"{base_url}wind?lat={lat}&lon={lon}&date_from={start_date}&date_to={end_date}&dataset={dataset}"
                  f"&capacity={capacity}&height={height}&turbine={turbine}&local_time={local_time}&format=json")
         
-    response = requests.get(query, headers=header, verify=False)
+    verify_target = False if not verify_ssl else True
+    if verify_ssl:
+        if ca_bundle:
+            verify_target = ca_bundle
+        else:
+            try:
+                import certifi
+                verify_target = certifi.where()
+            except ImportError:
+                verify_target = True  # fall back to system certs
+
+    response = requests.get(query, headers=header, verify=verify_target)
 
     if response.status_code != 200:
         raise Exception(f"Error querying data at ({lat}, {lon}): {response.status_code}")

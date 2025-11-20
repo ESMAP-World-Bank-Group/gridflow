@@ -76,3 +76,27 @@ Source: https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/mas
 Note:
 Country english names and ISO 2 and 3 codes. This data is used to map between the differences in country naming between gridflow, which prefers
 ISO codes, and EPM, which uses full names.
+
+------------------------------------------------------------
+
+7. High-resolution gridded GDP (optional)
+Folder name: gdp
+Source: https://www.nature.com/articles/s41597-022-01300-x (Zenodo: https://zenodo.org/records/5880037)
+
+Note:
+Li et al. (2022) provide annual 1-km GDP purchasing power parity estimates for 1992–2020 by fusing harmonized night-time lights, population, land
+cover, and official national accounts through machine-learning downscaling. The stack offers a spatial proxy for economic activity that can be used
+to cross-check or apportion demand when population is an imperfect stand-in. Use the `SSP2_1km` variant as the baseline if extending to future-year
+projections. Not bundled in the repository because of size; download the GeoTIFF stack from Zenodo and place it under data/global_datasets/gdp.
+
+------------------------------------------------------------
+
+8. Global population projections (optional)
+Folder name: population_projections
+Source: https://www.nature.com/articles/s41597-022-01675-x (Figshare: https://figshare.com/articles/dataset/Projecting_1_km-grid_population_distributions_from_2020_to_2100_globally_under_shared_socioeconomic_pathways/19608594/2)
+
+Note:
+Huang et al. (2022) provide 1-km global gridded population projections for 2010–2100 at 10-year intervals, aligned with SSP narratives. The team
+downscales national totals using night-time lights, road density, land cover, elevation, and socioeconomic covariates in a machine-learning
+framework, then constrains outputs to UN and SSP aggregates. Use this stack when you need future-year spatial population distributions to scale
+load or stress-test demand assumptions. Not bundled; download externally and place under data/global_datasets/population_projections.
