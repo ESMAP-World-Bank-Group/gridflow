@@ -90,9 +90,34 @@ class region:
         # Paths to necessary global datasets
         self.global_pv = global_data_path + "/pv.tif"
         self.global_wind = global_data_path + "/wind.tif"
+        self.global_admin = global_data_path + "/admin_boundaries.gpkg"
 
+    def create_zones(self, method="pv", n=10, verbose=False):
+        """Define zones by multiple methods.
+
+        method : string
+            Name of zoning method to use. Options include:
+            admin - Use administrative boundaries as zones
+            pv - Segment zones based on pv potential map
+            wind - Segment zones based on wind potential map
+        """
+
+        if method in ["pv", "wind"]:
+            zones = self.segment_re_zones(n=n, method=method, verbose=verbose)
+        elif method == "admin":
+            # load global boundary data
+            boundaries = gpd.read_file(self.global_admin, 
+                                       layer="globalADM1")
+            # filter to our countries
+            boundaries = boundaries[boundaries.shapeGroup.isin(self.countries.ISO_A3.to_list())]
+            zones = boundaries[["shapeName", "shapeGroup", "geometry"]]
+            zones = zones.rename({"shapeName" : "zone_name", "shapeGroup" : "country"},
+                                 axis = 1)
     
-    def create_zones(self, n=10, method="pv", verbose=False):
+        self.zones = zones
+
+
+    def segment_re_zones(self, n=10, method="pv", verbose=False):
         """Segments region into zones. 
 
         Number of zones is specified by modeller. Eventually will
@@ -105,8 +130,8 @@ class region:
 
         method : string
             Name of segmentation method to use. Options include:
-            pv - Segment based on pv potential map
-            wind - Segment based on wind potential map
+            pv - Segment zones based on pv potential map
+            wind - Segment zones based on wind potential map
         """
         if verbose:
             print(f"Segmenting zones using method '{method}'.")
@@ -132,9 +157,9 @@ class region:
             zones["country"] = country["ISO_A3"].iloc[0]
             all_zones.append(zones)
  
-        self.zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
-                                      geometry="geometry",
-                                      crs=all_zones[0].crs).drop(columns=["label"])
+        return gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
+                                geometry="geometry",
+                                crs=all_zones[0].crs).drop(columns=["label"])
 
     
     def set_zone_data(self, verbose=False):
