@@ -49,6 +49,14 @@ def read_borders(path, countries):
     return rez
 
 
+def read_boundaries(path, countries):
+    boundaries = gpd.read_file(path, 
+                               layer="globalADM1")
+    # filter to our countries
+    boundaries = boundaries[boundaries.shapeGroup.isin(countries)]
+    return boundaries
+
+
 # Functions to read a subset of a global raster
 def get_country_raster(country, raster_path):
     # Get a region of a large raster corresponding to a country bounding box.
