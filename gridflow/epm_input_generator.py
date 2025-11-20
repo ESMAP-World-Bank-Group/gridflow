@@ -149,17 +149,17 @@ def zone_replicate(region, input_path, output_path, verbose=True):
     if verbose:
         print(f"[zone_replicate] Reading input file: {input_path}")
         
-    df_original = pd.read_csv(input_path)
+    df_epm_original = pd.read_csv(input_path)
  
-    if 'zone' in df_original.columns:
+    if 'zone' in df_epm_original.columns:
         # Replicate data for each subregion
         df_final = pd.concat([
-            df_original.assign(zone=zone_id) 
+            df_epm_original.assign(zone=zone_id) 
             for zone_id in zone_ids
         ], ignore_index=True)
         
         if verbose:
-            print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+            print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
     else:
         raise ValueError("The input data is not zonal.")
     
@@ -222,30 +222,33 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
     if verbose:
         print(f"[zone_distribute] Reading input file: {input_path}")
     
-    df_original = pd.read_csv(input_path)
+    df_epm_original = pd.read_csv(input_path)
 
-    if "zone" not in df_original.columns:
-        raise ValueError("The input data must include a 'zone' column to distribute by zone.")
+    if "zone" not in df_epm_original.columns:
+        raise ValueError(
+            "The input data must include a 'zone' column; matching by country is not supported."
+        )
 
-    # Replicate and scale data for each subregion
     df_final = []
     for z in zone_ids:
-        df = df_original[df_original["zone"] == z].copy()
+        df = df_epm_original[df_epm_original["zone"].astype(str) == str(z)].copy()
+        df["zone"] = z
         if df.empty:
             raise ValueError(
-                f"No rows found in input for zone {z}; ensure zone labels align with region.zones."
+                f"No rows found in input for zone {z}; ensure 'zone' column labels align with region.zones."
             )
 
         # Restrict scaling to numeric columns not explicitly excluded
+        excluded = set(exclude_cols) | {"zone"}
         numeric_cols = [
-            c for c in df.columns.difference(exclude_cols)
+            c for c in df.columns.difference(excluded)
             if pd.api.types.is_numeric_dtype(df[c])
         ]
         df[numeric_cols] = df[numeric_cols].mul(scale.loc[z])
         df_final.append(df)
     df_final = pd.concat(df_final, ignore_index=True)
     if verbose:
-        print(f"original shape: {df_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+        print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
