@@ -33,7 +33,7 @@ Benjoin,Angola,OnshoreWind,Wind,3.0,2030.0,,52.0,,,,52.0,,,,,,,,,,,,0
 Bifoun,Gabon,ICE,Diesel,1.0,2020.0,,0.48,,,,,,,,,,,,,,,,0
 Bihongore,Rwanda,ROR,Water,2.0,2027.0,,4.22,,,,4.22,,,,,,,,,,,,0
 Bikomo,EquatorialGuinea,RoR,Water,1.0,1981.0,2051.0,3.0,,,,,,,,,,,,,,,,0
-Bikongo,Congo,ReservoirHydro,Water,,2051.0,,100.0,,,,100.0,,,,,,,,,,,,0
+Bikongo,LUX,ReservoirHydro,Water,,2051.0,,100.0,,,,100.0,,,,,,,,,,,,0
 Biltine,Chad,OCGT,Diesel,1.0,2010.0,,0.58,,,,,,,,,,,,,,,,0
 Bini A Barak,Cameroon,PV,Solar,2.0,2029.0,,35.0,,,,35.0,,,,,,,,5.0,,,,0
 Bini A Warak,Cameroon,ROR,Water,2.0,2029.0,,55.0,,,,55.0,,,,,,,,6.4,,,,0
@@ -47,7 +47,7 @@ Bongolo,Gabon,ReservoirHydro,Water,1.0,1992.0,,6.0,,,,,,,,,,,,,,,,0
 Booue,Gabon,ReservoirHydro,Water,3.0,2035.0,,411.0,,,,411.0,,,,,,,938.0,2.282238443,,,,0
 Boundji,Gabon,ROR,Water,3.0,2027.0,,72.0,,,,0.0,,,,,,,,,,,,0
 Bousanga,DRC_South,ReservoirHydro,Water,1.0,2022.0,2060.0,240.0,,,,,,,,,,,,,,,,0
-Brazzaville Solar,Congo,PV,Solar,3.0,2028.0,,55.0,,,,55.0,,,,,,,,,,,,0
+Brazzaville Solar,LUX,PV,Solar,3.0,2028.0,,55.0,,,,55.0,,,,,,,,,,,,0
 Bweru,Burundi,PV,Solar,3.0,2030.0,,20.0,,,,10.0,,,,,,,,,,,,0
 Cacula,Angola,OnshoreWind,Wind,3.0,2030.0,,88.0,,,,88.0,,,,,,,,,,,,0
 Cacula Cabasa,Angola,ROR,Water,2.0,2027.0,,2170.0,,,,2170.0,,,,,,,,,,,,0
@@ -79,11 +79,11 @@ CD Lunda Sul,Angola,ICE,Diesel,1.0,2020.0,,46.0,,,,,,,,,,,,,,,,0
 CD Menongue,Angola,ICE,Diesel,1.0,2020.0,,12.0,,,,,,,,,,,,,,,,0
 CD Quarteis,Angola,ICE,Diesel,1.0,2020.0,,28.0,,,,,,,,,,,,,,,,0
 CD Santa Catarina,Angola,ICE,Diesel,1.0,2020.0,,10.0,,,,,,,,,,,,,,,,0
-CEC (Cote Mateve) ,Congo,OCGT,Gas,1.0,2010.0,,484.0,,,,,30.0,,,,,,,,,,,0
-CEC Rebuild (Cote Mateve) ,Congo,CCGT,Gas,,2051.0,,484.0,,,,500.0,30.0,,,,,,,,,,,0
+CEC (Cote Mateve) ,LUX,OCGT,Gas,1.0,2010.0,,484.0,,,,,30.0,,,,,,,,,,,0
+CEC Rebuild (Cote Mateve) ,LUX,CCGT,Gas,,2051.0,,484.0,,,,500.0,30.0,,,,,,,,,,,0
 Chibia,Angola,OnshoreWind,Wind,3.0,2030.0,,88.0,,,,88.0,,,,,,,,,,,,0
 Chollet (Cameroon),Cameroon,ROR,Water,3.0,2035.0,,300.0,,,,300.0,,,,,,,,4.0,,,,0
-Chollet (Congo),Congo,ReservoirHydro,Water,3.0,2035.0,,300.0,,,,300.0,,,,,,,,3.5,,,,0
+Chollet (LUX),LUX,ReservoirHydro,Water,3.0,2035.0,,300.0,,,,300.0,,,,,,,,3.5,,,,0
 Chute de Tsamba,Gabon,ReservoirHydro,Water,3.0,2037.0,,90.0,,,,90.0,,,,,,,246.0,2.733333333,,,,0
 Chutes de l'Imperatrice,Gabon,ROR,Water,3.0,2035.0,,88.0,,,,88.0,,,,,,,453.0,5.147727273,,,,0
 Chutes de Nki,Cameroon,ROR,Water,,2051.0,,403.0,,,,403.0,,,,,,,,,,,,0
@@ -98,7 +98,7 @@ CT Malembo,Angola,OCGT,Gas,1.0,2012.0,,105.0,,,,,,,,,,,,,,,,0
 CT Morro Bento 2,Angola,OCGT,Gas,1.0,2020.0,,50.0,,,,,,,,,,,,,,,,0
 CT Namibe ,Angola,CCGT,Gas,3.0,2032.0,,750.0,,,,750.0,,,,,,,,,,,,0
 CT Viana,Angola,OCGT,Gas,1.0,2020.0,,22.0,,,,,,,,,,,,,,,,0
-CTB (Mpila),Congo,ICE,Diesel,1.0,2024.0,,21.0,,,,,,,,,,,,,,,,0
+CTB (Mpila),LUX,ICE,Diesel,1.0,2024.0,,21.0,,,,,,,,,,,,,,,,0
 CTH plant,Burundi,OCGT,Diesel,1.0,2022.0,,34.0,,,,,,,,,,,,,,,,0
 Cuango,Angola,PV,Solar,2.0,2030.0,,11.0,,,,11.0,,,,,,,,,,,,0
 Cunene,Angola,PV,Solar,2.0,2030.0,,8.0,,,,8.0,,,,,,,,,,,,0
@@ -113,14 +113,14 @@ Dibwangui,Gabon,ROR,Water,3.0,2029.0,,15.0,,,,15.0,,,,,,,84.0,5.6,,,,0
 Dimoli (Cameroon),Cameroon,ReservoirHydro,Water,3.0,2040.0,,90.0,,,,90.0,,,,,,,,,,,,0
 Dimoli (CAR),CAR,ReservoirHydro,Water,3.0,2040.0,,90.0,,,,90.0,,,,,,,,1.7,,,,0
 Djamboutou,Cameroon,ICE,Diesel,1.0,2024.0,,20.0,,,,,,,,,,,,,,,,0
-Djeno,Congo,OCGT,Gas,1.0,2023.0,,50.0,,,,,,,,,,,,,,,,0
+Djeno,LUX,OCGT,Gas,1.0,2023.0,,50.0,,,,,,,,,,,,,,,,0
 Djermaya,Chad,PV,Solar,2.0,2028.0,,36.0,,,,36.0,,,,,,,,,,,,0
 Djibloho,EquatorialGuinea,ReservoirHydro,Water,1.0,2025.0,,120.0,,,,,,,,,,,,,,,,0
-Djoue Rebuild,Congo,ReservoirHydro,Water,,2051.0,,25.0,,,,,,,,,,,,,,,,0
+Djoue Rebuild,LUX,ReservoirHydro,Water,,2051.0,,25.0,,,,,,,,,,,,,,,,0
 Doba,Chad,OCGT,Diesel,3.0,2028.0,,0.16,,,,0.16,,,,,,,,,,,,0
 Doba Kome Gas,Chad,OCGT,Gas,1.0,2003.0,,90.0,,,,,,,,,,,,,,,,0
 Doba Kome HFO,Chad,OCGT,HFO,1.0,2003.0,,30.0,,,,,,,,,,,,,,,,0
-Dolisie,Congo,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
+Dolisie,LUX,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
 Doubou,Gabon,PV,Solar,2.0,2028.0,,20.0,,,,20.0,,,,,,,,,,,,0
 Edea,Cameroon,ROR,Water,1.0,1958.0,2050.0,265.0,,,,,,,,,,,,,,,,0
 Edea Amont,Cameroon,ROR,Water,,2051.0,,474.0,,,,474.0,,,,,,,,,,,,0
@@ -133,7 +133,7 @@ Fougamou,Gabon,ICE,Diesel,1.0,2020.0,,0.24,,,,,,,,,,,,,,,,0
 Gakenke 1,Rwanda,ROR,Water,2.0,2027.0,,2.9,,,,2.9,,,,,,,,,,,,0
 Gakenke 2,Rwanda,ROR,Water,2.0,2027.0,,2.9,,,,2.9,,,,,,,,,,,,0
 Gamba,Gabon,OCGT,Gas,1.0,2020.0,,3.4,,,,,,,,,,,,,,,,0
-Gamboma,Congo,ReservoirHydro,Water,,2051.0,,14.0,,,,,,,,,,,,,,,,0
+Gamboma,LUX,ReservoirHydro,Water,,2051.0,,14.0,,,,,,,,,,,,,,,,0
 Gaseke,Rwanda,ROR,Water,1.0,2017.0,2051.0,0.5,,,,,,,,,,,,,,,,0
 Gastao,Angola,OnshoreWind,Wind,3.0,2030.0,,30.0,,,,30.0,,,,,,,,,,,,0
 GDS,Cameroon,PV,Solar,,2027.0,,33.0,,,,33.0,,,,,,,,,,,,0
@@ -142,7 +142,7 @@ Generic_BESS_Burundi,Burundi,Storage,Battery,3.0,2035.0,,3000.0,,,,6.0,,,,,,,,,,
 Generic_BESS_CAF,CAR,Storage,Battery,3.0,2035.0,,1000.0,,,,4.0,,,,,,,,,,,,0
 Generic_BESS_Cameroon,Cameroon,Storage,Battery,3.0,2035.0,,70000.0,,,,170.0,,,,,,,,,,,,0
 Generic_BESS_Chad,Chad,Storage,Battery,3.0,2035.0,,40000.0,,,,7.0,,,,,,,,,,,,0
-Generic_BESS_Congo,Congo,Storage,Battery,3.0,2035.0,,50000.0,,,,45.0,,,,,,,,,,,,0
+Generic_BESS_LUX,LUX,Storage,Battery,3.0,2035.0,,50000.0,,,,45.0,,,,,,,,,,,,0
 Generic_BESS_DRC,DRC,Storage,Battery,3.0,2030.0,,400000.0,,,,100.0,,,,,,,,,,,,0
 Generic_BESS_DRCEast,DRC_East,Storage,Battery,3.0,2035.0,,400000.0,,,,10.0,,,,,,,,,,,,0
 Generic_BESS_DRCSouth,DRC_South,Storage,Battery,3.0,2035.0,,400000.0,,,,74.0,,,,,,,,,,,,0
@@ -159,7 +159,7 @@ Generic_OnshoreWind_Angola,Angola,OnshoreWind,Wind,3.0,2035.0,,0.0,,,,100.0,,,,,
 Generic_OnshoreWind_CAF,CAR,OnshoreWind,Wind,3.0,2030.0,,0.0,,,,100.0,,,,,,,,,,,,0
 Generic_OnshoreWind_Cameroon,Cameroon,OnshoreWind,Wind,3.0,2035.0,,1000.0,,,,85.0,,,,,,,,,,,,0
 Generic_OnshoreWind_Chad,Chad,OnshoreWind,Wind,3.0,2035.0,,40000.0,,,,3.5,,,,,,,,,,,,0
-Generic_OnshoreWind_Congo,Congo,OnshoreWind,Wind,3.0,2030.0,,0.0,,,,0.0,,,,,,,,,,,,0
+Generic_OnshoreWind_LUX,LUX,OnshoreWind,Wind,3.0,2030.0,,0.0,,,,0.0,,,,,,,,,,,,0
 Generic_OnshoreWind_DRC,DRC,OnshoreWind,Wind,3.0,2035.0,,1800.0,,,,50.0,,,,,,,,,,,,0
 Generic_OnshoreWind_DRCSouth,DRC_South,OnshoreWind,Wind,3.0,2035.0,,1800.0,,,,36.0,,,,,,,,,,,,0
 Generic_PV_Angola,Angola,PV,Solar,3.0,2035.0,,200000.0,,,,200.0,,,,,,,,,,,,0
@@ -167,7 +167,7 @@ Generic_PV_Burundi,Burundi,PV,Solar,3.0,2035.0,,3000.0,,,,6.0,,,,,,,,,,,,0
 Generic_PV_CAF,CAR,PV,Solar,3.0,2035.0,,1000.0,,,,4.0,,,,,,,,,,,,0
 Generic_PV_Cameroon,Cameroon,PV,Solar,3.0,2035.0,,70413.0,,,,170.0,,,,,,,,,,,,0
 Generic_PV_Chad,Chad,PV,Solar,3.0,2035.0,,40000.0,,,,7.0,,,,,,,,,,,,0
-Generic_PV_Congo,Congo,PV,Solar,3.0,2035.0,,50000.0,,,,45.0,,,,,,,,,,,,0
+Generic_PV_LUX,LUX,PV,Solar,3.0,2035.0,,50000.0,,,,45.0,,,,,,,,,,,,0
 Generic_PV_DRC,DRC,PV,Solar,3.0,2030.0,,400000.0,,,,100.0,,,,,,,,,,,,0
 Generic_PV_DRCEast,DRC_East,PV,Solar,3.0,2035.0,,400000.0,,,,10.0,,,,,,,,,,,,0
 Generic_PV_DRCSouth,DRC_South,PV,Solar,3.0,2035.0,,400000.0,,,,74.0,,,,,,,,,,,,0
@@ -193,11 +193,11 @@ Guider,Cameroon,ICE,Diesel,1.0,2024.0,,10.0,,,,,,,,,,,,,,,,0
 Guider Solar Plant,Cameroon,PV,Solar,1.0,2025.0,,15.0,,,,,,,,,,,,,,,,0
 Hakan Peat,Rwanda,ST,Coal,1.0,2019.0,2051.0,30.0,,,,,,,,,,,,,,,,0
 Huila thermique,Angola,ICE,Diesel,1.0,2020.0,,137.0,,,,,,,,,,,,,,,,0
-Ibabanga,Congo,ReservoirHydro,Water,,2051.0,,300.0,,,,,,,,,,,,,,,,0
-Ibenga,Congo,ReservoirHydro,Water,,2051.0,,18.0,,,,,,,,,,,,,,,,0
+Ibabanga,LUX,ReservoirHydro,Water,,2051.0,,300.0,,,,,,,,,,,,,,,,0
+Ibenga,LUX,ReservoirHydro,Water,,2051.0,,18.0,,,,,,,,,,,,,,,,0
 Ibola,Gabon,ROR,Water,3.0,2027.0,,64.0,,,,0.0,,,,,,,,,,,,0
 Igotchi,Gabon,ROR,Water,3.0,2030.0,,17.0,,,,0.0,,,,,,,,,,,,0
-Imboulou,Congo,ReservoirHydro,Water,1.0,2011.0,,120.0,,,,,,,,,,,,,,,,0
+Imboulou,LUX,ReservoirHydro,Water,1.0,2011.0,,120.0,,,,,,,,,,,,,,,,0
 Inga 1,DRC,ReservoirHydro,Water,1.0,1974.0,2051.0,306.0,,,,,,,,,,,,,,,,0
 Inga 2,DRC,ReservoirHydro,Water,1.0,1982.0,2051.0,800.0,,,,,,,,,,,,,,,,0
 Inga 3,DRC,ReservoirHydro,Water,3.0,2037.0,,3500.0,,,,3500.0,,,,,,,,,,,,0
@@ -215,7 +215,7 @@ Kabavu,Rwanda,ROR,Water,3.0,2030.0,,0.38,,,,0.38,,,,,,,,,,,,0
 Kabu,Burundi,ROR,Water,3.0,2027.0,,20.0,,,,20.0,,,,,,,,,,,,0
 Kabu 2,Burundi,ROR,Water,3.0,2027.0,,16.0,,,,16.0,,,,,,,,,,,,0
 Kagunizi,Burundi,ROR,Water,3.0,2025.0,,8.0,,,,8.0,,,,,,,,,,,,0
-Kakamoeka,Congo,ReservoirHydro,Water,,2051.0,,700.0,,,,,,,,,,,,,,,,0
+Kakamoeka,LUX,ReservoirHydro,Water,,2051.0,,700.0,,,,,,,,,,,,,,,,0
 Kakobola,DRC,ReservoirHydro,Water,2.0,2030.0,,10.0,,,,10.0,,,,,,,,,,,,0
 Kastina,Cameroon,ROR,Water,,2051.0,,285.0,,,,285.0,,,,,,,,,,,,0
 Katende,DRC,ReservoirHydro,Water,2.0,2030.0,,64.0,,,,64.0,,,,,,,,,,,,0
@@ -229,9 +229,9 @@ Kilimbi,Rwanda,ROR,Water,2.0,2027.0,,4.23,,,,4.23,,,,,,,,,,,,0
 Kilubi,DRC_South,ReservoirHydro,Water,1.0,1954.0,2060.0,8.0,,,,,,,,,,,,,,,,0
 Kinguele,Gabon,ReservoirHydro,Water,1.0,1972.0,,57.0,,,,,,,,,,,,,,,,0
 Kinguele Rebuild,Gabon,ROR,Water,3.0,2041.0,,57.0,,,,0.0,,,,,,,,,,,,0
-Kiniangui,Congo,ReservoirHydro,Water,,2051.0,,715.0,,,,,,,,,,,,,,,,0
+Kiniangui,LUX,ReservoirHydro,Water,,2051.0,,715.0,,,,,,,,,,,,,,,,0
 Kirasakaronge,Burundi,ROR,Water,3.0,2022.0,,16.0,,,,16.0,,,,,,,,,,,,0
-Kiteke,Congo,ReservoirHydro,Water,,2051.0,,510.0,,,,,,,,,,,,,,,,0
+Kiteke,LUX,ReservoirHydro,Water,,2051.0,,510.0,,,,,,,,,,,,,,,,0
 Kivu,Rwanda,OCGT,Gas,1.0,2015.0,2051.0,26.0,,,,,,,,,,,,,,,,0
 Kivu-Extension,Rwanda,OCGT,Gas,3.0,2030.0,,9.0,,,,9.0,,,,,,,,,,,,0
 Kiwaba Ngozi 1,Angola,OnshoreWind,Wind,3.0,2030.0,,62.0,,,,62.0,,,,,,,,,,,,0
@@ -240,7 +240,7 @@ Kongue,Gabon,ReservoirHydro,Water,3.0,2035.0,,104.0,,,,104.0,,,,,,,260.0,2.5,,,,
 Koni,DRC_South,ReservoirHydro,Water,1.0,1950.0,2060.0,42.0,,,,,,,,,,,,,,,,0
 Kotto,CAR,ReservoirHydro,Water,3.0,2030.0,,60.0,,,,60.0,,,,,,,,3.4,,,,0
 Kouata Mango,Gabon,ReservoirHydro,Water,3.0,2035.0,,70.0,,,,70.0,,,,,,,219.0,3.128571429,,,,0
-Kouembali,Congo,ReservoirHydro,Water,3.0,2035.0,,150.0,,,,150.0,,,,,,,,2.0,,,,0
+Kouembali,LUX,ReservoirHydro,Water,3.0,2035.0,,150.0,,,,150.0,,,,,,,,2.0,,,,0
 Koula-Moutou,Gabon,ICE,Diesel,1.0,2020.0,,4.73,,,,,,,,,,,,,,,,0
 Kousseri 1,Cameroon,ICE,Diesel,1.0,2024.0,,4.4,,,,,,,,,,,,,,,,0
 Kousseri 2,Cameroon,ICE,Diesel,1.0,2024.0,,5.0,,,,,,,,,,,,,,,,0
@@ -260,8 +260,8 @@ Liboka,Gabon,ROR,Water,3.0,2030.0,,93.0,,,,0.0,,,,,,,,,,,,0
 Lifouta,Gabon,ReservoirHydro,Water,3.0,2036.0,,105.0,,,,105.0,,,,,,,261.0,2.485714286,,,,0
 Limbe,Cameroon,ICE,Diesel,1.0,2024.0,,85.0,,,,,,,,,,,,,,,,0
 Limbe CCGT,Cameroon,CCGT,Gas,2.0,2027.0,,350.0,,,,350.0,,,,,,,,0.85,,,,0
-Linzolo,Congo,ReservoirHydro,Water,,2051.0,,555.0,,,,,,,,,,,,,,,,0
-Liouesso,Congo,ReservoirHydro,Water,1.0,2017.0,,20.0,,,,,,,,,,,,,,,,0
+Linzolo,LUX,ReservoirHydro,Water,,2051.0,,555.0,,,,,,,,,,,,,,,,0
+Liouesso,LUX,ReservoirHydro,Water,1.0,2017.0,,20.0,,,,,,,,,,,,,,,,0
 Littoral du Lac,Burundi,PV,Solar,2.0,2030.0,,10.0,,,,10.0,,,,,,,,,,,,0
 Lobaye,CAR,ReservoirHydro,Water,,2035.0,,60.0,,,,60.0,,,,,,,,6.0,,,,0
 Logbaba,Cameroon,ICE,Diesel,1.0,2024.0,,12.0,,,,,,,,,,,,,,,,0
@@ -269,14 +269,14 @@ Lolo,Gabon,ROR,Water,3.0,2027.0,,60.0,,,,0.0,,,,,,,,,,,,0
 Lom-Pangar,Cameroon,ReservoirHydro,Water,1.0,2025.0,,30.0,,,,,,,,,,,,,,,,0
 Lomaum  ,Angola,ROR,Water,1.0,1964.0,2051.0,50.0,,,,,,,,,,,,,,,,0
 Lomaum 2  ,Angola,ROR,Water,3.0,2035.0,,160.0,,,,160.0,,,,,,,,2.862672852,,,,0
-Loufoulakari,Congo,ReservoirHydro,Water,,2051.0,,54.0,,,,,,,,,,,,,,,,0
+Loufoulakari,LUX,ReservoirHydro,Water,,2051.0,,54.0,,,,,,,,,,,,,,,,0
 Luachimo,Angola,ROR,Water,1.0,2021.0,,8.0,,,,,,,,,,,,,,,,0
 Luau PV,Angola,PV,Solar,2.0,2025.0,,32.0,,,,32.0,,,,,,,,,,,,0
 Lubango,Angola,PV,Solar,3.0,2030.0,,35.0,,,,0.0,,,,,,,,,,,,0
 Lubumbashi,DRC_South,PV,Solar,2.0,2025.0,2060.0,100.0,,,,100.0,,,,,,,,,,,,0
 Lucapa,Angola,PV,Solar,1.0,2024.0,,6.0,,,,,,,,,,,,,,,,0
 Luena,Angola,PV,Solar,1.0,2024.0,,21.0,,,,,,,,,,,,,,,,0
-Madingou,Congo,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
+Madingou,LUX,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
 Mafoulamatato,Gabon,ROR,Water,3.0,2030.0,,93.0,,,,0.0,,,,,,,,,,,,0
 Makay,Cameroon,ROR,Water,,2051.0,,350.0,,,,350.0,,,,,,,,,,,,0
 Makokou,Gabon,ICE,Diesel,1.0,2020.0,,3.57,,,,,,,,,,,,,,,,0
@@ -291,9 +291,9 @@ Matala  ,Angola,ROR,Water,1.0,1955.0,2051.0,41.0,,,,,,,,,,,,,,,,0
 Mayumba,Gabon,ICE,Diesel,1.0,2020.0,,0.9,,,,,,,,,,,,,,,,0
 Mbalmayo,Cameroon,ICE,Diesel,1.0,2024.0,,10.0,,,,,,,,,,,,,,,,0
 Mbam Amont,Cameroon,ROR,Water,,2051.0,,149.0,,,,149.0,,,,,,,,,,,,0
-Mbamba,Congo,ReservoirHydro,Water,,2051.0,,6.0,,,,,,,,,,,,,,,,0
+Mbamba,LUX,ReservoirHydro,Water,,2051.0,,6.0,,,,,,,,,,,,,,,,0
 Mbandaka,DRC,ICE,Diesel,1.0,2000.0,2051.0,5.0,,,,,,,,,,,,,,,,0
-Mbandza Ndounga,Congo,ReservoirHydro,Water,,2051.0,,630.0,,,,,,,,,,,,,,,,0
+Mbandza Ndounga,LUX,ReservoirHydro,Water,,2051.0,,630.0,,,,,,,,,,,,,,,,0
 Mbecko 1,CAR,ROR,Water,,2030.0,,1.0,,,,1.0,,,,,,,,,,,,0
 Mbinjal,Cameroon,ROR,Water,,2051.0,,83.0,,,,83.0,,,,,,,,,,,,0
 Mekambo,Gabon,ICE,Diesel,1.0,2020.0,,0.76,,,,,,,,,,,,,,,,0
@@ -308,20 +308,20 @@ Mitoungou,Gabon,ReservoirHydro,Water,3.0,2035.0,,410.0,,,,410.0,,,,,,,934.0,2.27
 Mitzic,Gabon,ICE,Diesel,1.0,2020.0,,1.03,,,,,,,,,,,,,,,,0
 Moabi,Gabon,ICE,Diesel,1.0,2020.0,,0.67,,,,,,,,,,,,,,,,0
 Moanda Comilog,Gabon,ICE,Diesel,1.0,2020.0,,2.81,,,,,,,,,,,,,,,,0
-Moanga Mapita 1,Congo,ReservoirHydro,Water,,2051.0,,137.0,,,,,,,,,,,,,,,,0
-Moanga Mapita 2,Congo,ReservoirHydro,Water,,2051.0,,80.0,,,,,,,,,,,,,,,,0
+Moanga Mapita 1,LUX,ReservoirHydro,Water,,2051.0,,137.0,,,,,,,,,,,,,,,,0
+Moanga Mapita 2,LUX,ReservoirHydro,Water,,2051.0,,80.0,,,,,,,,,,,,,,,,0
 Mobayi,DRC,ReservoirHydro,Water,1.0,1989.0,2051.0,10.0,,,,,,,,,,,,,,,,0
 Mongo,Chad,OCGT,Diesel,1.0,2010.0,,0.5,,,,,,,,,,,,,,,,0
-Motaba,Congo,ReservoirHydro,Water,,2051.0,,24.0,,,,,,,,,,,,,,,,0
+Motaba,LUX,ReservoirHydro,Water,,2051.0,,24.0,,,,,,,,,,,,,,,,0
 Mouila,Gabon,ICE,Diesel,1.0,2020.0,,3.26,,,,,,,,,,,,,,,,0
 Mouila Mogue,Cameroon,ROR,Water,,2051.0,,498.0,,,,498.0,,,,,,,,,,,,0
-Moukouloukou,Congo,ReservoirHydro,Water,1.0,1979.0,2051.0,74.0,,,,,,,,,,,,,,,,0
-Moukouloukou 2,Congo,ReservoirHydro,Water,,2051.0,,410.0,,,,,,,,,,,,,,,,0
+Moukouloukou,LUX,ReservoirHydro,Water,1.0,1979.0,2051.0,74.0,,,,,,,,,,,,,,,,0
+Moukouloukou 2,LUX,ReservoirHydro,Water,,2051.0,,410.0,,,,,,,,,,,,,,,,0
 Moundou,Chad,OCGT,Diesel,3.0,2028.0,,7.0,,,,3.5,,,,,,,,,,,,0
-Mourala,Congo,ReservoirHydro,Water,3.0,2035.0,,101.0,,,,101.0,,,,,,,,2.5,,,,0
+Mourala,LUX,ReservoirHydro,Water,3.0,2035.0,,101.0,,,,101.0,,,,,,,,2.5,,,,0
 Mpanda,Burundi,ReservoirHydro,Water,3.0,2027.0,,10.0,,,,10.0,,,,,,,,,,,,0
 Mpassa,Gabon,ROR,Water,3.0,2030.0,,70.0,,,,0.0,,,,,,,,,,,,0
-Mpoukou,Congo,ReservoirHydro,Water,3.0,2035.0,,180.0,,,,180.0,,,,,,,,1.7,,,,0
+Mpoukou,LUX,ReservoirHydro,Water,3.0,2035.0,,180.0,,,,180.0,,,,,,,,1.7,,,,0
 Mubuga,Burundi,PV,Solar,1.0,2022.0,,10.0,,,,,,,,,,,,,,,,0
 Mugere,Burundi,ROR,Water,1.0,2022.0,,8.0,,,,,,,,,,,,,,,,0
 Mukungwa,Rwanda,OCGT,Diesel,1.0,2010.0,2051.0,0.0,,,,,,,,,,,,,,,,0
@@ -350,18 +350,18 @@ Ngoila,Cameroon,ROR,Water,,2051.0,,84.0,,,,84.0,,,,,,,,,,,,0
 Ngororero,Rwanda,ROR,Water,2.0,2027.0,,2.7,,,,2.7,,,,,,,,,,,,0
 Ngoulmendjim,Gabon,ReservoirHydro,Water,3.0,2029.0,,88.0,,,,88.0,,,,,,,244.0,2.772727273,,,,0
 Nguene,Gabon,ROR,Water,3.0,2030.0,,90.0,,,,0.0,,,,,,,,,,,,0
-Nkayi Mill ,Congo,BiomassPlant,Biomass,1.0,2024.0,,6.0,,,,,,,,,,,,,,,,0
-Nkomo dam,Congo,ReservoirHydro,Water,,2051.0,,4.0,,,,,,,,,,,,,,,,0
+Nkayi Mill ,LUX,BiomassPlant,Biomass,1.0,2024.0,,6.0,,,,,,,,,,,,,,,,0
+Nkomo dam,LUX,ReservoirHydro,Water,,2051.0,,4.0,,,,,,,,,,,,,,,,0
 Nseke,DRC_South,ReservoirHydro,Water,1.0,1957.0,2060.0,250.0,,,,,,,,,,,,,,,,0
 NSTT,Chad,PV,Solar,3.0,2028.0,,30.0,,,,30.0,,,,,,,,,,,,0
 Ntaruka 1,Rwanda,ReservoirHydro,Water,1.0,1957.0,2051.0,9.0,,,,,,,,,,,,,,,,0
 Ntaruka 2,Rwanda,ROR,Water,2.0,2027.0,,2.1,,,,2.1,,,,,,,,,,,,0
-Ntoula,Congo,ReservoirHydro,Water,,2051.0,,535.0,,,,,,,,,,,,,,,,0
+Ntoula,LUX,ReservoirHydro,Water,,2051.0,,535.0,,,,,,,,,,,,,,,,0
 Nyabarongo 1,Rwanda,ROR,Water,1.0,2014.0,2051.0,27.0,,,,,,,,,,,,,,,,0
 Nyabarongo 2,Rwanda,ReservoirHydro,Water,2.0,2027.0,,10.0,,,,10.0,,,,,,,,,,,,0
 Nyagatare PV,Rwanda,PV,Solar,1.0,2020.0,2051.0,20.0,,,,,,,,,,,,,,,,0
 Nyagwana,Burundi,PV,Solar,3.0,2030.0,,30.0,,,,10.0,,,,,,,,,,,,0
-Nyanga,Congo,ReservoirHydro,Water,3.0,2035.0,,230.0,,,,230.0,,,,,,,,1.6,,,,0
+Nyanga,LUX,ReservoirHydro,Water,3.0,2035.0,,230.0,,,,230.0,,,,,,,,1.6,,,,0
 Nyangza Lac,Burundi,PV,Solar,3.0,2030.0,,10.0,,,,10.0,,,,,,,,,,,,0
 Nyaruhengeri,Burundi,PV,Solar,3.0,2030.0,,50.0,,,,10.0,,,,,,,,,,,,0
 Nyazom,Cameroon,ROR,Water,,2051.0,,367.0,,,,367.0,,,,,,,,,,,,0
@@ -375,8 +375,8 @@ Nzoro,DRC,ReservoirHydro,Water,3.0,2051.0,,48.0,,,,48.0,,,,,,,,,,,,0
 Omboue,Gabon,ICE,Diesel,1.0,2020.0,,0.49,,,,,,,,,,,,,,,,0
 Omvan Amont,Gabon,ROR,Water,3.0,2030.0,,52.5,,,,0.0,,,,,,,,,,,,0
 Omvan Aval,Gabon,ROR,Water,3.0,2027.0,,30.0,,,,0.0,,,,,,,,,,,,0
-Ouesso,Congo,ICE,Diesel,1.0,2024.0,,6.0,,,,,,,,,,,,,,,,0
-Ouesso Biomass,Congo,BiomassPlant,Biomass,1.0,2024.0,,2.5,,,,,,,,,,,,,,,,0
+Ouesso,LUX,ICE,Diesel,1.0,2024.0,,6.0,,,,,,,,,,,,,,,,0
+Ouesso Biomass,LUX,BiomassPlant,Biomass,1.0,2024.0,,2.5,,,,,,,,,,,,,,,,0
 Oum Hadjer,Chad,OCGT,Diesel,1.0,2010.0,,0.5,,,,,,,,,,,,,,,,0
 Ouyama,Gabon,ReservoirHydro,Water,3.0,2030.0,,12.0,,,,0.0,,,,,,,,,,,,0
 Owendo Gas,Gabon,OCGT,Gas,1.0,2020.0,,165.0,,,,,,,,,,,,,,,,0
@@ -385,10 +385,10 @@ Owendoc,Gabon,ICE,Diesel,1.0,2020.0,,66.2,,,,,,,,,,,,,,,,0
 Oyala,EquatorialGuinea,OCGT,Gas,1.0,2024.0,,36.0,,,,,,,,,,,,,,,,0
 Oyem,Gabon,ICE,Diesel,1.0,2020.0,,6.5,,,,,,,,,,,,,,,,0
 Oyem PV,Gabon,PV,Solar,2.0,2028.0,,50.0,,,,50.0,,,,,,,,,,,,0
-Oyo,Congo,ICE,Diesel,1.0,2024.0,,5.0,,,,,,,,,,,,,,,,0
+Oyo,LUX,ICE,Diesel,1.0,2024.0,,5.0,,,,,,,,,,,,,,,,0
 Oyomabang,Cameroon,ICE,Diesel,1.0,2024.0,,18.0,,,,,,,,,,,,,,,,0
 Palambo,CAR,ReservoirHydro,Water,3.0,2051.0,,40.0,,,,40.0,,,,,,,,4.2,,,,0
-Pointe Noire,Congo,ICE,Diesel,1.0,2024.0,,26.0,,,,,,,,,,,,,,,,0
+Pointe Noire,LUX,ICE,Diesel,1.0,2024.0,,26.0,,,,,,,,,,,,,,,,0
 Port Gentil Perenco,Gabon,OCGT,Gas,1.0,2020.0,,62.0,,,,,,,,,,,,,,,,0
 Poubara,Gabon,ReservoirHydro,Water,1.0,1975.0,,38.0,,,,,,,,,,,,,,,,0
 Poubara 1 Rebuild,Gabon,ReservoirHydro,Water,3.0,2031.0,,18.2,,,,0.0,,,,,,,,,,,,0
@@ -435,7 +435,7 @@ Saurimo,Angola,PV,Solar,1.0,2024.0,,21.0,,,,,,,,,,,,,,,,0
 Semu,EquatorialGuinea,OCGT,HFO,1.0,2024.0,,7.0,,,,,,,,,,,,,,,,0
 Sendje,EquatorialGuinea,ReservoirHydro,Water,3.0,2030.0,,200.0,,,,200.0,,,,,,,,,,,,0
 Shema IPP,Rwanda,OCGT,Gas,2.0,2024.0,,0.0,,,,56.0,,,,,,,,,,,,0
-Sibiti,Congo,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
+Sibiti,LUX,ICE,Diesel,1.0,2024.0,,2.0,,,,,,,,,,,,,,,,0
 Siguvyaye,Burundi,ROR,Water,3.0,2027.0,,12.0,,,,12.0,,,,,,,,,,,,0
 Sindara,Gabon,ROR,Water,3.0,2027.0,,90.0,,,,0.0,,,,,,,,,,,,0
 Sipopo,EquatorialGuinea,OCGT,HFO,1.0,2024.0,,15.0,,,,,,,,,,,,,,,,0
@@ -446,7 +446,7 @@ Song Mbengue,Cameroon,ReservoirHydro,Water,,2051.0,,1140.0,,,,1140.0,,,,,,,,,,,,
 Song Mbong,Cameroon,ROR,Water,,2051.0,,94.0,,,,94.0,,,,,,,,,,,,0
 Song Ndong,Cameroon,ROR,Water,,2051.0,,270.0,,,,270.0,,,,,,,,,,,,0
 Souka,Gabon,ROR,Water,3.0,2030.0,,90.0,,,,0.0,,,,,,,,,,,,0
-Sounda Gorge,Congo,ReservoirHydro,Water,3.0,2035.0,,500.0,,,,500.0,,,,,,,,2.7,,,,0
+Sounda Gorge,LUX,ReservoirHydro,Water,3.0,2035.0,,500.0,,,,500.0,,,,,,,,2.7,,,,0
 Soyo,Angola,CCGT,Gas,1.0,2017.0,2051.0,750.0,,,,,,,,,,,,,,,,0
 SPLK,Rwanda,OCGT,Diesel,1.0,2019.0,2051.0,50.0,,,,,,,,,,,,,,,,0
 SPLK-Extension,Rwanda,OCGT,Gas,3.0,2030.0,,28.0,,,,28.0,,,,,,,,,,,,0
