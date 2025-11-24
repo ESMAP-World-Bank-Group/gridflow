@@ -137,6 +137,8 @@ def zone_replicate(region, input_path, output_path,
 
     input_path = Path(input_path)
     output_path = Path(output_path)
+
+    df_epm_original = pd.read_csv(input_path)
     
     # Check if zones have been created
     if region.zones.empty:
