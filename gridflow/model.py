@@ -19,6 +19,7 @@ from shapely.geometry import shape, mapping
 from shapely.geometry import MultiLineString, LineString, Point
 
 from gridflow.data_readers import *
+from gridflow.utils import verbose_log, directional_zone_labels
 
 
 class region:
@@ -108,8 +109,7 @@ class region:
             pv - Segment based on pv potential map
             wind - Segment based on wind potential map
         """
-        if verbose:
-            print(f"Segmenting zones using method '{method}'.")
+        verbose_log("ZONE_SEGMENT", f"Starting segmentation for method '{method}', target {n} zones per country.", verbose)
 
         all_zones = []
         for idx in range(len(self.countries)):
@@ -135,6 +135,11 @@ class region:
         self.zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
                                       geometry="geometry",
                                       crs=all_zones[0].crs).drop(columns=["label"])
+        zone_names = directional_zone_labels(self.zones, country_col="country")
+        self.zones = self.zones.assign(zone_label=zone_names)
+        self.zones.index = pd.Index(zone_names, name="zone")
+        country_list = ", ".join(self.countries["ISO_A3"].tolist())
+        verbose_log("ZONE_SEGMENT", f"Created {len(self.zones)} zones for {country_list}.", verbose)
 
     
     def set_zone_data(self, verbose=False):
@@ -150,27 +155,29 @@ class region:
         # Iterate through datasets, and obtain aggregate subregion statistics
         zstats = pd.DataFrame(index=self.zones.index)
         for zdata in self.zone_stat_specs.values():
-            if verbose:
-                print(f"Loading zone stat '{zdata.name}' from {zdata.path}")
+            verbose_log("ZONE_STATS", f"Loading zone stat '{zdata.name}' from {zdata.path}", verbose)
             zstats = zdata.get_zone_values(self, outputdf=zstats)
         
         self.zone_stats = zstats
-        if verbose:
-            print(f"Saved stats to region.zone_stats with columns: {list(self.zone_stats.columns)}")
+        verbose_log("ZONE_STATS", f"Saved stats with columns: {list(self.zone_stats.columns)}", verbose)
 
         # Get renewables profiles for each zone
-        if verbose:
-            print("Loading renewables profiles for each zone from renewables.ninja (default: pv).")
+        verbose_log("ZONE_RE", "Loading renewables profiles for each zone from renewables.ninja (default: pv).", verbose)
         for zidx in range(len(self.zones)):
             zone = self.zones.iloc[[zidx]]
-            if verbose:
-                print(f"  - Querying zone {zidx}")
+            country_iso = zone["country"].iloc[0] if "country" in zone else "?"
+            zone_area = zone.geometry.area.iloc[0]
+            centroid = zone.geometry.centroid.iloc[0]
+            verbose_log(
+                "ZONE_RE",
+                f"  - Querying zone {zidx} ({country_iso}) area {zone_area:.2f}, centroid ({centroid.x:.3f}, {centroid.y:.3f}).",
+                verbose,
+            )
             if zidx == 0:
                 self.zone_re = get_zonal_re(zone)
             else:
                 self.zone_re = pd.concat([self.zone_re, get_zonal_re(zone)], axis=1)
-        if verbose:
-            print("Saved renewables profiles to region.zone_re")
+        verbose_log("ZONE_RE", "Saved renewables profiles to region.zone_re", verbose)
 
 
     def create_network(self):
@@ -377,4 +384,3 @@ def _segment_raster(ras, n=10):
     gdf = gpd.GeoDataFrame.from_features(list(poly), crs=ras.rio.crs)
     gdf = gdf.dissolve(by="label", as_index=False)
     return gdf
-        

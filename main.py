@@ -9,13 +9,49 @@ Runs the core pipeline:
 """
 
 import argparse
+import matplotlib.pyplot as plt
 from pathlib import Path
 
-from gridflow import model, epm_input_generator
+from gridflow import model, epm_input_generator, visuals
+from gridflow.utils import verbose_log
 
 
 def _comma_list(value):
     return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def _save_figure(fig, destination):
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(destination, bbox_inches="tight", dpi=150)
+    plt.close(fig)
+
+
+def _export_zone_segmentation(region, plot_root):
+    if region.zones.empty:
+        return
+    fig, _ = visuals.zone_segmentation_map(region)
+    _save_figure(fig, plot_root / "create_zones_zones.pdf")
+
+
+def _export_zone_stats(region, plot_root):
+    if region.zones.empty or region.zone_stats.empty:
+        return
+    stat_column = region.zone_stats.columns[0]
+    fig, _ = visuals.zone_stat_choropleth(region, stat_column)
+    _save_figure(fig, plot_root / "set_zone_data_stats.pdf")
+
+
+def _export_network_plots(region, plot_root):
+    try:
+        fig, _ = visuals.country_viz(region, title="Network visualization")
+        _save_figure(fig, plot_root / "create_network_map.pdf")
+    except Exception:
+        pass
+    try:
+        fig, _ = visuals.flow_field_heatmap(region, title="Network flow heatmap")
+        _save_figure(fig, plot_root / "create_network_flow_heatmap.pdf")
+    except Exception:
+        pass
 
 
 def run_pipeline(
@@ -27,6 +63,8 @@ def run_pipeline(
     method_zoning,
     epm_input_raw,
     epm_output_dir,
+    generate_plots=True,
+    plot_dir="data/maps",
     verbose=False,
 ):
     """Execute the end-to-end gridflow pipeline."""
@@ -37,8 +75,14 @@ def run_pipeline(
     )
 
     region.create_zones(n=n_zones, method=method_zoning)
+    if generate_plots:
+        _export_zone_segmentation(region, Path(plot_dir))
     region.set_zone_data(verbose=verbose)
+    if generate_plots:
+        _export_zone_stats(region, Path(plot_dir))
     region.create_network()
+    if generate_plots:
+        _export_network_plots(region, Path(plot_dir))
 
     epm_input_generator.generate_epm_inputs(
         region,
@@ -65,7 +109,7 @@ def parse_args():
     parser.add_argument(
         "--n-zones",
         type=int,
-        default=5,
+        default=4,
         help="Number of zones per country.",
     )
     parser.add_argument(
@@ -91,6 +135,17 @@ def parse_args():
         help="Destination for zonalized EPM CSVs.",
     )
     parser.add_argument(
+        "--plot-dir",
+        default="data/maps",
+        help="Directory where generated maps for each stage are stored.",
+    )
+    parser.add_argument(
+        "--generate-plots",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="If true (default), save maps after each pipeline stage.",
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         help="Print detailed progress.",
@@ -100,16 +155,23 @@ def parse_args():
 
 def main():
     args = parse_args()
-    region = run_pipeline(
-        data_path=args.data_path,
-        countries=args.countries,
-        n_zones=args.n_zones,
-        zone_stats_to_load=args.zone_stats,
-        method_zoning=args.method_zoning,
-        epm_input_raw=args.epm_input_raw,
-        epm_output_dir=args.epm_output_dir,
-        verbose=args.verbose,
-    )
+    try:
+        region = run_pipeline(
+            data_path=args.data_path,
+            countries=args.countries,
+            n_zones=args.n_zones,
+            zone_stats_to_load=args.zone_stats,
+            method_zoning=args.method_zoning,
+            epm_input_raw=args.epm_input_raw,
+            epm_output_dir=args.epm_output_dir,
+            generate_plots=args.generate_plots,
+            plot_dir=args.plot_dir,
+            verbose=args.verbose,
+        )
+    except FileNotFoundError as err:
+        if args.verbose and err.filename:
+            verbose_log("RUN_PIPELINE", f"Missing file: {Path(err.filename).resolve()}", args.verbose)
+        raise
     print(f"Created {len(region.zones)} zones across {len(args.countries)} countries.")
     print(f"Zonal EPM inputs written to {Path(args.epm_output_dir).resolve()}")
 
