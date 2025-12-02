@@ -158,3 +158,46 @@ def country_viz(
     )
     ax.legend(handles=[legend_line], loc="lower left", frameon=False)
     return fig, ax
+
+
+def zone_segmentation_map(
+    reg,
+    figsize=(10, 6),
+    facecolor="lightgrey",
+    edgecolor="black",
+    linewidth=1,
+    title="Zone segmentation",
+):
+    """Render the zone outlines for the current region."""
+    fig, ax = plt.subplots(figsize=figsize)
+    reg.zones.to_crs(epsg=3857).plot(
+        ax=ax, edgecolor=edgecolor, facecolor=facecolor, linewidth=linewidth
+    )
+    ax.set_title(title)
+    ax.set_axis_off()
+    return fig, ax
+
+
+def zone_stat_choropleth(
+    reg,
+    stat_column,
+    figsize=(10, 6),
+    cmap="OrRd",
+    linewidth=0.8,
+    edgecolor="white",
+    title=None,
+):
+    """Render a choropleth of a specific zone statistic."""
+    zones_with_stats = reg.zones.join(reg.zone_stats[[stat_column]])
+    fig, ax = plt.subplots(figsize=figsize)
+    zones_with_stats.to_crs(epsg=3857).plot(
+        column=stat_column,
+        cmap=cmap,
+        legend=True,
+        linewidth=linewidth,
+        edgecolor=edgecolor,
+        ax=ax,
+    )
+    ax.set_title(title or f"{stat_column} by zone")
+    ax.set_axis_off()
+    return fig, ax
