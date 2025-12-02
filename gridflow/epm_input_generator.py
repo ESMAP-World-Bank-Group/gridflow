@@ -214,6 +214,12 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
             f"Scaling metric '{scaleby}' sums to zero or is empty; cannot distribute demand."
         )
     scale = region.zone_stats.loc[zone_ids, scaleby] / denom
+
+    verbose_log(
+        "EPM_ZONE_DISTRIBUTE",
+        f"Distributing using '{scaleby}' (sum={denom:.6f}) across {n_zones} zones.",
+        verbose,
+    )
     
     # Read the original CSV
     verbose_log("EPM_ZONE_DISTRIBUTE", f"Reading input file: {input_path}", verbose)
@@ -245,6 +251,12 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
             if pd.api.types.is_numeric_dtype(df[c])
         ]
         df[numeric_cols] = df[numeric_cols].mul(scale.loc[z])
+        verbose_log(
+            "EPM_ZONE_DISTRIBUTE",
+            f"  - Zone {z} (country {zone_country}): '{scaleby}' value "
+            f"{region.zone_stats.loc[z, scaleby]:.6f}, scale factor {scale.loc[z]:.6f}.",
+            verbose,
+        )
         df_final.append(df)
     df_final = pd.concat(df_final, ignore_index=True)
     verbose_log(

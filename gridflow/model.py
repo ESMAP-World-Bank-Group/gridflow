@@ -70,7 +70,8 @@ class region:
 
         # Define the zonal statistics; allow users to pick a subset to keep setup simple.
         available_zone_stats = {
-            "population": zonedata("population", global_data_path + "/population_2020.tif", "sum")
+            "population": zonedata("population", global_data_path + "/population_2020.tif", "sum"),
+            "gdp": zonedata("gdp", global_data_path + "/GDP2005_1km.tif", "mean")
         }
         if zone_stats_to_load is None:
             selected_stats = list(available_zone_stats.keys())
@@ -230,6 +231,7 @@ class network:
     """
 
     def __init__(self, path):
+        """Initialize network metadata."""
         # The region this network is in
         self.region = None
         # Path to the network data file
@@ -240,6 +242,7 @@ class network:
         self.flow = None
         
     def create_lines(self, zones, minkm=5):
+        """Assign each power line to zone sequences and compute the flow model."""
         # Load the list of power lines - filter short lines
         self.lines = read_line_data(self.path, self.region, minkm=5)
         
@@ -261,6 +264,7 @@ class network:
         self.flow = self.get_flow_model()
     
     def get_flow_model(self):
+        """Build the symmetric flow matrix from inter-zone lines."""
         nzones = len(self.region.zones)
         zidx = self.region.zones.index
         flow_mat = pd.DataFrame(data=np.zeros([nzones, nzones]),
@@ -281,6 +285,7 @@ class network:
         return flow_mat
         
     def _get_line_capacity(self, lines):
+        """Estimate per-line capacities using surge impedance loading heuristics."""
         # This is a preliminary model mapping line parameters from openinframaps
         # to line capacities. This model could be significantly enhanced based on
         # engineering rules of thumb or operational data.
@@ -296,6 +301,7 @@ class network:
         return sil_mw
     
     def _get_line_zones(self, line, zones):
+        """Return an ordered, deduplicated list of zone ids crossed by the line."""
         # This obtains an ordered sequence of zones traversed by a line.
         # Generalizes to non-convex regions and complex line pathways.
         int_points = []
@@ -325,17 +331,20 @@ class network:
 
 class zonedata:
     def __init__(self, name, path, agg):
+        """Describe a raster-based zone statistic."""
         self.path = path
         self.agg = agg
         self.name = name
     
     def aggregate(self, data):
+        """Aggregate raster values according to the configured function."""
         if self.agg=="mean":
             return np.mean(data)
         elif self.agg=="sum":
             return np.sum(data)
     
     def get_zone_values(self, region, outputdf=None):
+        """Aggregate the raster statistics per zone and append to `outputdf`."""
         # Read in the segment of the raster corresponding to the region
         ras = get_country_raster(region.countries, self.path)
         zones = region.zones.to_crs(ras.rio.crs)
@@ -361,14 +370,21 @@ class zonedata:
 """Helper Functions"""
 
 def _get_ras_values(ras, nodata):
+    """Extract valid raster cells, excluding nodata."""
     data = ras.values
-    if np.isnan(nodata):
-        data = data[~np.isnan(data)]
+    if data.size == 0:
+        return data
+    if pd.isna(nodata):
+        mask = ~pd.isna(data)
     else:
-        data = data[data != nodata]
-    return data
+        try:
+            mask = data != nodata
+        except TypeError:
+            mask = pd.Series(data.ravel()).ne(nodata).values.reshape(data.shape)
+    return data[mask]
         
 def _streamline(seq):
+    """Collapse consecutive duplicates while preserving order."""
     if len(seq) == 0:
         return seq
     else:

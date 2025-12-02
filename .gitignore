@@ -42,6 +42,7 @@ htmlcov/
 
 # Generated EPM outputs
 data/epm_inputs/
+data/maps/
 
 # Global datasets: ignore everything except tracked core files/folders
 data/global_datasets/*

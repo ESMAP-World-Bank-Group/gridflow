@@ -36,9 +36,10 @@ def _export_zone_segmentation(region, plot_root):
 def _export_zone_stats(region, plot_root):
     if region.zones.empty or region.zone_stats.empty:
         return
-    stat_column = region.zone_stats.columns[0]
-    fig, _ = visuals.zone_stat_choropleth(region, stat_column)
-    _save_figure(fig, plot_root / "set_zone_data_stats.pdf")
+    for stat_column in region.zone_stats.columns:
+        fig, _ = visuals.zone_stat_choropleth(region, stat_column)
+        safe_name = stat_column.replace(" ", "_")
+        _save_figure(fig, plot_root / f"set_zone_data_{safe_name}.pdf")
 
 
 def _export_network_plots(region, plot_root):
@@ -63,6 +64,7 @@ def run_pipeline(
     method_zoning,
     epm_input_raw,
     epm_output_dir,
+    demand_scaleby="population",
     generate_plots=True,
     plot_dir="output",
     verbose=False,
@@ -88,6 +90,7 @@ def run_pipeline(
         region,
         epm_input_raw,
         epm_output_dir,
+        demand_scaleby=demand_scaleby,
         verbose=verbose,
     )
     return region
@@ -114,7 +117,7 @@ def parse_args():
     )
     parser.add_argument(
         "--zone-stats",
-        default="population",
+        default=["population", "gdp"],
         type=_comma_list,
         help="Comma-separated list of zone statistics to load (default: population).",
     )
@@ -133,6 +136,11 @@ def parse_args():
         "--epm-output-dir",
         default="data/epm_inputs",
         help="Destination for zonalized EPM CSVs.",
+    )
+    parser.add_argument(
+        "--demand-scaleby",
+        default="population",
+        help="Zone statistic column used to distribute country-level demand (default: population).",
     )
     parser.add_argument(
         "--plot-dir",
@@ -165,6 +173,7 @@ def main():
             method_zoning=args.method_zoning,
             epm_input_raw=args.epm_input_raw,
             epm_output_dir=args.epm_output_dir,
+            demand_scaleby=args.demand_scaleby,
             generate_plots=args.generate_plots,
             plot_dir=args.plot_dir,
             verbose=args.verbose,

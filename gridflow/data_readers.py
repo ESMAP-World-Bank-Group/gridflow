@@ -16,6 +16,7 @@ from gridflow import utils
 
 # Reader functions for openinframaps data
 def read_line_data(path, region, minkm=0):
+    """Load power-line geometries that intersect the region and filter short segments."""
     # Get CRS of line data
     with fiona.open(path, layer="power_line") as src:
         crs = src.crs
@@ -39,6 +40,7 @@ def read_line_data(path, region, minkm=0):
 
 # Reader functions for country borders
 def read_borders(path, countries):
+    """Load country borders for the ISO3 codes of interest."""
     with fiona.open(path) as src:
         filtered_features = [
             feature for feature in src
@@ -51,6 +53,7 @@ def read_borders(path, countries):
 
 # Functions to read a subset of a global raster
 def get_country_raster(country, raster_path):
+    """Clip a global raster down to the country bounding box and return it."""
     # Get a region of a large raster corresponding to a country bounding box.
     # Get raster crs
     with rasterio.open(raster_path) as src:
@@ -149,6 +152,7 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv", ve
 
 # Read from config file
 def get_config_data(category, key):
+    """Read a specific key from the YAML config file."""
     path = "config.yaml"
     with open(path, 'r') as file:
         data = yaml.safe_load(file)
