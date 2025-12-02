@@ -109,8 +109,7 @@ def generate_epm_inputs(
     processed_rel_paths = set()
 
     for param_name, param in toprocess.items():
-        if verbose:
-            print(f"Processing {param_name}")
+        verbose_log("EPM_PROCESS", f"Processing {param_name}", verbose)
         rel_path = Path(param["path"])
         processed_rel_paths.add(rel_path.as_posix())
         in_path = input_base_dir / rel_path
@@ -146,8 +145,7 @@ def zone_replicate(region, input_path, output_path, verbose=True):
     n_zones = len(zone_ids)
     
     # Read the original CSV
-    if verbose:
-        print(f"[zone_replicate] Reading input file: {input_path}")
+    verbose_log("EPM_ZONE_REPLICATE", f"[zone_replicate] Reading input file: {input_path}", verbose)
         
     df_epm_original = pd.read_csv(input_path)
  
@@ -158,8 +156,7 @@ def zone_replicate(region, input_path, output_path, verbose=True):
             for zone_id in zone_ids
         ], ignore_index=True)
         
-        if verbose:
-            print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+        verbose_log("EPM_ZONE_REPLICATE", f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
     else:
         raise ValueError("The input data is not zonal.")
     
@@ -219,8 +216,7 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
     scale = region.zone_stats.loc[zone_ids, scaleby] / denom
     
     # Read the original CSV
-    if verbose:
-        print(f"[zone_distribute] Reading input file: {input_path}")
+    verbose_log("EPM_ZONE_DISTRIBUTE", f"[zone_distribute] Reading input file: {input_path}", verbose)
     
     df_epm_original = pd.read_csv(input_path)
 
@@ -229,14 +225,18 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
             "The input data must include a 'zone' column; matching by country is not supported."
         )
 
+    if "country" not in region.zones.columns:
+        raise ValueError("Region zones must include a 'country' column to map legacy inputs.")
     df_final = []
     for z in zone_ids:
-        df = df_epm_original[df_epm_original["zone"].astype(str) == str(z)].copy()
-        df["zone"] = z
-        if df.empty:
+        zone_country = region.zones.at[z, "country"]
+        mask = df_epm_original["zone"].astype(str) == str(zone_country)
+        if not mask.any():
             raise ValueError(
-                f"No rows found in input for zone {z}; ensure 'zone' column labels align with region.zones."
+                f"No rows found in input for legacy zone '{zone_country}' while mapping to new zone {z}."
             )
+        df = df_epm_original[mask].copy()
+        df["zone"] = z
 
         # Restrict scaling to numeric columns not explicitly excluded
         excluded = set(exclude_cols) | {"zone"}
@@ -247,8 +247,7 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
         df[numeric_cols] = df[numeric_cols].mul(scale.loc[z])
         df_final.append(df)
     df_final = pd.concat(df_final, ignore_index=True)
-    if verbose:
-        print(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.")
+    verbose_log(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
@@ -267,14 +266,13 @@ def _copy_remaining_inputs(
             columns = pd.read_csv(src, nrows=0).columns
         except pd.errors.EmptyDataError:
             columns = []
-        lower_cols = {str(col).strip().lower() for col in columns}
-        if {"zone", "z"} & lower_cols:
-            message = (
-                f"File '{rel_path}' contains zonal data but is not explicitly processed."
-            )
-            if verbose:
-                print(f"[EPM inputs] Unhandled zonal input detected: {message}")
-            raise ValueError(message)
+            lower_cols = {str(col).strip().lower() for col in columns}
+            if {"zone", "z"} & lower_cols:
+                message = (
+                    f"File '{rel_path}' contains zonal data but is not explicitly processed."
+                )
+                verbose_log("EPM_PROCESS", f"[EPM inputs] Unhandled zonal input detected: {message}", verbose)
+                raise ValueError(message)
 
         destination = output_base_dir / rel_path
         destination.parent.mkdir(parents=True, exist_ok=True)
