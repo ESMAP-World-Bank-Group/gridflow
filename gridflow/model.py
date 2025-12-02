@@ -17,6 +17,7 @@ from rasterstats import zonal_stats
 from skimage.segmentation import slic
 from shapely.geometry import shape, mapping
 from shapely.geometry import MultiLineString, LineString, Point
+from pyproj import Transformer
 
 from gridflow.data_readers import *
 from gridflow.utils import verbose_log, directional_zone_labels
@@ -135,11 +136,19 @@ class region:
         self.zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
                                       geometry="geometry",
                                       crs=all_zones[0].crs).drop(columns=["label"])
-        zone_names = directional_zone_labels(self.zones, country_col="country")
+        zone_names = directional_zone_labels(self.zones, country_col="country", verbose=verbose)
         self.zones = self.zones.assign(zone_label=zone_names)
         self.zones.index = pd.Index(zone_names, name="zone")
         country_list = ", ".join(self.countries["ISO_A3"].tolist())
         verbose_log("ZONE_SEGMENT", f"Created {len(self.zones)} zones for {country_list}.", verbose)
+        sample_count = min(5, len(zone_names))
+        sample_labels = ", ".join(zone_names[:sample_count])
+        extra = f" +{len(zone_names)-sample_count} more" if len(zone_names) > sample_count else ""
+        verbose_log(
+            "ZONE_LABELS",
+            f"Method '{method}' assigned labels (first {sample_count}): {sample_labels}{extra}",
+            verbose,
+        )
 
     
     def set_zone_data(self, verbose=False):
@@ -163,14 +172,17 @@ class region:
 
         # Get renewables profiles for each zone
         verbose_log("ZONE_RE", "Loading renewables profiles for each zone from renewables.ninja (default: pv).", verbose)
+        transformer = Transformer.from_crs("EPSG:3857", self.zones.crs, always_xy=True)
         for zidx in range(len(self.zones)):
             zone = self.zones.iloc[[zidx]]
             country_iso = zone["country"].iloc[0] if "country" in zone else "?"
-            zone_area = zone.geometry.area.iloc[0]
-            centroid = zone.geometry.centroid.iloc[0]
+            zone_proj = zone.to_crs(epsg=3857)
+            zone_area = zone_proj.geometry.area.iloc[0]
+            centroid_proj = zone_proj.geometry.centroid.iloc[0]
+            centroid_lonlat = Point(transformer.transform(centroid_proj.x, centroid_proj.y))
             verbose_log(
                 "ZONE_RE",
-                f"  - Querying zone {zidx} ({country_iso}) area {zone_area:.2f}, centroid ({centroid.x:.3f}, {centroid.y:.3f}).",
+                f"  - Querying zone {zidx} ({country_iso}) area {zone_area:.2f}, centroid ({centroid_lonlat.x:.3f}, {centroid_lonlat.y:.3f}).",
                 verbose,
             )
             if zidx == 0:
@@ -262,8 +274,10 @@ class network:
                 for i in range(1, npath):
                     # Add capacity to (both) of the corresponding entries
                     # in the flow model matrix
-                    flow_mat.iloc[zpath[i-1], zpath[i]] += capmw
-                    flow_mat.iloc[zpath[i], zpath[i-1]] += capmw
+                    from_zone = zpath[i - 1]
+                    to_zone = zpath[i]
+                    flow_mat.loc[from_zone, to_zone] += capmw
+                    flow_mat.loc[to_zone, from_zone] += capmw
         return flow_mat
         
     def _get_line_capacity(self, lines):

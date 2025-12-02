@@ -79,10 +79,27 @@ class country_code_map:
         return self.codes[self.codes["alpha-3"]==iso3]["name"].iloc[0]
 
 
-def directional_zone_labels(zones, country_col="country"):
-    """Return names like 'KEN-North' based on centroid direction per country."""
+def directional_zone_labels(zones, country_col="country", verbose=False):
+    """Return names like 'KEN-North' based on centroid direction per country.
+
+    Parameters
+    ----------
+    zones : geopandas.GeoDataFrame
+        Zones GeoDataFrame that contains the geometries to measure.
+    country_col : str, optional
+        Name of the column inside `zones` that stores the country identifier
+        (for example ISO3). Defaults to ``"country"``.
+    verbose : bool, optional
+        If True, log summary and each label as it is assigned.
+    """
     if "geometry" not in zones:
         raise ValueError("zones must include a geometry column")
+
+    verbose_log(
+        "ZONE_LABELS",
+        f"Computing directional labels for {len(zones)} zones (country column '{country_col}').",
+        verbose,
+    )
 
     default_country = "__GLOBAL__"
     if country_col in zones:
@@ -90,18 +107,25 @@ def directional_zone_labels(zones, country_col="country"):
     else:
         country_values = pd.Series([default_country] * len(zones), index=zones.index)
 
+    # Use a projected CRS for centroid-based direction calculations to avoid geographic warnings.
+    geometry = zones.geometry
+    geometry_crs = geometry.crs
+    needs_project = bool(geometry_crs and getattr(geometry_crs, "is_geographic", False))
+    projected_geometry = geometry.to_crs(epsg=3857) if needs_project else geometry
+    centroids = projected_geometry.centroid
+
     centers = {}
     for country in country_values.unique():
         mask = country_values == country
-        subset = zones.loc[mask]
-        if subset.empty:
+        subset_geometry = projected_geometry.loc[mask]
+        if subset_geometry.empty:
             continue
-        minx, miny, maxx, maxy = subset.total_bounds
+        minx, miny, maxx, maxy = subset_geometry.total_bounds
         centers[country] = ((minx + maxx) / 2, (miny + maxy) / 2)
 
     records = []
     for idx in zones.index:
-        centroid = zones.geometry.centroid.loc[idx]
+        centroid = centroids.loc[idx]
         country = country_values.loc[idx]
         center = centers.get(country)
         dx = centroid.x - center[0] if center is not None else 0
@@ -146,6 +170,11 @@ def directional_zone_labels(zones, country_col="country"):
             base_label = direction if ordinal == 1 else f"{direction}-{ordinal}"
             label = f"{country}-{base_label}" if country != default_country else base_label
         labels.append(label)
+        verbose_log(
+            "ZONE_LABELS",
+            f"  - Zone index {idx!r}: country {country}, final direction {direction}, label '{label}'.",
+            verbose,
+        )
 
     return labels
 

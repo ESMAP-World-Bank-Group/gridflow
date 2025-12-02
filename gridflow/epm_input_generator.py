@@ -145,7 +145,7 @@ def zone_replicate(region, input_path, output_path, verbose=True):
     n_zones = len(zone_ids)
     
     # Read the original CSV
-    verbose_log("EPM_ZONE_REPLICATE", f"[zone_replicate] Reading input file: {input_path}", verbose)
+    verbose_log("EPM_ZONE_REPLICATE", f"Reading input file: {input_path}", verbose)
         
     df_epm_original = pd.read_csv(input_path)
  
@@ -156,7 +156,7 @@ def zone_replicate(region, input_path, output_path, verbose=True):
             for zone_id in zone_ids
         ], ignore_index=True)
         
-        verbose_log("EPM_ZONE_REPLICATE", f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
+        verbose_log("EPM_ZONE_REPLICATE", f"Original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
     else:
         raise ValueError("The input data is not zonal.")
     
@@ -216,7 +216,7 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
     scale = region.zone_stats.loc[zone_ids, scaleby] / denom
     
     # Read the original CSV
-    verbose_log("EPM_ZONE_DISTRIBUTE", f"[zone_distribute] Reading input file: {input_path}", verbose)
+    verbose_log("EPM_ZONE_DISTRIBUTE", f"Reading input file: {input_path}", verbose)
     
     df_epm_original = pd.read_csv(input_path)
 
@@ -247,7 +247,11 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
         df[numeric_cols] = df[numeric_cols].mul(scale.loc[z])
         df_final.append(df)
     df_final = pd.concat(df_final, ignore_index=True)
-    verbose_log(f"original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
+    verbose_log(
+        "EPM_ZONE_DISTRIBUTE",
+        f"Original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.",
+        verbose,
+    )
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)

@@ -43,7 +43,7 @@ def _export_zone_stats(region, plot_root):
 
 def _export_network_plots(region, plot_root):
     try:
-        fig, _ = visuals.country_viz(region, title="Network visualization")
+        fig, _ = visuals.country_viz(region, title="Network visualization", show_arrows=True, show_flow_values=True)
         _save_figure(fig, plot_root / "create_network_map.pdf")
     except Exception:
         pass
@@ -64,7 +64,7 @@ def run_pipeline(
     epm_input_raw,
     epm_output_dir,
     generate_plots=True,
-    plot_dir="data/maps",
+    plot_dir="output",
     verbose=False,
 ):
     """Execute the end-to-end gridflow pipeline."""
@@ -74,7 +74,7 @@ def run_pipeline(
         zone_stats_to_load=zone_stats_to_load,
     )
 
-    region.create_zones(n=n_zones, method=method_zoning)
+    region.create_zones(n=n_zones, method=method_zoning, verbose=verbose)
     if generate_plots:
         _export_zone_segmentation(region, Path(plot_dir))
     region.set_zone_data(verbose=verbose)
@@ -148,6 +148,7 @@ def parse_args():
     parser.add_argument(
         "--verbose",
         action="store_true",
+        default=True, # keep it
         help="Print detailed progress.",
     )
     return parser.parse_args()
