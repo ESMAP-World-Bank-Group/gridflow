@@ -11,11 +11,12 @@ import calendar
 
 from gridflow.utils import *
 from gridflow.model import *
+from gridflow.data_readers import get_global_datasets_path
 
 cc = country_code_map()
 
 def synth_region(countries, zones_per_country=2):
-    global_data_path = "data/global_datasets"
+    global_data_path = get_global_datasets_path()
     sregion = region(countries, global_data_path=global_data_path)
     # Create zones
     zdf = pd.DataFrame(columns=["geometry", "country"])
@@ -81,5 +82,4 @@ def _get_annual_matrix(leap=False):
         df.loc[start_idx:start_idx+days_in_month-1, "d"] = days
         start_idx += days_in_month
     return df
-
 

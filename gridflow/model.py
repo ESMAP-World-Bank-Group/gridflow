@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import warnings
 import yaml
+from collections import defaultdict
 
 # Raster data packages
 import rasterio
@@ -19,7 +20,14 @@ from shapely.geometry import shape, mapping
 from shapely.geometry import MultiLineString, LineString, Point
 from pyproj import Transformer
 
-from gridflow.data_readers import *
+from gridflow.data_readers import (
+    get_country_raster,
+    get_global_dataset_file_path,
+    get_global_datasets_path,
+    get_zonal_re,
+    read_borders,
+    read_line_data,
+)
 from gridflow.utils import verbose_log, directional_zone_labels
 
 
@@ -45,33 +53,47 @@ class region:
         3. zone_re - renewable profiles by zone
     """
 
-    def __init__(self, countries, global_data_path, zone_stats_to_load=None):
+    def __init__(self, countries, global_data_path=None, zone_stats_to_load=None):
         """
         Parameters
         ----------
         countries : list of str
             ISO3 codes for the countries to model.
-        global_data_path : str
-            Path to the folder containing borders, rasters, and grid data.
+        global_data_path : str, optional
+            Path to the folder containing borders, rasters, and grid data. Defaults
+            to `input_data.global_datasets` from :file:`config.yaml`.
         zone_stats_to_load : list of str, optional
             Subset of zone statistics to compute. Defaults to all available stats
             (currently: ["population"]). Pass a list like ["population"] to pick
             specific datasets.
         """
-        self.countries = read_borders(global_data_path + "/borders/WB_GAD_ADM0_complete.shp",
-                                      countries)
+        if global_data_path is None:
+            global_data_path = get_global_datasets_path()
+        self.global_data_path = global_data_path
+
+        borders_path = get_global_dataset_file_path(
+            "borders", "borders/WB_GAD_ADM0_complete.shp", root=global_data_path
+        )
+        self.countries = read_borders(borders_path, countries)
 
         # The transmission system -- starts out empty
-        self.grid = network(global_data_path + "/grid.gpkg")
+        grid_path = get_global_dataset_file_path("grid", "grid_sample.gpkg", root=global_data_path)
+        self.grid = network(grid_path)
         self.grid.region = self
         
         # The zones -- start out empty
         self.zones = gpd.GeoDataFrame(geometry=[])
 
         # Define the zonal statistics; allow users to pick a subset to keep setup simple.
+        population_path = get_global_dataset_file_path(
+            "population", "population_2020.tif", root=global_data_path
+        )
+        gdp_path = get_global_dataset_file_path(
+            "gdp", "GDP2005_1km.tif", root=global_data_path
+        )
         available_zone_stats = {
-            "population": zonedata("population", global_data_path + "/population_2020.tif", "sum"),
-            "gdp": zonedata("gdp", global_data_path + "/GDP2005_1km.tif", "mean")
+            "population": zonedata("population", population_path, "sum"),
+            "gdp": zonedata("gdp", gdp_path, "mean"),
         }
         if zone_stats_to_load is None:
             selected_stats = list(available_zone_stats.keys())
@@ -91,8 +113,8 @@ class region:
         self.zone_re = pd.DataFrame()
         
         # Paths to necessary global datasets
-        self.global_pv = global_data_path + "/pv.tif"
-        self.global_wind = global_data_path + "/wind.tif"
+        self.global_pv = get_global_dataset_file_path("pv", "pv.tif", root=global_data_path)
+        self.global_wind = get_global_dataset_file_path("wind", "wind.tif", root=global_data_path)
 
     
     def create_zones(self, n=10, method="pv", verbose=False):
@@ -203,6 +225,10 @@ class region:
 
         self.grid.create_lines(self.zones)
 
+    def get_neighbor_capacities(self, verbose=False):
+        """Return the per-country neighbor capacity map collected from the network."""
+        return self.grid.get_neighbor_capacities(verbose=verbose)
+
 
 class network:
     """
@@ -262,6 +288,57 @@ class network:
         # Create the flow model representation of the network
         # for the lines created
         self.flow = self.get_flow_model()
+
+    def get_neighbor_capacities(self, verbose=False):
+        """Summarize inter-country capacities based on built network lines."""
+        if self.lines is None or self.lines.empty:
+            verbose_log("NEIGHBOR_CAPACITY", "No transmission lines loaded; cannot infer neighbors.", verbose)
+            return {}
+        if self.region is None or "country" not in self.region.zones:
+            verbose_log("NEIGHBOR_CAPACITY", "Zones lack 'country' tags; skipping neighbor summary.", verbose)
+            return {}
+
+        zone_to_country = self.region.zones["country"].to_dict()
+        neighbor_caps = defaultdict(float)
+        detail_messages = []
+
+        for line_id, line in self.lines.iterrows():
+            prev_country = None
+            for zone in line.zones or []:
+                country = zone_to_country.get(zone)
+                if country is None or country == prev_country:
+                    prev_country = country
+                    continue
+                if prev_country:
+                    cap_val = line.capacity
+                    try:
+                        capacity = float(cap_val) if np.isfinite(cap_val) else 0.0
+                    except (TypeError, ValueError):
+                        capacity = 0.0
+                    pair = tuple(sorted([prev_country, country]))
+                    neighbor_caps[pair] += capacity
+                    if verbose:
+                        detail_messages.append(
+                            f"Line {line_id} contributes {capacity:.1f} MW between {pair[0]} and {pair[1]}."
+                        )
+                prev_country = country
+
+        if verbose:
+            verbose_log(
+                "NEIGHBOR_CAPACITY",
+                f"Derived {len(neighbor_caps)} neighbor pair(s) from {len(self.lines)} lines.",
+                verbose,
+            )
+            for message in detail_messages:
+                verbose_log("NEIGHBOR_CAPACITY", message, verbose)
+            for pair, cap in sorted(neighbor_caps.items()):
+                verbose_log(
+                    "NEIGHBOR_CAPACITY",
+                    f"  {pair[0]} <-> {pair[1]} : {cap:.1f} MW total capacity",
+                    verbose,
+                )
+
+        return neighbor_caps
     
     def get_flow_model(self):
         """Build the symmetric flow matrix from inter-zone lines."""

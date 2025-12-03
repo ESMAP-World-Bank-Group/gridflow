@@ -12,6 +12,7 @@ import argparse
 from pathlib import Path
 
 from gridflow import model, epm_input_generator
+from gridflow.data_readers import get_global_datasets_path
 
 
 def _comma_list(value):
@@ -53,8 +54,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run the gridflow pipeline.")
     parser.add_argument(
         "--data-path",
-        default="data/global_datasets",
-        help="Path containing borders, rasters, and grid.gpkg.",
+        default=get_global_datasets_path(),
+        help="Path containing borders, rasters, and grid.gpkg (default from config.yaml).",
     )
     parser.add_argument(
         "--countries",

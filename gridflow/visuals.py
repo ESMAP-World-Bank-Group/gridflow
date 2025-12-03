@@ -4,6 +4,53 @@ from matplotlib import patheffects
 from matplotlib.patches import FancyArrowPatch
 from matplotlib.lines import Line2D
 
+from gridflow.data_readers import load_background_map
+
+
+_DEFAULT_COUNTRIES_BACKGROUND = "data/maps/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+_DEFAULT_POPULATED_BACKGROUND = "data/maps/ne_110m_populated_places/ne_110m_populated_places.shp"
+
+
+def _prepare_background_layer(name, default_path):
+    """Load a background layer if the shapefile is available."""
+    gdf = load_background_map(name, default_path=default_path)
+    if gdf is None or gdf.empty:
+        return None
+    return gdf
+
+
+def _plot_background_layer(ax, gdf, *, target_crs=None, zorder=0, **kwargs):
+    """Plot a pre-projected GeoDataFrame if available."""
+    if gdf is None or gdf.empty:
+        return
+    plot_gdf = gdf.to_crs(target_crs) if target_crs is not None else gdf
+    plot_gdf.plot(ax=ax, zorder=zorder, **kwargs)
+
+
+def _fit_axes_to_bounds(ax, bounds, *, buffer_factor=0.05, min_span=1e4):
+    """Clamp axes to given bounds with a safety margin to avoid global zoom."""
+    if bounds is None:
+        return
+    minx, miny, maxx, maxy = bounds
+    if np.isnan([minx, miny, maxx, maxy]).any():
+        return
+
+    margin_x = max(maxx - minx, min_span) * buffer_factor
+    margin_y = max(maxy - miny, min_span) * buffer_factor
+    ax.set_xlim(minx - margin_x, maxx + margin_x)
+    ax.set_ylim(miny - margin_y, maxy + margin_y)
+
+
+def _fit_axes_to_zones(ax, zones_gdf, **kwargs):
+    """Zoom the axis to the extent of the supplied zones GeoDataFrame."""
+    if zones_gdf is None or zones_gdf.empty:
+        return
+    _fit_axes_to_bounds(ax, zones_gdf.total_bounds, **kwargs)
+
+
+_COUNTRY_BACKGROUND = _prepare_background_layer("countries", _DEFAULT_COUNTRIES_BACKGROUND)
+_POPULATED_BACKGROUND = _prepare_background_layer("populated_places", _DEFAULT_POPULATED_BACKGROUND)
+
 
 def flow_field_heatmap(
     reg,
@@ -66,11 +113,31 @@ def country_viz(
     title=None,
     show_grid=False,
     show_flow_values=False,
+    show_background=False,
     flow_value_scale=1.0,
     flow_value_fmt="{:.0f}",
 ):
     """Visualize grid zones and flow capacities with configurable styling."""
     fig, ax = plt.subplots(1, 1, figsize=figsize)
+
+    if show_background:
+        _plot_background_layer(
+            ax,
+            _COUNTRY_BACKGROUND,
+            target_crs=zones_p.crs,
+            facecolor="whitesmoke",
+            edgecolor="gray",
+            linewidth=0.5,
+            alpha=0.75,
+        )
+        _plot_background_layer(
+            ax,
+            _POPULATED_BACKGROUND,
+            target_crs=zones_p.crs,
+            color="firebrick",
+            markersize=3,
+            alpha=0.4,
+        )
 
     zones_p = reg.zones.to_crs(epsg=3857)
     lines_p = reg.grid.lines.to_crs(epsg=3857)
@@ -101,6 +168,7 @@ def country_viz(
     maxmw = maxmw if maxmw > 0 else 1  # avoid divide-by-zero
 
     ax.grid(show_grid)
+    _fit_axes_to_zones(ax, zones_p)
     ax.set_axis_off()
 
     zidx = zones_p.index
@@ -167,13 +235,24 @@ def zone_segmentation_map(
     edgecolor="black",
     linewidth=1,
     title="Zone segmentation",
+    show_background=False,
 ):
     """Render the zone outlines for the current region."""
     fig, ax = plt.subplots(figsize=figsize)
-    reg.zones.to_crs(epsg=3857).plot(
-        ax=ax, edgecolor=edgecolor, facecolor=facecolor, linewidth=linewidth
-    )
+    zones_proj = reg.zones.to_crs(epsg=3857)
+    if show_background:
+        _plot_background_layer(
+            ax,
+            _COUNTRY_BACKGROUND,
+            target_crs=zones_proj.crs,
+            facecolor="whitesmoke",
+            edgecolor="gray",
+            linewidth=0.4,
+            alpha=0.6,
+        )
+    zones_proj.plot(ax=ax, edgecolor=edgecolor, facecolor=facecolor, linewidth=linewidth)
     ax.set_title(title)
+    _fit_axes_to_zones(ax, zones_proj)
     ax.set_axis_off()
     return fig, ax
 
@@ -186,11 +265,23 @@ def zone_stat_choropleth(
     linewidth=0.8,
     edgecolor="white",
     title=None,
+    show_background=False,
 ):
     """Render a choropleth of a specific zone statistic."""
     zones_with_stats = reg.zones.join(reg.zone_stats[[stat_column]])
+    zones_proj = zones_with_stats.to_crs(epsg=3857)
     fig, ax = plt.subplots(figsize=figsize)
-    zones_with_stats.to_crs(epsg=3857).plot(
+    if show_background:
+        _plot_background_layer(
+            ax,
+            _COUNTRY_BACKGROUND,
+            target_crs=zones_proj.crs,
+            facecolor="whitesmoke",
+            edgecolor="gray",
+            linewidth=0.4,
+            alpha=0.6,
+        )
+    zones_proj.plot(
         column=stat_column,
         cmap=cmap,
         legend=True,
@@ -199,5 +290,6 @@ def zone_stat_choropleth(
         ax=ax,
     )
     ax.set_title(title or f"{stat_column} by zone")
+    _fit_axes_to_zones(ax, zones_proj)
     ax.set_axis_off()
     return fig, ax

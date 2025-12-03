@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import requests
 import yaml
 
@@ -39,16 +42,13 @@ def read_line_data(path, region, minkm=0):
 
 
 # Reader functions for country borders
-def read_borders(path, countries):
-    """Load country borders for the ISO3 codes of interest."""
-    with fiona.open(path) as src:
-        filtered_features = [
-            feature for feature in src
-            if feature["properties"]["ISO_A3"] in countries
-        ]
-    # Convert to GeoDataFrame
-    rez = gpd.GeoDataFrame.from_features(filtered_features, crs="EPSG:4326")
-    return rez
+def read_borders(path, countries=None):
+    """Load country borders for the ISO3 codes of interest or return all."""
+    gdf = gpd.read_file(path)
+    if countries is None:
+        return gdf
+    filtered = gdf[gdf["ISO_A3"].isin(countries)]
+    return filtered
 
 
 # Functions to read a subset of a global raster
@@ -157,3 +157,50 @@ def get_config_data(category, key):
     with open(path, 'r') as file:
         data = yaml.safe_load(file)
     return data[category][key]
+
+
+def get_global_datasets_path(fallback="data/global_datasets"):
+    """Return the global datasets folder configured in config.yaml."""
+    try:
+        return get_config_data("input_data", "global_datasets")
+    except (FileNotFoundError, KeyError, TypeError):
+        return fallback
+
+
+def get_global_dataset_file_path(name, default_relative, *, root=None):
+    """Return a dataset file path, preferring config overrides."""
+    try:
+        files = get_config_data("input_data", "files")
+    except (FileNotFoundError, KeyError, TypeError):
+        files = None
+
+    if isinstance(files, dict) and name in files:
+        return files[name]
+
+    if root is None:
+        root = get_global_datasets_path()
+    return os.path.join(root, default_relative)
+
+
+def load_background_map(name, default_path=None):
+    """Load a background map defined in config.yaml (if available)."""
+    try:
+        backgrounds = get_config_data("input_data", "backgrounds")
+    except (FileNotFoundError, KeyError, TypeError):
+        backgrounds = None
+
+    path = None
+    if isinstance(backgrounds, dict):
+        path = backgrounds.get(name)
+    if not path:
+        path = default_path
+
+    if not path:
+        return None
+    file_path = Path(path)
+    if not file_path.exists():
+        return None
+    try:
+        return gpd.read_file(file_path)
+    except Exception:
+        return None

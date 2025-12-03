@@ -2,7 +2,17 @@ grid_params:
   countries: ["LUX"]
 
 input_data:
-  global_datasets: "data/global"
+  global_datasets: "data/global_datasets"
+  files:
+    borders: "data/global_datasets/borders/WB_GAD_ADM0_complete.shp"
+    grid: "data/global_datasets/grid.gpkg"
+    population: "data/global_datasets/population_2020.tif"
+    gdp: "data/global_datasets/GDP2005_1km.tif"
+    pv: "data/global_datasets/pv.tif"
+    wind: "data/global_datasets/wind.tif"
+  backgrounds:
+    countries: "data/maps/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+    populated_places: "data/maps/ne_110m_populated_places/ne_110m_populated_places.shp"
 
 renewables_ninja:
   api_key: "2deb093cdece49f3b316c98687150421ee425566"

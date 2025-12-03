@@ -98,12 +98,19 @@ def _export_neighbor_map(region, lines, plot_dir, global_data_path, verbose=True
         region_isos = set(region.countries["ISO_A3"].tolist())
         touch = all_proj[all_proj.geometry.intersects(line_union)]
         neighbors = touch[~touch[iso_col].isin(region_isos)]
+        if verbose and neighbors is not None and not neighbors.empty:
+            neighbor_list = ", ".join(sorted(set(neighbors[iso_col].tolist())))
+            verbose_log(
+                "NEIGHBOR_MAP",
+                f"Neighbors detected via borders file: {neighbor_list}.",
+                verbose,
+            )
         if not neighbors.empty:
             neighbors.plot(
                 ax=ax,
                 facecolor="navajowhite",
                 edgecolor="orange",
-                linewidth=0.6,
+                linewidth=1.2,
                 alpha=0.5,
                 zorder=0,
             )
@@ -336,7 +343,7 @@ def parse_args():
     parser.add_argument(
         "--mode",
         choices=["zoning", "neighbors"],
-        default="neighbors",
+        default="zoning",
         help="Choose workflow: zoning/EPM pipeline or neighbor capacity summary.",
     )
     parser.add_argument(
