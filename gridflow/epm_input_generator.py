@@ -154,16 +154,39 @@ def zone_replicate(region, input_path, output_path, verbose=True):
         
     df_epm_original = pd.read_csv(input_path)
  
-    if 'zone' in df_epm_original.columns:
-        # Replicate data for each subregion
-        df_final = pd.concat([
-            df_epm_original.assign(zone=zone_id) 
-            for zone_id in zone_ids
-        ], ignore_index=True)
-        
-        verbose_log("EPM_ZONE_REPLICATE", f"Original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.", verbose)
-    else:
+    if "zone" not in df_epm_original.columns:
         raise ValueError("The input data is not zonal.")
+
+    df_epm_original["zone_str"] = df_epm_original["zone"].astype(str)
+    country_set = set(region.zones["country"].astype(str))
+    static_rows = df_epm_original[~df_epm_original["zone_str"].isin(country_set)].copy()
+
+    replicated_rows = []
+    for zone_id in zone_ids:
+        zone_country = str(region.zones.at[zone_id, "country"])
+        mask = df_epm_original["zone_str"] == zone_country
+        if not mask.any():
+            verbose_log(
+                "EPM_ZONE_REPLICATE",
+                f"No source rows for country '{zone_country}'; skipping zone {zone_id}.",
+                verbose,
+            )
+            continue
+        segment = df_epm_original[mask].copy()
+        segment["zone"] = zone_id
+        replicated_rows.append(segment)
+
+    if replicated_rows:
+        df_final = pd.concat([static_rows] + replicated_rows, ignore_index=True)
+    else:
+        df_final = static_rows.copy()
+    df_final.drop(columns=["zone_str"], inplace=True, errors="ignore")
+    verbose_log(
+        "EPM_ZONE_REPLICATE",
+        f"Original shape: {df_epm_original.shape}, final shape: {df_final.shape}, "
+        f"{len(replicated_rows)} zones replicated out of {n_zones}.",
+        verbose,
+    )
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
@@ -264,6 +287,9 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
         )
         df_final.append(df)
     df_final = pd.concat(df_final, ignore_index=True)
+    static_rows = df_epm_original[~df_epm_original["zone"].astype(str).isin(region.zones["country"].astype(str))].copy()
+    if not static_rows.empty:
+        df_final = pd.concat([static_rows, df_final], ignore_index=True)
     verbose_log(
         "EPM_ZONE_DISTRIBUTE",
         f"Original shape: {df_epm_original.shape}, final shape: {df_final.shape}, {n_zones} zones.",
