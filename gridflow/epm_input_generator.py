@@ -103,6 +103,11 @@ def generate_epm_inputs(
             "path": "constraint/pMaxFuellimit.csv",
             "func": zone_replicate,
             "args": []
+        },
+        "pTransferLimit": {
+            "path": "trade/pTransferLimit.csv",
+            "func": trade_transfer_limit,
+            "args": []
         }
     }
 
@@ -267,6 +272,51 @@ def zone_distribute(region, input_path, output_path, exclude_cols=None,
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_final.to_csv(output_path)
+
+
+def trade_transfer_limit(region, input_path, output_path, verbose=True):
+    """Generate trade/pTransferLimit entries from the region grid flow model."""
+    input_path = Path(input_path)
+    output_path = Path(output_path)
+
+    if region.grid.flow is None:
+        raise ValueError("Flow model missing; run region.create_network() before computing transfer limits.")
+
+    template = pd.read_csv(input_path, dtype=str)
+    quarters = list(dict.fromkeys(template["q"].dropna().astype(str).tolist()))
+    base_years = [col for col in template.columns if col not in {"From", "To", "q"}]
+    if not base_years:
+        raise ValueError("pTransferLimit template lacks year columns.")
+
+    flow = region.grid.flow.fillna(0)
+    rows = []
+    for frm in flow.index:
+        for to in flow.columns:
+            if frm == to:
+                continue
+            cap = flow.at[frm, to]
+            if not np.isfinite(cap) or cap <= 0:
+                continue
+            for q in quarters:
+                row = {"From": frm, "To": to, "q": q}
+                row.update({year: cap for year in base_years})
+                rows.append(row)
+
+    if not rows:
+        verbose_log("EPM_TRANSFER_LIMIT", "No inter-zone capacity was found; leaving pTransferLimit empty.", verbose)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame(columns=template.columns).to_csv(output_path, index=False)
+        return
+
+    df_final = pd.DataFrame(rows, columns=["From", "To", "q"] + base_years)
+    verbose_log(
+        "EPM_TRANSFER_LIMIT",
+        f"Created {len(df_final)} transfer limit rows across {len(quarters)} quarter(s) from {len(flow.index)} zones.",
+        verbose,
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    df_final.to_csv(output_path, index=False)
 
 
 def _copy_remaining_inputs(
