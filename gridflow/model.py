@@ -299,57 +299,6 @@ class network:
         # Create the flow model representation of the network
         # for the lines created
         self.flow, self.flow_neighbor = self.get_flow_model(zones)
-
-    def get_neighbor_capacities(self, verbose=False):
-        """Summarize inter-country capacities based on built network lines."""
-        if self.lines is None or self.lines.empty:
-            verbose_log("NEIGHBOR_CAPACITY", "No transmission lines loaded; cannot infer neighbors.", verbose)
-            return {}
-        if self.region is None or "country" not in self.region.zones:
-            verbose_log("NEIGHBOR_CAPACITY", "Zones lack 'country' tags; skipping neighbor summary.", verbose)
-            return {}
-
-        zone_to_country = self.region.zones["country"].to_dict()
-        neighbor_caps = defaultdict(float)
-        detail_messages = []
-
-        for line_id, line in self.lines.iterrows():
-            prev_country = None
-            for zone in line.zones or []:
-                country = zone_to_country.get(zone)
-                if country is None or country == prev_country:
-                    prev_country = country
-                    continue
-                if prev_country:
-                    cap_val = line.capacity
-                    try:
-                        capacity = float(cap_val) if np.isfinite(cap_val) else 0.0
-                    except (TypeError, ValueError):
-                        capacity = 0.0
-                    pair = tuple(sorted([prev_country, country]))
-                    neighbor_caps[pair] += capacity
-                    if verbose:
-                        detail_messages.append(
-                            f"Line {line_id} contributes {capacity:.1f} MW between {pair[0]} and {pair[1]}."
-                        )
-                prev_country = country
-
-        if verbose:
-            verbose_log(
-                "NEIGHBOR_CAPACITY",
-                f"Derived {len(neighbor_caps)} neighbor pair(s) from {len(self.lines)} lines.",
-                verbose,
-            )
-            for message in detail_messages:
-                verbose_log("NEIGHBOR_CAPACITY", message, verbose)
-            for pair, cap in sorted(neighbor_caps.items()):
-                verbose_log(
-                    "NEIGHBOR_CAPACITY",
-                    f"  {pair[0]} <-> {pair[1]} : {cap:.1f} MW total capacity",
-                    verbose,
-                )
-
-        return neighbor_caps
     
     def get_flow_model(self, zones):
         """Build the symmetric flow matrix from inter-zone lines."""
