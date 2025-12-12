@@ -26,6 +26,7 @@ from gridflow.data_readers import (
     get_global_datasets_path,
     get_zonal_re,
     read_borders,
+    read_boundaries,
     read_line_data,
 )
 from gridflow.utils import verbose_log, directional_zone_labels
