@@ -133,8 +133,16 @@ class region:
             # load global boundary data
             boundaries = read_boundaries(self.global_admin, self.countries.ISO_A3.to_list())
             zones = boundaries[["shapeName", "shapeGroup", "geometry"]]
+            # some of these boundaries may be invalid - let's make them valid
+            for idx in zones.index:
+                poly = zones.loc[idx, "geometry"]
+                if not poly.is_valid:
+                    zones.loc[idx, "geometry"] = poly.buffer(0)
             zones = zones.rename({"shapeName" : "zone_name", "shapeGroup" : "country"},
                                  axis = 1)
+    
+        # force the zones to have ordered, integer indices
+        zones = zones.reset_index().drop("index", axis=1)
     
         self.zones = zones
 
