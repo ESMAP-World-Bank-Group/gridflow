@@ -24,7 +24,8 @@ def read_line_data(path, region, minkm=0):
     with fiona.open(path, layer="power_line") as src:
         crs = src.crs
     # Get bounding box of region
-    minx, miny, maxx, maxy = utils.get_bb(region.countries, crs=crs)
+    minx, miny, maxx, maxy = utils.get_bb(pd.concat([region.countries, region.neighbors],
+                                                    ignore_index=True), crs=crs)
     # Get lines that intersect bounding box
     linepd = gpd.read_file(path, layer="power_line",
                            bbox=(minx, miny, maxx, maxy))
@@ -51,10 +52,32 @@ def read_borders(path, countries=None):
     return filtered
 
 
+# Determine neighbors of countries given neighbor dataset
+def get_neighbors(countries):
+    return []
+
+
+# Convert country to zone
+def ctry_to_zone_format(countries):
+    """Converts the dataframe containing countries to the format of zone data.
+    This is used when adding neighboring countries into network estimation.
+    """
+    if len(countries) == 0:
+        empty = pd.DataFrame(columns=["country", "zone_label", "geometry"])
+        empty.index.name = "zone"
+        return empty
+
+    ctry_zone = countries[["ISO_A3", "geometry"]]
+    ctry_zone = ctry_zone.assign(country=ctry_zone["ISO_A3"],
+                                 zone_label=ctry_zone["ISO_A3"])
+    ctry_zone = ctry_zone.set_index("ISO_A3")
+    ctry_zone.index.name = "zone"
+    return ctry_zone
+
+
 # Functions to read a subset of a global raster
 def get_country_raster(country, raster_path):
     """Clip a global raster down to the country bounding box and return it."""
-    # Get a region of a large raster corresponding to a country bounding box.
     # Get raster crs
     with rasterio.open(raster_path) as src:
         raster_crs = src.crs

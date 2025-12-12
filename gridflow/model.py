@@ -24,9 +24,11 @@ from gridflow.data_readers import (
     get_country_raster,
     get_global_dataset_file_path,
     get_global_datasets_path,
+    get_neighbors,
     get_zonal_re,
     read_borders,
     read_line_data,
+    ctry_to_zone_format
 )
 from gridflow.utils import verbose_log, directional_zone_labels
 
@@ -53,7 +55,7 @@ class region:
         3. zone_re - renewable profiles by zone
     """
 
-    def __init__(self, countries, global_data_path=None, zone_stats_to_load=None):
+    def __init__(self, countries, include_neighbors=True, global_data_path=None, zone_stats_to_load=None):
         """
         Parameters
         ----------
@@ -75,6 +77,12 @@ class region:
             "borders", "borders/WB_GAD_ADM0_complete.shp", root=global_data_path
         )
         self.countries = read_borders(borders_path, countries)
+        if include_neighbors is True:
+            self.neighbors = read_borders(borders_path, get_neighbors(countries))
+        elif isinstance(include_neighbors, list):
+            self.neighbors = read_borders(borders_path, include_neighbors)
+        else:
+            self.neighbors = gpd.GeoDataFrame(geometry=[])
 
         # The transmission system -- starts out empty
         grid_path = get_global_dataset_file_path("grid", "grid_sample.gpkg", root=global_data_path)
@@ -222,8 +230,9 @@ class region:
         the routes of lines through subregions and accordingly estimate the
         flow representation of the network. 
         """
-
-        self.grid.create_lines(self.zones)
+        zones = self.zones.assign(type="region-zone")
+        neigh = ctry_to_zone_format(self.neighbors).assign(type="region-neighbor")
+        self.grid.create_lines(pd.concat([zones, neigh]))
 
     def get_neighbor_capacities(self, verbose=False):
         """Return the per-country neighbor capacity map collected from the network."""
@@ -266,6 +275,8 @@ class network:
         self.lines = None
         # No flow model
         self.flow = None
+        # No flow model to neighbors
+        self.flow_neighbor = None
         
     def create_lines(self, zones, minkm=5):
         """Assign each power line to zone sequences and compute the flow model."""
@@ -287,7 +298,7 @@ class network:
         self.lines["capacity"] = self._get_line_capacity(self.lines)
         # Create the flow model representation of the network
         # for the lines created
-        self.flow = self.get_flow_model()
+        self.flow, self.flow_neighbor = self.get_flow_model(zones)
 
     def get_neighbor_capacities(self, verbose=False):
         """Summarize inter-country capacities based on built network lines."""
@@ -340,10 +351,10 @@ class network:
 
         return neighbor_caps
     
-    def get_flow_model(self):
+    def get_flow_model(self, zones):
         """Build the symmetric flow matrix from inter-zone lines."""
-        nzones = len(self.region.zones)
-        zidx = self.region.zones.index
+        nzones = len(zones)
+        zidx = zones.index
         flow_mat = pd.DataFrame(data=np.zeros([nzones, nzones]),
                                 index = zidx, 
                                 columns = zidx)
@@ -359,7 +370,15 @@ class network:
                     to_zone = zpath[i]
                     flow_mat.loc[from_zone, to_zone] += capmw
                     flow_mat.loc[to_zone, from_zone] += capmw
-        return flow_mat
+        
+        # split the flow model into zones and neighbor zones.
+        zones_idxs = zones[zones["type"] == "region-zone"].index
+        neigh_idxs = zones[zones["type"] == "region-neighbor"].index
+        
+        zone_flow = flow_mat.loc[zones_idxs, zones_idxs]
+        neigh_flow = flow_mat.loc[zones_idxs, neigh_idxs]
+
+        return zone_flow, neigh_flow
         
     def _get_line_capacity(self, lines):
         """Estimate per-line capacities using surge impedance loading heuristics."""
