@@ -3,15 +3,11 @@ import geopandas as gpd
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import warnings
-import yaml
 from collections import defaultdict
 
 # Raster data packages
-import rasterio
 from rasterio.features import shapes
 from rasterio.mask import mask
-import rioxarray
 from rasterstats import zonal_stats
 
 # For segmenting rasters
