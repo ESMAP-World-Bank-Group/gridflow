@@ -8,6 +8,7 @@ import yaml
 import geopandas as gpd
 import pandas as pd
 import fiona
+import json
 
 # Raster packages
 import rasterio
@@ -53,8 +54,35 @@ def read_borders(path, countries=None):
 
 
 # Determine neighbors of countries given neighbor dataset
-def get_neighbors(countries):
-    return []
+def get_neighbors(countries, neighbor_path, iso2_to_3):
+    # load the data of country neighbors
+    with open(neighbor_path) as f:
+        data = json.load(f)
+    # extract into pandas dataframe
+    df = (
+        pd.DataFrame.from_dict(data, orient="index")
+        .assign(neighbour=lambda d: d["neighbour"].apply(lambda lst: [n["code"] for n in lst]))
+    )
+    df.index.name = "country"
+
+    # create a dictionary to map iso2 to iso3 names
+    iso_map_df = pd.read_csv(iso2_to_3)
+    iso_map = dict(zip(iso_map_df["alpha-2"], iso_map_df["alpha-3"]))
+    
+    # map the iso2 names in the index and neighbors lists
+    df["neighbour"] = df["neighbour"].apply(
+        lambda lst: [iso_map.get(ctry) for ctry in lst]
+    )
+    df = df.rename(index=iso_map)
+
+    # filter to our countries
+    df = df.loc[df.index.isin(countries)]
+    neighbor_set = set(df.neighbour.sum())
+    # remove countries themselves from neighbors list
+    country_set = set(countries)
+    neighbor_set = neighbor_set - country_set
+
+    return neighbor_set
 
 
 # Convert country to zone

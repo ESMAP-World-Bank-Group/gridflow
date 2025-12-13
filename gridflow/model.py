@@ -78,7 +78,10 @@ class region:
         )
         self.countries = read_borders(borders_path, countries)
         if include_neighbors is True:
-            self.neighbors = read_borders(borders_path, get_neighbors(countries))
+            neighbor_list_path = get_global_dataset_file_path("neighbors", "country_neighbors.json", root=global_data_path)
+            country_names_path = get_global_dataset_file_path("country", "country_names.csv", root=global_data_path)
+            neighbors_list = get_neighbors(countries, neighbor_list_path, country_names_path)
+            self.neighbors = read_borders(borders_path, neighbors_list)
         elif isinstance(include_neighbors, list):
             self.neighbors = read_borders(borders_path, include_neighbors)
         else:
@@ -233,10 +236,6 @@ class region:
         zones = self.zones.assign(type="region-zone")
         neigh = ctry_to_zone_format(self.neighbors).assign(type="region-neighbor")
         self.grid.create_lines(pd.concat([zones, neigh]))
-
-    def get_neighbor_capacities(self, verbose=False):
-        """Return the per-country neighbor capacity map collected from the network."""
-        return self.grid.get_neighbor_capacities(verbose=verbose)
 
 
 class network:
