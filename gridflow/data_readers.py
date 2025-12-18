@@ -8,6 +8,7 @@ import yaml
 import geopandas as gpd
 import pandas as pd
 import fiona
+import json
 
 # Raster packages
 import rasterio
@@ -24,7 +25,8 @@ def read_line_data(path, region, minkm=0):
     with fiona.open(path, layer="power_line") as src:
         crs = src.crs
     # Get bounding box of region
-    minx, miny, maxx, maxy = utils.get_bb(region.countries, crs=crs)
+    minx, miny, maxx, maxy = utils.get_bb(pd.concat([region.countries, region.neighbors],
+                                                    ignore_index=True), crs=crs)
     # Get lines that intersect bounding box
     linepd = gpd.read_file(path, layer="power_line",
                            bbox=(minx, miny, maxx, maxy))
@@ -51,6 +53,55 @@ def read_borders(path, countries=None):
     return filtered
 
 
+# Determine neighbors of countries given neighbor dataset
+def get_neighbors(countries, neighbor_path, iso2_to_3):
+    # load the data of country neighbors
+    with open(neighbor_path) as f:
+        data = json.load(f)
+    # extract into pandas dataframe
+    df = (
+        pd.DataFrame.from_dict(data, orient="index")
+        .assign(neighbour=lambda d: d["neighbour"].apply(lambda lst: [n["code"] for n in lst]))
+    )
+    df.index.name = "country"
+
+    # create a dictionary to map iso2 to iso3 names
+    iso_map_df = pd.read_csv(iso2_to_3)
+    iso_map = dict(zip(iso_map_df["alpha-2"], iso_map_df["alpha-3"]))
+    
+    # map the iso2 names in the index and neighbors lists
+    df["neighbour"] = df["neighbour"].apply(
+        lambda lst: [iso_map.get(ctry) for ctry in lst]
+    )
+    df = df.rename(index=iso_map)
+
+    # filter to our countries
+    df = df.loc[df.index.isin(countries)]
+    neighbor_set = set(df.neighbour.sum())
+    # remove countries themselves from neighbors list
+    country_set = set(countries)
+    neighbor_set = neighbor_set - country_set
+
+    return neighbor_set
+
+
+# Convert country to zone
+def ctry_to_zone_format(countries):
+    """Converts the dataframe containing countries to the format of zone data.
+    This is used when adding neighboring countries into network estimation.
+    """
+    if len(countries) == 0:
+        empty = pd.DataFrame(columns=["country", "zone_label", "geometry"])
+        empty.index.name = "zone"
+        return empty
+
+    ctry_zone = countries[["ISO_A3", "geometry"]]
+    ctry_zone = ctry_zone.assign(country=ctry_zone["ISO_A3"],
+                                 zone_label=ctry_zone["ISO_A3"])
+    ctry_zone = ctry_zone.set_index("ISO_A3")
+    ctry_zone.index.name = "zone"
+    return ctry_zone
+  
 def read_boundaries(path, countries):
     boundaries = gpd.read_file(path, 
                                layer="globalADM1")
@@ -62,7 +113,6 @@ def read_boundaries(path, countries):
 # Functions to read a subset of a global raster
 def get_country_raster(country, raster_path):
     """Clip a global raster down to the country bounding box and return it."""
-    # Get a region of a large raster corresponding to a country bounding box.
     # Get raster crs
     with rasterio.open(raster_path) as src:
         raster_crs = src.crs
