@@ -101,6 +101,13 @@ def ctry_to_zone_format(countries):
     ctry_zone = ctry_zone.set_index("ISO_A3")
     ctry_zone.index.name = "zone"
     return ctry_zone
+  
+def read_boundaries(path, countries):
+    boundaries = gpd.read_file(path, 
+                               layer="globalADM1")
+    # filter to our countries
+    boundaries = boundaries[boundaries.shapeGroup.isin(countries)]
+    return boundaries
 
 
 # Functions to read a subset of a global raster

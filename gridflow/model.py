@@ -23,6 +23,7 @@ from gridflow.data_readers import (
     get_neighbors,
     get_zonal_re,
     read_borders,
+    read_boundaries,
     read_line_data,
     ctry_to_zone_format
 )
@@ -122,9 +123,39 @@ class region:
         # Paths to necessary global datasets
         self.global_pv = get_global_dataset_file_path("pv", "pv.tif", root=global_data_path)
         self.global_wind = get_global_dataset_file_path("wind", "wind.tif", root=global_data_path)
-
+        self.global_admin = get_global_dataset_file_path("admin", "admin_boundaries.gpkg", root=global_data_path)
     
-    def create_zones(self, n=10, method="pv", verbose=False):
+    def create_zones(self, method="pv", n=10, verbose=False):
+        """Define zones by multiple methods.
+
+        method : string
+            Name of zoning method to use. Options include:
+            admin - Use administrative boundaries as zones
+            pv - Segment zones based on pv potential map
+            wind - Segment zones based on wind potential map
+        """
+
+        if method in ["pv", "wind"]:
+            zones = self.segment_re_zones(n=n, method=method, verbose=verbose)
+        elif method == "admin":
+            # load global boundary data
+            boundaries = read_boundaries(self.global_admin, self.countries.ISO_A3.to_list())
+            zones = boundaries[["shapeName", "shapeGroup", "geometry"]]
+            # some of these boundaries may be invalid - let's make them valid
+            for idx in zones.index:
+                poly = zones.loc[idx, "geometry"]
+                if not poly.is_valid:
+                    zones.loc[idx, "geometry"] = poly.buffer(0)
+            zones = zones.rename({"shapeName" : "zone_name", "shapeGroup" : "country"},
+                                 axis = 1)
+    
+        # force the zones to have ordered, integer indices
+        zones = zones.reset_index().drop("index", axis=1)
+    
+        self.zones = zones
+
+
+    def segment_re_zones(self, n=10, method="pv", verbose=False):
         """Segments region into zones. 
 
         Number of zones is specified by modeller. Eventually will
@@ -137,8 +168,8 @@ class region:
 
         method : string
             Name of segmentation method to use. Options include:
-            pv - Segment based on pv potential map
-            wind - Segment based on wind potential map
+            pv - Segment zones based on pv potential map
+            wind - Segment zones based on wind potential map
         """
         verbose_log("ZONE_SEGMENT", f"Starting segmentation for method '{method}', target {n} zones per country.", verbose)
 
