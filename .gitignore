@@ -46,12 +46,7 @@ output/
 data/epm_inputs/
 data/maps/
 
-# Global datasets: ignore everything except tracked core files/folders
-data/global_datasets/*
-!data/global_datasets/borders_sample/
-!data/global_datasets/country_names.csv
-!data/global_datasets/data_documentation.txt
-!data/global_datasets/grid_sample.gpkg
-!data/global_datasets/population_2020.tif
-!data/global_datasets/pv.tif
-!data/global_datasets/wind.tif
+# real global datasets are too large to track. 
+# keep your own local copy here to work with.
+# a smaller sample dataset is tracked in data/sample/
+data/global/
