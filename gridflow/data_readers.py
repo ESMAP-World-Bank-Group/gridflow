@@ -217,27 +217,29 @@ def get_config_data(category, key):
     return data[category][key]
 
 
-def get_global_datasets_path(fallback="data/global_datasets"):
-    """Return the global datasets folder configured in config.yaml."""
+def get_global_datasets_path(fallback="data/sample"):
+    """Return the active root folder (config.yaml's input_data.roots[input_data.root])."""
     try:
-        return get_config_data("input_data", "global_datasets")
+        roots = get_config_data("input_data", "roots")
+        return roots[get_config_data("input_data", "root")]
     except (FileNotFoundError, KeyError, TypeError):
         return fallback
 
 
-def get_global_dataset_file_path(name, default_relative, *, root=None):
-    """Return a dataset file path, preferring config overrides."""
-    try:
-        files = get_config_data("input_data", "files")
-    except (FileNotFoundError, KeyError, TypeError):
-        files = None
-
-    if isinstance(files, dict) and name in files:
-        return files[name]
+def get_global_dataset_file_path(name, *, root=None):
+    """Return `root` (or the active config.yaml root) joined with dataset
+    `name`'s relative filename, declared in config.yaml's `input_data.files`.
+    """
+    files = get_config_data("input_data", "files")
+    if name not in files:
+        raise KeyError(
+            f"No 'input_data.files.{name}' entry in config.yaml -- add one "
+            "(a relative filename) to declare where this dataset lives."
+        )
 
     if root is None:
         root = get_global_datasets_path()
-    return os.path.join(root, default_relative)
+    return os.path.join(root, files[name])
 
 
 def load_background_map(name, default_path=None):
