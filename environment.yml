@@ -27,6 +27,9 @@ dependencies:
   # image processing
   - scikit-image
 
+  # graph algorithms (network condensation)
+  - networkx
+
   # parallel / lazy evaluation
   - dask
   - distributed

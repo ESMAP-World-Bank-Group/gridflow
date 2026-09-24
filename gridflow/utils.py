@@ -71,7 +71,7 @@ def ensure_file_exists(path, *, verbose=False):
     return file_path
 
 class country_code_map:
-    def __init__(self, code_path="data/global_datasets/country_names.csv"):
+    def __init__(self, code_path="data/sample/country_names.csv"):
         path = ensure_file_exists(code_path)
         self.codes = pd.read_csv(path)
 

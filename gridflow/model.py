@@ -28,6 +28,7 @@ from gridflow.data_readers import (
     ctry_to_zone_format
 )
 from gridflow.utils import verbose_log, directional_zone_labels
+from gridflow.network_zones import build_network_zones
 
 
 class region:
@@ -70,13 +71,11 @@ class region:
             global_data_path = get_global_datasets_path()
         self.global_data_path = global_data_path
 
-        borders_path = get_global_dataset_file_path(
-            "borders", "borders/WB_GAD_ADM0_complete.shp", root=global_data_path
-        )
+        borders_path = get_global_dataset_file_path("borders", root=global_data_path)
         self.countries = read_borders(borders_path, countries)
         if include_neighbors is True:
-            neighbor_list_path = get_global_dataset_file_path("neighbors", "country_neighbors.json", root=global_data_path)
-            country_names_path = get_global_dataset_file_path("country", "country_names.csv", root=global_data_path)
+            neighbor_list_path = get_global_dataset_file_path("neighbors", root=global_data_path)
+            country_names_path = get_global_dataset_file_path("country", root=global_data_path)
             neighbors_list = get_neighbors(countries, neighbor_list_path, country_names_path)
             self.neighbors = read_borders(borders_path, neighbors_list)
         elif isinstance(include_neighbors, list):
@@ -85,20 +84,16 @@ class region:
             self.neighbors = gpd.GeoDataFrame(geometry=[])
 
         # The transmission system -- starts out empty
-        grid_path = get_global_dataset_file_path("grid", "grid_sample.gpkg", root=global_data_path)
+        grid_path = get_global_dataset_file_path("grid", root=global_data_path)
         self.grid = network(grid_path)
         self.grid.region = self
-        
+
         # The zones -- start out empty
         self.zones = gpd.GeoDataFrame(geometry=[])
 
         # Define the zonal statistics; allow users to pick a subset to keep setup simple.
-        population_path = get_global_dataset_file_path(
-            "population", "population_2020.tif", root=global_data_path
-        )
-        gdp_path = get_global_dataset_file_path(
-            "gdp", "GDP2005_1km.tif", root=global_data_path
-        )
+        population_path = get_global_dataset_file_path("population", root=global_data_path)
+        gdp_path = get_global_dataset_file_path("gdp", root=global_data_path)
         available_zone_stats = {
             "population": zonedata("population", population_path, "sum"),
             "gdp": zonedata("gdp", gdp_path, "mean"),
@@ -121,9 +116,9 @@ class region:
         self.zone_re = pd.DataFrame()
         
         # Paths to necessary global datasets
-        self.global_pv = get_global_dataset_file_path("pv", "pv.tif", root=global_data_path)
-        self.global_wind = get_global_dataset_file_path("wind", "wind.tif", root=global_data_path)
-        self.global_admin = get_global_dataset_file_path("admin", "admin_boundaries.gpkg", root=global_data_path)
+        self.global_pv = get_global_dataset_file_path("pv", root=global_data_path)
+        self.global_wind = get_global_dataset_file_path("wind", root=global_data_path)
+        self.global_admin = get_global_dataset_file_path("admin", root=global_data_path)
     
     def create_zones(self, method="pv", n=10, verbose=False):
         """Define zones by multiple methods.
@@ -136,7 +131,8 @@ class region:
         """
 
         if method in ["pv", "wind"]:
-            zones = self.segment_re_zones(n=n, method=method, verbose=verbose)
+            self.zones = self.segment_re_zones(n=n, method=method, verbose=verbose)
+            return
         elif method == "admin":
             # load global boundary data
             boundaries = read_boundaries(self.global_admin, self.countries.ISO_A3.to_list())
@@ -148,18 +144,20 @@ class region:
                     zones.loc[idx, "geometry"] = poly.buffer(0)
             zones = zones.rename({"shapeName" : "zone_name", "shapeGroup" : "country"},
                                  axis = 1)
-    
-        # force the zones to have ordered, integer indices
-        zones = zones.reset_index().drop("index", axis=1)
-    
+            zones = zones.reset_index(drop=True)
+            # Match pv/wind/network zoning's zone_label/index convention;
+            # prefixed with country in case two share an admin unit name.
+            zone_labels = [f"{row.country}-{row.zone_name}" for row in zones.itertuples()]
+            zones = zones.assign(zone_label=zone_labels)
+            zones.index = pd.Index(zone_labels, name="zone")
+        else:
+            raise ValueError(f"Unknown zoning method '{method}'. Use 'pv', 'wind', or 'admin'.")
+
         self.zones = zones
 
 
     def segment_re_zones(self, n=10, method="pv", verbose=False):
-        """Segments region into zones. 
-
-        Number of zones is specified by modeller. Eventually will
-        support multiple segmentation methods of varied complexity. 
+        """Segments region into zones and returns them (does not set self.zones).
 
         Parameters
         ----------
@@ -194,14 +192,14 @@ class region:
             zones["country"] = country["ISO_A3"].iloc[0]
             all_zones.append(zones)
  
-        self.zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
-                                      geometry="geometry",
-                                      crs=all_zones[0].crs).drop(columns=["label"])
-        zone_names = directional_zone_labels(self.zones, country_col="country", verbose=verbose)
-        self.zones = self.zones.assign(zone_label=zone_names)
-        self.zones.index = pd.Index(zone_names, name="zone")
+        zones = gpd.GeoDataFrame(pd.concat(all_zones, ignore_index=True),
+                                 geometry="geometry",
+                                 crs=all_zones[0].crs).drop(columns=["label"])
+        zone_names = directional_zone_labels(zones, country_col="country", verbose=verbose)
+        zones = zones.assign(zone_label=zone_names)
+        zones.index = pd.Index(zone_names, name="zone")
         country_list = ", ".join(self.countries["ISO_A3"].tolist())
-        verbose_log("ZONE_SEGMENT", f"Created {len(self.zones)} zones for {country_list}.", verbose)
+        verbose_log("ZONE_SEGMENT", f"Created {len(zones)} zones for {country_list}.", verbose)
         sample_count = min(5, len(zone_names))
         sample_labels = ", ".join(zone_names[:sample_count])
         extra = f" +{len(zone_names)-sample_count} more" if len(zone_names) > sample_count else ""
@@ -210,6 +208,7 @@ class region:
             f"Method '{method}' assigned labels (first {sample_count}): {sample_labels}{extra}",
             verbose,
         )
+        return zones
 
     
     def set_zone_data(self, verbose=False):
@@ -253,13 +252,33 @@ class region:
         verbose_log("ZONE_RE", "Saved renewables profiles to region.zone_re", verbose)
 
 
-    def create_network(self):
-        """Create the network flow models for defined subregions.
+    def create_network(self, method=None, n=10, resolution_km=50, weight="capacity", minkm=5,
+                       adjacency_weight=1e-3, verbose=False):
+        """Create the network flow model for the region.
 
-        After region has been segmented into subregions, we can define
-        the routes of lines through subregions and accordingly estimate the
-        flow representation of the network. 
+        With no `method`, assumes zones already exist (e.g. via `create_zones()`)
+        and just computes flow between them. Passing `method` makes this a
+        one-call alternative that (re)defines zones too, so `set_zone_data()`
+        still works afterward either way.
+
+        method : {"pv", "wind", "admin", "network", None}
+            "pv"/"wind"/"admin": delegates to `create_zones(method, n)`, then
+            computes flow the existing way. "network": zones and capacities are
+            both derived from the real line topology instead (see
+            `gridflow.network_zones`); `n` is target zones per country, and
+            `resolution_km`/`weight`/`minkm`/`adjacency_weight` only apply here.
+            None (default): use whatever is already in `self.zones`.
         """
+        if method == "network":
+            self.zones, self.grid.lines, self.grid.flow, self.grid.flow_neighbor = build_network_zones(
+                self, n=n, resolution_km=resolution_km, weight=weight, minkm=minkm,
+                adjacency_weight=adjacency_weight, verbose=verbose
+            )
+            return
+
+        if method is not None:
+            self.create_zones(method=method, n=n, verbose=verbose)
+
         zones = self.zones.assign(type="region-zone")
         neigh = ctry_to_zone_format(self.neighbors).assign(type="region-neighbor")
         self.grid.create_lines(pd.concat([zones, neigh]))
@@ -379,7 +398,11 @@ class network:
         int_zones = []
         int_dist = []
 
-        onpath = zones[zones.intersects(line)].copy()
+        # Use the zones' spatial index to narrow down to candidates whose bounding
+        # box could intersect the line before running the exact intersects test,
+        # instead of testing every zone.
+        candidate_pos = zones.sindex.query(line, predicate="intersects")
+        onpath = zones.iloc[candidate_pos].copy()
         onpath["intersect"] = onpath.geometry.apply(lambda r: r.intersection(line))
         for zidx, intersection in onpath.iterrows():
             seg = intersection.intersect
