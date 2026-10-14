@@ -97,7 +97,7 @@ class region:
         population_path = get_global_dataset_file_path("population", root=global_data_path)
         gdp_path = get_global_dataset_file_path("gdp", root=global_data_path)
         available_zone_stats = {
-            "population": zonedata("population", population_path, "sum"),
+            "population": zonedata("population", population_path, "density_sum"),
             "gdp": zonedata("gdp", gdp_path, "mean"),
         }
         if zone_stats_to_load is None:
@@ -216,26 +216,61 @@ class region:
         return zones
 
     
-    def set_zone_data(self, verbose=False):
+    def set_zone_data(self, demand_scaleby="population", verbose=False):
         """
-        Compute zonal statistics and renewables profiles.
+        Compute zonal statistics, demand shares and renewables profiles, via
+        `set_zone_demand_shares()` and `set_zone_re()`, which can also be
+        called separately.
 
         Parameters
         ----------
+        demand_scaleby : str
+            Zone statistic to distribute demand by (see `set_zone_demand_shares`).
         verbose : bool
             If True, print which datasets are loaded and where they are stored.
         """
-        ### Generate statistics for each subregion
+        self.set_zone_demand_shares(scaleby=demand_scaleby, verbose=verbose)
+        self.set_zone_re(verbose=verbose)
+
+    def set_zone_demand_shares(self, scaleby="population", verbose=False):
+        """Compute zonal statistics into `self.zone_stats`, plus a
+        `demand_share` column: each zone's share of its country's demand,
+        proportional to `scaleby`. Shares sum to 1 within each country.
+
+        Parameters
+        ----------
+        scaleby : str
+            Zone statistic to distribute demand by; must be one of the
+            loaded `zone_stat_specs` (e.g. "population").
+        verbose : bool
+            If True, print which datasets are loaded and where they are stored.
+        """
+        if scaleby not in self.zone_stat_specs:
+            raise ValueError(
+                f"Can't distribute demand by '{scaleby}': it isn't a loaded zone stat. "
+                f"Loaded: {list(self.zone_stat_specs.keys())}."
+            )
         # Iterate through datasets, and obtain aggregate subregion statistics
         zstats = pd.DataFrame(index=self.zones.index)
         for zdata in self.zone_stat_specs.values():
             verbose_log("ZONE_STATS", f"Loading zone stat '{zdata.name}' from {zdata.path}", verbose)
             zstats = zdata.get_zone_values(self, outputdf=zstats)
-        
+
+        country_total = zstats[scaleby].groupby(self.zones["country"]).transform("sum")
+        zstats["demand_share"] = zstats[scaleby] / country_total
+
         self.zone_stats = zstats
         verbose_log("ZONE_STATS", f"Saved stats with columns: {list(self.zone_stats.columns)}", verbose)
 
-        # Get renewables profiles for each zone
+    def set_zone_re(self, verbose=False):
+        """Fetch renewables profiles for each zone from renewables.ninja into
+        `self.zone_re`, one column per zone.
+
+        Parameters
+        ----------
+        verbose : bool
+            If True, print each zone as it's queried.
+        """
         verbose_log("ZONE_RE", "Loading renewables profiles for each zone from renewables.ninja (default: pv).", verbose)
         transformer = Transformer.from_crs("EPSG:3857", self.zones.crs, always_xy=True)
         for zidx in range(len(self.zones)):
@@ -502,10 +537,14 @@ class zonedata:
         self.name = name
     
     def aggregate(self, data):
-        """Aggregate raster values according to the configured function."""
+        """Aggregate raster values according to the configured function.
+
+        "density_sum" expects `data` already multiplied by pixel area (see
+        `get_zone_values`), turning a per-km² density into a total.
+        """
         if self.agg=="mean":
             return np.mean(data)
-        elif self.agg=="sum":
+        elif self.agg in ("sum", "density_sum"):
             return np.sum(data)
     
     def get_zone_values(self, region, outputdf=None):
@@ -525,7 +564,10 @@ class zonedata:
             # Clip the raster to the zone geometry
             zoneras = ras.rio.clip([geom], zones.crs)
             # Get valid raster values
-            data = _get_ras_values(zoneras, zoneras.rio.nodata)
+            valid = _get_ras_mask(zoneras, zoneras.rio.nodata)
+            data = zoneras.values[valid]
+            if self.agg == "density_sum":
+                data = data * _pixel_area_km2(zoneras)[valid]
             # Aggregate the data and fill in the results dataframe
             rez = self.aggregate(data) if data.size > 0 else np.nan
             outputdf.loc[idx, self.name] = rez
@@ -534,19 +576,32 @@ class zonedata:
 
 """Helper Functions"""
 
-def _get_ras_values(ras, nodata):
-    """Extract valid raster cells, excluding nodata."""
+def _get_ras_mask(ras, nodata):
+    """Boolean mask of valid (non-nodata) raster cells."""
     data = ras.values
-    if data.size == 0:
-        return data
     if pd.isna(nodata):
-        mask = ~pd.isna(data)
+        return ~pd.isna(data)
+    try:
+        return data != nodata
+    except TypeError:
+        return pd.Series(data.ravel()).ne(nodata).values.reshape(data.shape)
+
+def _pixel_area_km2(ras):
+    """Area of each raster cell in km², broadcast to the raster's shape.
+
+    In a geographic CRS, cells shrink with latitude, so area is computed
+    per row on a sphere; in a projected CRS, every cell has the same area.
+    """
+    res_x, res_y = (abs(r) for r in ras.rio.resolution())
+    if ras.rio.crs.is_geographic:
+        earth_radius_km = 6371.0088
+        lat = np.radians(ras.y.values)
+        half = np.radians(res_y) / 2
+        row_area = earth_radius_km**2 * np.radians(res_x) * (np.sin(lat + half) - np.sin(lat - half))
+        area = np.broadcast_to(row_area[:, None], ras.shape[-2:])
     else:
-        try:
-            mask = data != nodata
-        except TypeError:
-            mask = pd.Series(data.ravel()).ne(nodata).values.reshape(data.shape)
-    return data[mask]
+        area = np.full(ras.shape[-2:], res_x * res_y / 1e6)
+    return np.broadcast_to(area, ras.shape)
         
 def _streamline(seq):
     """Collapse consecutive duplicates while preserving order."""
