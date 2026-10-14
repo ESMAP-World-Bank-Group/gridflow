@@ -77,6 +77,38 @@ def build_adjacency_edges(nodes, land, weight=1e-3, land_buffer_deg=0.02):
     return pd.DataFrame(records, columns=["from_node", "to_node", "capacity", "weight", "line_ids"])
 
 
+def connect_small_components(nodes, edges, land, min_km2=1000, weight=1e-3):
+    """Tiny-weight edges tying each connected component with less than
+    `min_km2` of land to the nearest cell outside all such components.
+
+    Without these, every small island no line reaches is its own component,
+    and since modularity clustering can't merge components, each one takes up
+    a zone of its own. Components of at least `min_km2` (e.g. major islands)
+    are left separate on purpose.
+    """
+    G = nx.Graph()
+    G.add_nodes_from(nodes.index)
+    G.add_edges_from(zip(edges["from_node"], edges["to_node"]))
+
+    utm = nodes.estimate_utm_crs()
+    centroids = nodes.to_crs(utm).geometry.centroid
+    land_utm = gpd.GeoSeries([land], crs=nodes.crs).to_crs(utm).iloc[0]
+    land_km2 = nodes.to_crs(utm).geometry.intersection(land_utm).area / 1e6
+
+    small = [list(c) for c in nx.connected_components(G) if land_km2[list(c)].sum() < min_km2]
+    targets = nodes.index.difference([n for c in small for n in c])
+    if not small or targets.empty:
+        return pd.DataFrame(columns=["from_node", "to_node", "capacity", "weight", "line_ids"])
+
+    records = []
+    for component in small:
+        distances = pd.DataFrame({n: centroids[targets].distance(centroids[n]) for n in component})
+        to_node, from_node = distances.stack().idxmin()
+        records.append({"from_node": from_node, "to_node": to_node,
+                        "capacity": 0.0, "weight": weight, "line_ids": []})
+    return pd.DataFrame(records, columns=["from_node", "to_node", "capacity", "weight", "line_ids"])
+
+
 def condense_by_modularity(nodes, edges, weight="capacity", n_clusters=None):
     """Condense the graph into communities via greedy modularity maximization.
     """
@@ -121,12 +153,14 @@ def condense_by_modularity(nodes, edges, weight="capacity", n_clusters=None):
 
 
 def build_network_zones(region, n=10, resolution_km=50, weight="capacity", minkm=5,
-                        adjacency_weight=1e-3, verbose=False):
+                        adjacency_weight=1e-3, min_km2=1000, verbose=False):
     """Build zones and inter-zone flow for `region` directly from real line
     topology: a fine grid per country, condensed via modularity clustering.
 
     `n` is zones per country; a country with more disconnected landmasses
     than `n` comes back with more zones instead of merging unrelated ones.
+    Landmasses smaller than `min_km2` that no line reaches are tied
+    to the nearest larger one instead, so they don't take up zones.
     `adjacency_weight` must stay well below real line capacity (~1MW+) so it
     only breaks ties for cells with no real line.
 
@@ -172,6 +206,9 @@ def build_network_zones(region, n=10, resolution_km=50, weight="capacity", minkm
         edges["weight"] = edges[weight]
         adjacency_edges = build_adjacency_edges(nodes, country.union_all(), weight=adjacency_weight)
         edges = pd.concat([edges, adjacency_edges], ignore_index=True)
+        island_edges = connect_small_components(nodes, edges, country.union_all(),
+                                                min_km2=min_km2, weight=adjacency_weight)
+        edges = pd.concat([edges, island_edges], ignore_index=True)
 
         n_clusters = min(n, len(nodes)) if len(nodes) else 1
         condensed_nodes, condensed_edges = condense_by_modularity(

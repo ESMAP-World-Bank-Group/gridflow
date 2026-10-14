@@ -100,3 +100,16 @@ Huang et al. (2022) provide 1-km global gridded population projections for 2010â
 downscales national totals using night-time lights, road density, land cover, elevation, and socioeconomic covariates in a machine-learning
 framework, then constrains outputs to UN and SSP aggregates. Use this stack when you need future-year spatial population distributions to scale
 load or stress-test demand assumptions. Not bundled; download externally and place under data/global_datasets/population_projections.
+
+------------------------------------------------------------
+
+9. Global Power Plant Data
+File name: power_plants.csv
+Source: https://github.com/rhiza-research/powerplantmatching/tree/global-gem/outputs/gem_global (gem_global_plants.csv)
+Original source: Global Energy Monitor trackers (https://globalenergymonitor.org), CC BY 4.0
+
+Note:
+Global plant list built from the Global Energy Monitor trackers with powerplantmatching. Each row is one plant site, technology and
+status, with capacity in MW, coordinates, ISO3 country code, and `tech`/`fuel` named after PyPSA technology-data. If the file is
+missing under the active root, gridflow downloads it from config.yaml's input_data.urls.power_plants. The sample file contains
+Luxembourg's plants only.

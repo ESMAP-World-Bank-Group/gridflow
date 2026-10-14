@@ -19,12 +19,14 @@ from pyproj import Transformer
 from gridflow.data_readers import (
     get_country_raster,
     get_global_dataset_file_path,
+    get_global_dataset_url,
     get_global_datasets_path,
     get_neighbors,
     get_zonal_re,
     read_borders,
     read_boundaries,
     read_line_data,
+    read_power_plants,
     ctry_to_zone_format
 )
 from gridflow.utils import verbose_log, directional_zone_labels
@@ -114,12 +116,15 @@ class region:
         self.zone_stats = pd.DataFrame()
         # Empty dataframe for zone RE profiles
         self.zone_re = pd.DataFrame()
-        
+        # Empty dataframe for power plants assigned to zones
+        self.zone_plants = pd.DataFrame()
+
         # Paths to necessary global datasets
         self.global_pv = get_global_dataset_file_path("pv", root=global_data_path)
         self.global_wind = get_global_dataset_file_path("wind", root=global_data_path)
         self.global_admin = get_global_dataset_file_path("admin", root=global_data_path)
-    
+        self.global_power_plants = get_global_dataset_file_path("power_plants", root=global_data_path)
+
     def create_zones(self, method="pv", n=10, verbose=False):
         """Define zones by multiple methods.
 
@@ -251,9 +256,73 @@ class region:
                 self.zone_re = pd.concat([self.zone_re, get_zonal_re(zone)], axis=1)
         verbose_log("ZONE_RE", "Saved renewables profiles to region.zone_re", verbose)
 
+    def set_zone_plants(self, max_distance_km=50, verbose=False):
+        """Assign the region's power plants to zones and store them in
+        `self.zone_plants`, one row per plant with a `zone` column.
+
+        Plants inside a zone are assigned to it; plants outside every zone
+        (offshore wind, coastal plants, plants just past a trimmed border) go
+        to the nearest zone within `max_distance_km`, and are dropped with a
+        warning beyond that.
+
+        Parameters
+        ----------
+        max_distance_km : float
+            Furthest a plant outside all zones may be from its assigned zone.
+        verbose : bool
+            If True, print how plants were assigned.
+        """
+        countries = self.countries["ISO_A3"].tolist()
+        plants = read_power_plants(self.global_power_plants, countries,
+                                   url=get_global_dataset_url("power_plants"))
+        verbose_log("ZONE_PLANTS", f"Loaded {len(plants)} plants for {', '.join(countries)} "
+                    f"from {self.global_power_plants}", verbose)
+
+        zones = self.zones[["geometry"]].rename_axis("zone").reset_index().to_crs(plants.crs)
+        inside = gpd.sjoin(plants, zones, how="left", predicate="within")
+        zone = inside.loc[~inside.index.duplicated(), "zone"]
+
+        outside = zone.isna()
+        if outside.any():
+            # Distances need a metric CRS; a local UTM zone keeps them accurate.
+            utm = plants.estimate_utm_crs()
+            nearest = gpd.sjoin_nearest(plants[outside].to_crs(utm), zones.to_crs(utm),
+                                        how="left", max_distance=max_distance_km * 1e3)
+            nearest = nearest.loc[~nearest.index.duplicated(), "zone"]
+            zone = zone.fillna(nearest)
+            verbose_log("ZONE_PLANTS", f"Assigned {nearest.notna().sum()} plants "
+                        f"outside all zones to the nearest zone.", verbose)
+
+        dropped = zone.isna()
+        if dropped.any():
+            print(f"WARNING: {dropped.sum()} plants ({plants.loc[dropped, 'Capacity'].sum():.0f} MW) "
+                  f"are more than {max_distance_km} km from any zone and were dropped.")
+
+        self.zone_plants = plants[~dropped].assign(zone=zone[~dropped])
+        verbose_log("ZONE_PLANTS", f"Saved {len(self.zone_plants)} plants to region.zone_plants", verbose)
+
+    def zone_capacity(self, status="operating", by="tech"):
+        """Return installed capacity (MW) per zone, with zones as rows and
+        `by` (e.g. "tech", "fuel") as columns.
+
+        Parameters
+        ----------
+        status : str, list of str, or None
+            Plant statuses to include (e.g. "operating", "construction").
+            None includes all.
+        by : str
+            Column of `self.zone_plants` to split capacity by.
+        """
+        plants = self.zone_plants
+        if status is not None:
+            plants = plants[plants["Status"].isin(np.atleast_1d(status))]
+        return (plants.pivot_table(index="zone", columns=by, values="Capacity",
+                                   aggfunc="sum", fill_value=0)
+                      .reindex(self.zones.index, fill_value=0))
+
 
     def create_network(self, method=None, n=10, resolution_km=50, weight="capacity", minkm=5,
-                       adjacency_weight=1e-3, verbose=False):
+                       adjacency_weight=1e-3, min_km2=1000, verbose=False):
         """Create the network flow model for the region.
 
         With no `method`, assumes zones already exist (e.g. via `create_zones()`)
@@ -266,13 +335,15 @@ class region:
             computes flow the existing way. "network": zones and capacities are
             both derived from the real line topology instead (see
             `gridflow.network_zones`); `n` is target zones per country, and
-            `resolution_km`/`weight`/`minkm`/`adjacency_weight` only apply here.
+            `resolution_km`/`weight`/`minkm`/`adjacency_weight`/`min_km2`
+            only apply here.
             None (default): use whatever is already in `self.zones`.
         """
         if method == "network":
             self.zones, self.grid.lines, self.grid.flow, self.grid.flow_neighbor = build_network_zones(
                 self, n=n, resolution_km=resolution_km, weight=weight, minkm=minkm,
-                adjacency_weight=adjacency_weight, verbose=verbose
+                adjacency_weight=adjacency_weight, min_km2=min_km2,
+                verbose=verbose
             )
             return
 

@@ -102,6 +102,29 @@ def ctry_to_zone_format(countries):
     ctry_zone.index.name = "zone"
     return ctry_zone
   
+# Reader functions for power plant data
+def read_power_plants(path, countries, url=None):
+    """Load power plants for the ISO3 codes of interest as point geometries.
+
+    `path` is a powerplantmatching-style CSV with `ISO3`, `lat` and `lon`
+    columns. If it doesn't exist and `url` is given, the file is downloaded
+    there first.
+    """
+    if not os.path.exists(path):
+        if url is None:
+            raise FileNotFoundError(f"No power plant file at {path} and no url to download it from.")
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        response = requests.get(url, timeout=120)
+        response.raise_for_status()
+        with open(path, "wb") as f:
+            f.write(response.content)
+    plants = pd.read_csv(path, low_memory=False)
+    plants = plants[plants["ISO3"].isin(countries)]
+    return gpd.GeoDataFrame(plants,
+                            geometry=gpd.points_from_xy(plants["lon"], plants["lat"]),
+                            crs="EPSG:4326").reset_index(drop=True)
+
+
 def read_boundaries(path, countries):
     boundaries = gpd.read_file(path, 
                                layer="globalADM1")
@@ -224,6 +247,15 @@ def get_global_datasets_path(fallback="data/sample"):
         return roots[get_config_data("input_data", "root")]
     except (FileNotFoundError, KeyError, TypeError):
         return fallback
+
+
+def get_global_dataset_url(name):
+    """Return dataset `name`'s download url from config.yaml's
+    `input_data.urls`, or None if it has none."""
+    try:
+        return (get_config_data("input_data", "urls") or {}).get(name)
+    except (FileNotFoundError, KeyError, TypeError):
+        return None
 
 
 def get_global_dataset_file_path(name, *, root=None):
