@@ -5,18 +5,26 @@ The `gridflow` library uses geospatial data to build out a network flow model fo
 
 ## Installation
 
-> **Important:** Use the pinned environment definition to lock dependencies to Python 3.9 and the matching native libraries.
+gridflow is a Python package (`pyproject.toml`, Python 3.10+). Any of these work:
 
-1. Create and configure the environment from the provided `environment.yml`:
-   ```
-   conda env create -f environment.yml
-   ```
-2. Activate the environment before working on the project:
-   ```
-   conda activate gridflow_env
-   ```
-3. (Optional) Verify the installation by importing `gridflow` in a Python shell or running `conda list`/`pip list`.
+- **uv (recommended):** `uv sync` creates `.venv` from the pinned `uv.lock`
+  (add `--extra notebook` for Jupyter).
+- **pip:** `pip install -r requirements.txt` (pinned, exported from `uv.lock`),
+  then `pip install -e .`.
+- **conda:** `conda env create -f environment.yml`, then `conda activate gridflow-env`.
 
+### Using gridflow from another project
+
+Install it in editable mode from a checkout, e.g. from seer:
+
+```
+uv add --editable ../gridflow
+```
+
+gridflow then reads the repo's `config.yaml` and resolves its data paths
+(`data/sample`, `data/global`, ...) relative to that file, regardless of the
+working directory, so edits to the repo's config and code take effect without
+reinstalling. To use a different config, set `GRIDFLOW_CONFIG=/path/to/config.yaml`.
 
 ## Run
 

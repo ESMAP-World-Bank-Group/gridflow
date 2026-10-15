@@ -232,21 +232,43 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv", ve
     return df
 
 # Read from config file
+def get_config_path():
+    """Return the config.yaml gridflow uses: $GRIDFLOW_CONFIG if set, else the
+    repo's config.yaml, else the copy packaged with gridflow.
+
+    The repo copy is found relative to this package rather than the working
+    directory, so gridflow reads its own config when called from another
+    project (e.g. seer) via an editable install.
+    """
+    env_path = os.environ.get("GRIDFLOW_CONFIG")
+    if env_path:
+        return Path(env_path)
+    for path in (utils.REPO_ROOT / "config.yaml", Path(__file__).resolve().parent / "config.yaml"):
+        if path.exists():
+            return path
+    raise FileNotFoundError("No gridflow config.yaml found; set GRIDFLOW_CONFIG to its path.")
+
+
+def resolve_config_path(path):
+    """Resolve a (possibly relative) path from config.yaml against the
+    config file's folder, so it doesn't depend on the working directory."""
+    return str(get_config_path().parent / path)
+
+
 def get_config_data(category, key):
     """Read a specific key from the YAML config file."""
-    path = "config.yaml"
-    with open(path, 'r') as file:
+    with open(get_config_path(), 'r') as file:
         data = yaml.safe_load(file)
     return data[category][key]
 
 
-def get_global_datasets_path(fallback="data/sample"):
+def get_global_datasets_path(fallback=utils.REPO_ROOT / "data/sample"):
     """Return the active root folder (config.yaml's input_data.roots[input_data.root])."""
     try:
         roots = get_config_data("input_data", "roots")
-        return roots[get_config_data("input_data", "root")]
+        return resolve_config_path(roots[get_config_data("input_data", "root")])
     except (FileNotFoundError, KeyError, TypeError):
-        return fallback
+        return str(fallback)
 
 
 def get_global_dataset_url(name):
@@ -289,7 +311,10 @@ def load_background_map(name, default_path=None):
 
     if not path:
         return None
-    file_path = Path(path)
+    try:
+        file_path = Path(resolve_config_path(path))
+    except FileNotFoundError:
+        file_path = utils.REPO_ROOT / path
     if not file_path.exists():
         return None
     try:
