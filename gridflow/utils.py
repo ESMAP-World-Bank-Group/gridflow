@@ -9,6 +9,11 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point
 
+# The gridflow repo checkout (one level above this package). For an editable
+# install -- the usual way to use gridflow from another project -- this is
+# where config.yaml and data/ live.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
 def get_random_points(gpdf, n=20, maxattempts=10):
     "Obtains n randomly sampled points within a geometry."
     # Convert the geometry to a projected one for even sampling
@@ -71,7 +76,7 @@ def ensure_file_exists(path, *, verbose=False):
     return file_path
 
 class country_code_map:
-    def __init__(self, code_path="data/global_datasets/country_names.csv"):
+    def __init__(self, code_path=REPO_ROOT / "data/sample/country_names.csv"):
         path = ensure_file_exists(code_path)
         self.codes = pd.read_csv(path)
 

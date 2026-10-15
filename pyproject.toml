@@ -1,0 +1,56 @@
+[project]
+name = "gridflow"
+version = "0.1.0"
+description = "Spatial zoning, transmission networks and zonal data for power system models."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = [
+    # basic scientific packages
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "scipy",
+    # geospatial packages
+    "geopandas>=1.0",
+    "shapely>=2.0",
+    "fiona>=1.10",
+    "pyproj>=3.6",
+    "rtree",
+    "rasterio",
+    "rioxarray",
+    "rasterstats",
+    "pyogrio",
+    # image processing
+    "scikit-image",
+    # graph algorithms (network condensation)
+    "networkx",
+    # parallel / lazy evaluation
+    "dask",
+    "distributed",
+    "xarray",
+    # standard utilities
+    "requests",
+    "certifi",
+    "pyyaml",
+    "tqdm",
+    # plotting & visualization
+    "mapclassify",
+    "xyzservices",
+]
+
+[project.optional-dependencies]
+# jupyter (for demos)
+notebook = ["notebook", "jupyterlab"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gridflow"]
+
+# Ship the repo's config.yaml inside non-editable installs as a fallback;
+# editable installs read the repo copy directly (see data_readers.get_config_path).
+[tool.hatch.build.targets.wheel.force-include]
+"config.yaml" = "gridflow/config.yaml"

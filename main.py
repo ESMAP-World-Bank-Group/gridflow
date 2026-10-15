@@ -78,9 +78,7 @@ def _export_neighbor_map(region, lines, plot_dir, global_data_path, verbose=True
     fig, ax = plt.subplots(figsize=(10, 6))
     countries = region.countries.to_crs(epsg=3857)
     lines_proj = lines.to_crs(epsg=3857)
-    border_path = get_global_dataset_file_path(
-        "borders", "borders/WB_GAD_ADM0_complete.shp", root=global_data_path
-    )
+    border_path = get_global_dataset_file_path("borders", root=global_data_path)
     all_countries = read_borders(border_path)
     verbose_log(
         "NEIGHBOR_MAP",

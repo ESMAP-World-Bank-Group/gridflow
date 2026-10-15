@@ -1,0 +1,57 @@
+locationID,Country,ISO3,Fueltype,Technology,tech,fuel,Set,Status,Name,Capacity,DateIn,DateOut,lat,lon,n_units
+L100000602423,Luxembourg,LUX,Hydro,Pumped Storage,PHS,,PP,operating,Vianden,1294.0,1964.0,,49.9395,6.1825,1
+L100000908589,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Benzelt Wind Farm,12.0,2012.0,,50.1163,6.0168,1
+L100000909225,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Rulljen Geisdref Wind Farm,12.0,2016.0,,49.9409,5.9301,1
+L100000909474,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Kehmen Heischent Wind Farm,13.0,2004.0,,49.8965,6.0286,1
+L100000910347,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Aerenzdall Wind Farm,12.6,2023.0,,49.8409,6.2538,1
+L100000910754,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Housen Petschent Wind Farm,17.0,2016.0,,49.9701,6.1138,1
+L100000911438,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Duelem Wind Park,21.0,2023.0,,49.5478,6.2344,1
+L100000911966,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Weiler Wind Farm,21.0,2016.0,,50.1212,5.9457,1
+L100000912298,Luxembourg,LUX,Wind,Onshore,onwind,,PP,operating,Wincrange Wind Farm,23.0,2020.0,,50.0318,5.9053,1
+L100001010568,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Mamer Solar,1.3,,,49.6266,6.0229,1
+L100001010569,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Steinfort Solar,1.0,,,49.6598,5.9147,1
+L100001010570,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Bettembourg Solar,2.4,,,49.5173,6.0967,1
+L100001010571,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,5.0,,,49.5208,5.8892,1
+L100001010572,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,3.0,,,49.5208,5.8892,1
+L100001010573,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,1.7,,,49.5208,5.8892,1
+L100001010574,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,1.6,,,49.5208,5.8892,1
+L100001010575,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,1.7,,,49.5208,5.8892,1
+L100001010576,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.2,,,49.4786,6.0848,1
+L100001010577,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.2,,,49.4786,6.0848,1
+L100001010578,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,2.1,,,49.4786,6.0848,1
+L100001010579,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.5,,,49.4786,6.0848,1
+L100001010580,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.2,,,49.4786,6.0848,1
+L100001010581,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Mondercange Solar,1.1,,,49.5321,5.987,1
+L100001010582,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Contern Solar,3.6,,,49.5858,6.2263,1
+L100001010583,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Contern Solar,2.7,,,49.5858,6.2263,1
+L100001010584,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Colmar Berg Solar,1.4,,,49.8111,6.091,1
+L100001010585,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Bissen Solar,1.4,,,49.7892,6.0663,1
+L100001010586,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Clervaux Solar,1.4,,,50.0616,6.0247,1
+L100001010587,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Wincrange Solar,1.0,,,50.0534,5.915,1
+L100001010588,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Wincrange Solar,1.4,,,50.0534,5.915,1
+L100001010589,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Diekirch Solar,1.8,,,49.8648,6.1541,1
+L100001010590,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Redange Sur Attert Solar,1.0,,,49.7651,5.8914,1
+L100001010591,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Betzdorf Solar,1.0,,,49.6874,6.3508,1
+L100001010592,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Junglinster Solar,2.3,,,49.7118,6.2523,1
+L100001010593,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Junglinster Solar,5.0,,,49.7118,6.2523,1
+L100001010594,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Junglinster Solar,2.9,,,49.7118,6.2523,1
+L100001010595,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Mondorf Les Bains Solar,1.2,,,49.5072,6.2814,1
+L100001046255,Luxembourg,LUX,Solid Biomass,,biomass,solid biomass,,operating,Kiowatt,2.8,2008.0,,49.7883388778834,6.09012756874776,1
+L100001046257,Luxembourg,LUX,Waste,,waste CHP,,,operating,Leudelange Waste To Energy,15.0,2010.0,,49.55375,6.06944,1
+L100001074246,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dippach Solar,3.5,,,49.5875,5.9815,1
+L100001074247,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Kaerjeng Solar,5.0,,,49.5877,5.9011,1
+L100001074248,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Mamer Solar,1.3,,,49.6266,6.0229,1
+L100001074249,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Bettembourg Solar,2.4,,,49.5173,6.0967,1
+L100001074250,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Differdange Solar,5.0,,,49.5208,5.8892,1
+L100001074251,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.2,,,49.4786,6.0848,1
+L100001074252,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,2.1,,,49.4786,6.0848,1
+L100001074253,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Dudelange Solar,1.5,,,49.4786,6.0848,1
+L100001074254,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Mondercange Solar,1.1,,,49.5321,5.987,1
+L100001074255,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Colmar Berg Solar,2.2,,,49.8111,6.091,1
+L100001074256,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Colmar Berg Solar,2.5,,,49.8111,6.091,1
+L100001074257,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Colmar Berg Solar,1.4,,,49.8111,6.091,1
+L100001074258,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Colmar Berg Solar,4.4,,,49.8111,6.091,1
+L100001074259,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Parc Hosingen Solar,1.9,,,49.9963,6.0991,1
+L100001074260,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Tandel Solar,4.1,,,49.8975,6.1825,1
+L100001074261,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Grevenmacher Solar,4.5,,,49.6793,6.4431,1
+L100001074262,Luxembourg,LUX,Solar,PV,solar-utility,,PP,operating,Junglinster Solar,2.9,,,49.7118,6.2523,1
