@@ -116,12 +116,15 @@ class region:
         self.zone_stats = pd.DataFrame()
         # Empty dataframe for zone RE profiles
         self.zone_re = pd.DataFrame()
+        # Empty dataframe for zone renewable capacity factors, zones x tech
+        self.zone_re_potential = pd.DataFrame()
         # Empty dataframe for power plants assigned to zones
         self.zone_plants = pd.DataFrame()
 
         # Paths to necessary global datasets
         self.global_pv = get_global_dataset_file_path("pv", root=global_data_path)
         self.global_wind = get_global_dataset_file_path("wind", root=global_data_path)
+        self.global_wind_cf = get_global_dataset_file_path("wind_cf", root=global_data_path)
         self.global_admin = get_global_dataset_file_path("admin", root=global_data_path)
         self.global_power_plants = get_global_dataset_file_path("power_plants", root=global_data_path)
 
@@ -218,8 +221,9 @@ class region:
     
     def set_zone_data(self, demand_scaleby="population", verbose=False):
         """
-        Compute zonal statistics, demand shares and renewables profiles, via
-        `set_zone_demand_shares()` and `set_zone_re()`, which can also be
+        Compute zonal statistics and demand shares, renewable potential and
+        renewables profiles, via `set_zone_demand_shares()`,
+        `set_zone_re_potential()` and `set_zone_re()`, which can also be
         called separately.
 
         Parameters
@@ -230,7 +234,33 @@ class region:
             If True, print which datasets are loaded and where they are stored.
         """
         self.set_zone_demand_shares(scaleby=demand_scaleby, verbose=verbose)
+        self.set_zone_re_potential(verbose=verbose)
         self.set_zone_re(verbose=verbose)
+
+    def set_zone_re_potential(self, verbose=False):
+        """Compute each zone's average renewable capacity factor per tech into
+        `self.zone_re_potential`: zones as rows, PyPSA technology-data tech
+        names (as used in seer) as columns, values always capacity factors.
+
+        solar-utility is the Global Solar Atlas daily PV output (kWh/kWp) / 24;
+        onwind is the Global Wind Atlas IEC class 2 capacity factor.
+
+        Parameters
+        ----------
+        verbose : bool
+            If True, print which datasets are loaded.
+        """
+        specs = [
+            zonedata("solar-utility", self.global_pv, "mean", scale=1 / 24),
+            zonedata("onwind", self.global_wind_cf, "mean"),
+        ]
+        potential = pd.DataFrame(index=self.zones.index)
+        for zdata in specs:
+            verbose_log("ZONE_RE_POTENTIAL", f"Loading '{zdata.name}' from {zdata.path}", verbose)
+            potential = zdata.get_zone_values(self, outputdf=potential)
+        potential.columns.name = "tech"
+        self.zone_re_potential = potential
+        verbose_log("ZONE_RE_POTENTIAL", f"Saved {list(potential.columns)} to region.zone_re_potential", verbose)
 
     def set_zone_demand_shares(self, scaleby="population", verbose=False):
         """Compute zonal statistics into `self.zone_stats`, plus a
@@ -530,18 +560,24 @@ class network:
 
 
 class zonedata:
-    def __init__(self, name, path, agg):
-        """Describe a raster-based zone statistic."""
+    def __init__(self, name, path, agg, scale=1.0):
+        """Describe a raster-based zone statistic.
+
+        `scale` multiplies raster values before aggregating (e.g. 1/24 turns
+        daily kWh/kWp into a capacity factor).
+        """
         self.path = path
         self.agg = agg
         self.name = name
-    
+        self.scale = scale
+
     def aggregate(self, data):
         """Aggregate raster values according to the configured function.
 
         "density_sum" expects `data` already multiplied by pixel area (see
         `get_zone_values`), turning a per-km² density into a total.
         """
+        data = data * self.scale
         if self.agg=="mean":
             return np.mean(data)
         elif self.agg in ("sum", "density_sum"):

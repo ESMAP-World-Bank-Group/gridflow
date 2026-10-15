@@ -18,6 +18,7 @@ input_data:
     gdp: "GDP2005_1km.tif"
     pv: "pv.tif"
     wind: "wind.tif"
+    wind_cf: "wind_cf.tif"
     admin: "admin_boundaries.gpkg"
     country: "country_names.csv"
     neighbors: "country_neighbors.json"

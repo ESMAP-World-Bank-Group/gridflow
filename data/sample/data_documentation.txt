@@ -17,7 +17,9 @@ Source: https://globalwindatlas.info/en/download/gis-files
 Documentation: https://globalwindatlas.info/en/about/KeyFeatures  
 
 Note:  
-This dataset represents wind power density at a 1-kilometer spatial resolution, resampled to match the Global Solar Atlas data.
+This dataset represents wind power density (W/m²) at 50 m height, at a 1-kilometer spatial resolution. The source file is
+250 m (0.0025°); it is resampled to the Global Solar Atlas grid (30 arc-seconds, same origin as pv.tif) by averaging, ignoring
+nodata, with rasterio/GDAL's warp (Resampling.average), covering 64°S to 80°N.
 
 ------------------------------------------------------------
 
