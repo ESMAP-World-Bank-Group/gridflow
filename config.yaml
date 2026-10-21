@@ -23,6 +23,7 @@ input_data:
     country: "country_names.csv"
     neighbors: "country_neighbors.json"
     power_plants: "power_plants.csv"
+    demand: "ember_yearly.csv"
 
   # Where to download a file from if it's missing under the active root.
   # Pinned to a commit so the data doesn't change underneath a model.

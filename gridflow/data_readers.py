@@ -125,6 +125,22 @@ def read_power_plants(path, countries, url=None):
                             crs="EPSG:4326").reset_index(drop=True)
 
 
+# Reader functions for Ember yearly electricity data
+def read_country_demand(path, countries, year):
+    """Annual demand (TWh) per ISO3 country: its latest Ember year at or before `year`."""
+    ember = pd.read_csv(path, usecols=["ISO 3 code", "Year", "Area type",
+                                       "Electricity source", "Generation (TWh)"])
+    demand = ember[(ember["Electricity source"] == "Demand")
+                   & (ember["Area type"] == "Country or economy")
+                   & ember["ISO 3 code"].isin(countries)
+                   & (ember["Year"] <= year)
+                   & ember["Generation (TWh)"].notna()]
+    latest = demand.sort_values("Year").groupby("ISO 3 code").tail(1)
+    return (latest.set_index("ISO 3 code")
+                  .rename(columns={"Generation (TWh)": "demand_twh", "Year": "demand_year"})
+                  [["demand_twh", "demand_year"]])
+
+
 def read_boundaries(path, countries):
     boundaries = gpd.read_file(path, 
                                layer="globalADM1")

@@ -3,6 +3,7 @@ import geopandas as gpd
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from datetime import date
 from collections import defaultdict
 
 # Raster data packages
@@ -26,6 +27,7 @@ from gridflow.data_readers import (
     read_borders,
     read_boundaries,
     read_line_data,
+    read_country_demand,
     read_power_plants,
     ctry_to_zone_format
 )
@@ -55,12 +57,15 @@ class region:
         3. zone_re - renewable profiles by zone
     """
 
-    def __init__(self, countries, include_neighbors=True, global_data_path=None, zone_stats_to_load=None):
+    def __init__(self, countries, include_neighbors=True, global_data_path=None, zone_stats_to_load=None,
+                 year=None):
         """
         Parameters
         ----------
         countries : list of str
             ISO3 codes for the countries to model.
+        year : int, optional
+            The year the model represents. Defaults to the current year.
         global_data_path : str, optional
             Path to the folder containing borders, rasters, and grid data. Defaults
             to `input_data.global_datasets` from :file:`config.yaml`.
@@ -69,6 +74,9 @@ class region:
             (currently: ["population"]). Pass a list like ["population"] to pick
             specific datasets.
         """
+        # The year the model represents
+        self.year = date.today().year if year is None else year
+
         if global_data_path is None:
             global_data_path = get_global_datasets_path()
         self.global_data_path = global_data_path
@@ -127,6 +135,7 @@ class region:
         self.global_wind_cf = get_global_dataset_file_path("wind_cf", root=global_data_path)
         self.global_admin = get_global_dataset_file_path("admin", root=global_data_path)
         self.global_power_plants = get_global_dataset_file_path("power_plants", root=global_data_path)
+        self.global_demand = get_global_dataset_file_path("demand", root=global_data_path)
 
     def create_zones(self, method="pv", n=10, verbose=False):
         """Define zones by multiple methods.
@@ -221,10 +230,10 @@ class region:
     
     def set_zone_data(self, demand_scaleby="population", verbose=False):
         """
-        Compute zonal statistics and demand shares, renewable potential and
-        renewables profiles, via `set_zone_demand_shares()`,
-        `set_zone_re_potential()` and `set_zone_re()`, which can also be
-        called separately.
+        Compute country demand, zonal statistics and demand shares, renewable
+        potential and renewables profiles, via `set_country_demand()`,
+        `set_zone_demand_shares()`, `set_zone_re_potential()` and
+        `set_zone_re()`, which can also be called separately.
 
         Parameters
         ----------
@@ -233,9 +242,26 @@ class region:
         verbose : bool
             If True, print which datasets are loaded and where they are stored.
         """
+        self.set_country_demand(verbose=verbose)
         self.set_zone_demand_shares(scaleby=demand_scaleby, verbose=verbose)
         self.set_zone_re_potential(verbose=verbose)
         self.set_zone_re(verbose=verbose)
+
+    def set_country_demand(self, verbose=False):
+        """Add each country's annual demand (TWh, Ember) for `self.year` to
+        `self.countries` as `demand_twh`, with the data year used in `demand_year`."""
+        isos = self.countries["ISO_A3"].tolist()
+        demand = read_country_demand(self.global_demand, isos, self.year)
+        missing = sorted(set(isos) - set(demand.index))
+        if missing:
+            print(f"WARNING: no Ember demand data at or before {self.year} for {missing}.")
+        self.countries = self.countries.assign(
+            demand_twh=self.countries["ISO_A3"].map(demand["demand_twh"]),
+            demand_year=self.countries["ISO_A3"].map(demand["demand_year"]).astype("Int64"),
+        )
+        for iso, row in demand.iterrows():
+            verbose_log("COUNTRY_DEMAND", f"{iso}: {row.demand_twh:.1f} TWh "
+                        f"(Ember {row.demand_year:.0f}, model year {self.year})", verbose)
 
     def set_zone_re_potential(self, verbose=False):
         """Compute each zone's average renewable capacity factor per tech into

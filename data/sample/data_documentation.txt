@@ -115,3 +115,13 @@ Global plant list built from the Global Energy Monitor trackers with powerplantm
 status, with capacity in MW, coordinates, ISO3 country code, and `tech`/`fuel` named after PyPSA technology-data. If the file is
 missing under the active root, gridflow downloads it from config.yaml's input_data.urls.power_plants. The sample file contains
 Luxembourg's plants only.
+
+------------------------------------------------------------
+
+10. Ember Yearly Electricity Data
+File name: ember_yearly.csv
+Source: https://ember-energy.org/data/yearly-electricity-data/ (release_generation_yearly_global.csv), CC BY 4.0
+
+Note:
+Annual country demand (TWh) comes from the "Demand" rows. Global copy downloaded 2026-10-20 (data through 2025); the sample
+file contains Luxembourg only.
