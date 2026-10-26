@@ -23,19 +23,19 @@
 ### `gridflow.utils`
 - `get_random_points`: creates evenly distributed sample points inside a zone polygon by projecting into EPSG:32633, sampling within the buffered bounds, and filtering for containment.
 - `get_bb`: returns buffered bounding boxes in a desired CRS.
-- `country_code_map`: simple ISO3-to-name map backed by `data/global_datasets/country_names.csv`.
+- `country_code_map`: simple ISO3-to-name map backed by `data/sample/country_names.csv` (or `data/global/`, depending on the active root).
 
 ## Supporting files
-- `config.yaml`: defines what countries to model by default (`grid_params.countries`), where to find the `global_datasets`, and holds the `"renewables_ninja"` API key placeholder.
+- `config.yaml`: defines what countries to model by default (`grid_params.countries`), where to find the `global_datasets` (`data/sample` by default, or your own `data/global` once you have real data), and holds the `"renewables_ninja"` API key placeholder.
 - `requirements.txt`: pinned dependencies (e.g., geopandas, rasterio, skimage) matched to Python 3.9; see README instructions for installing GDAL/Rtree/PyProj first.
 - `README.md`: project overview plus runtime instructions for segmentation & network construction via `gridflow.model.region`.
 - `DemoNotebook.ipynb`: interactive notebook demonstrating how to build a region, create zones, and inspect outputs.
 
 ## Data structure
 
-Refer to `data/global_datasets/data_documentation.txt` for the detailed provenance, expected formats, and download links noted in this overview.
+Refer to `data/sample/data_documentation.txt` for the detailed provenance, expected formats, and download links noted in this overview.
 
-- `data/global_datasets/`: contains the sample inputs that mirror the World Bank’s standard dataset layout:
+- `data/sample/` (tracked) and `data/global/` (untracked, your own full datasets) mirror each other file-for-file; `config.yaml`'s `input_data.root` selects which is active. Every file gridflow actually reads, and its relative path (identical under either root), is declared in `config.yaml`'s `input_data.files`:
   - `borders/WB_GAD_ADM0_complete.*`: shapefile components that provide ADM0 country boundaries for segmentation and region clipping.
   - `grid.gpkg`: OpenInfraMap transmission lines filtered to the target region with layer `power_line`.
   - `pv.tif`, `wind.tif`, `population_2020.tif`: global raster layers used for zone segmentation, renewable profiles, and population statistics.
@@ -59,7 +59,7 @@ Refer to `data/global_datasets/data_documentation.txt` for the detailed provenan
 | `gdp/` (optional) | Annual 1 km gridded GDP PPP estimates (1992–2020) derived from harmonized night-time lights and ancillary socioeconomic predictors ([Li et al. 2022](https://www.nature.com/articles/s41597-022-01300-x); Zenodo https://zenodo.org/records/5880037); use `SSP2_1km` as the baseline variant for forward projections | GeoTIFF stack, one band per year; not bundled due to size |
 
 ## Workflow summary
-1. Configure `config.yaml` and ensure `data/global_datasets` contains the desired countries’ rasters/grids.
+1. Configure `config.yaml` and ensure `data/sample` (or your own `data/global`) contains the desired countries’ rasters/grids.
 2. Instantiate `gridflow.model.region` with ISO3s and call `create_zones` (PV or wind) plus `set_zone_data`.
 3. Generate the simplified zone-to-zone `network.flow` matrix via `create_network`.
 4. Use `gridflow.epm_input_generator.generate_epm_inputs` to emit CSVs for EPM that respect the newly defined zonal split.

@@ -1,0 +1,613 @@
+Area,ISO 3 code,Year,Area type,Electricity source,Is aggregated source,Generation (TWh),Generation YoY change (TWh),Generation YoY change (%),Share of generation (%),Share of generation YoY change (% points),Capacity (GW),Emissions (MtCO2e),Emissions YoY change (MtCO2e),Emissions YoY change (%),Share of emissions (%),Emissions intensity (gCO2e/kWh),Continent,Ember region,EU member,OECD member,G20 member,G7 member,ASEAN member
+Luxembourg,LUX,1990,Country or economy,Solar,False,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Wind,False,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Hydro,False,0.07,,,11.29,,,0.002,,,0.573,28.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Bioenergy,False,0.01,,,1.613,,,0.002,,,0.573,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Other renewables,False,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Nuclear,False,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Coal,False,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Gas,False,0.03,,,4.839,,,0.01,,,2.863,333.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Other fossil,False,0.51,,,82.258,,,0.336,,,96.205,658.824,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Net imports,False,3.93,,,633.871,,,0.0,,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Wind and solar,True,0.0,,,0.0,,,0.0,,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,"Hydro, bioenergy and other renewables",True,0.08,,,12.903,,,0.004,,,1.145,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Renewables,True,0.08,,,12.903,,,0.004,,,1.145,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Clean,True,0.08,,,12.903,,,0.004,,,1.145,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Fossil,True,0.54,,,87.097,,,0.345,,,98.782,638.889,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Total generation,True,0.62,,,100.0,,,0.349,,,99.927,562.903,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1990,Country or economy,Demand,True,4.55,,,733.871,,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Hydro,False,0.08,0.01,14.286,11.429,0.139,,0.002,0.0,0.0,0.506,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Bioenergy,False,0.01,0.0,0.0,1.429,-0.184,,0.002,0.0,0.0,0.506,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Gas,False,0.03,0.0,0.0,4.286,-0.553,,0.01,0.0,0.0,2.528,333.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Other fossil,False,0.58,0.07,13.725,82.857,0.599,,0.382,0.046,13.69,96.574,658.621,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Net imports,False,4.15,0.22,5.598,592.857,-41.014,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,"Hydro, bioenergy and other renewables",True,0.09,0.01,12.5,12.857,-0.046,,0.004,0.0,0.0,1.011,44.444,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Renewables,True,0.09,0.01,12.5,12.857,-0.046,,0.004,0.0,0.0,1.011,44.444,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Clean,True,0.09,0.01,12.5,12.857,-0.046,,0.004,0.0,0.0,1.011,44.444,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Fossil,True,0.61,0.07,12.963,87.143,0.046,,0.391,0.046,13.333,98.849,640.984,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Total generation,True,0.7,0.08,12.903,100.0,0.0,,0.396,0.047,13.467,100.113,565.714,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1991,Country or economy,Demand,True,4.85,0.3,6.593,692.857,-41.014,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Hydro,False,0.07,-0.01,-12.5,10.606,-0.823,,0.002,0.0,0.0,0.533,28.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Bioenergy,False,0.01,0.0,0.0,1.515,0.086,,0.002,0.0,0.0,0.533,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Gas,False,0.03,0.0,0.0,4.545,0.259,,0.01,0.0,0.0,2.663,333.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Other fossil,False,0.55,-0.03,-5.172,83.333,0.476,,0.362,-0.02,-5.236,96.386,658.182,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Net imports,False,3.98,-0.17,-4.096,603.03,10.173,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,"Hydro, bioenergy and other renewables",True,0.08,-0.01,-11.111,12.121,-0.736,,0.004,0.0,0.0,1.065,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Renewables,True,0.08,-0.01,-11.111,12.121,-0.736,,0.004,0.0,0.0,1.065,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Clean,True,0.08,-0.01,-11.111,12.121,-0.736,,0.004,0.0,0.0,1.065,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Fossil,True,0.58,-0.03,-4.918,87.879,0.736,,0.372,-0.019,-4.859,99.048,641.379,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Total generation,True,0.66,-0.04,-5.714,100.0,0.0,,0.376,-0.02,-5.051,100.113,569.697,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1992,Country or economy,Demand,True,4.64,-0.21,-4.33,703.03,10.173,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Hydro,False,0.07,0.0,0.0,10.448,-0.158,,0.002,0.0,0.0,0.519,28.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Bioenergy,False,0.01,0.0,0.0,1.493,-0.022,,0.002,0.0,0.0,0.519,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Gas,False,0.02,-0.01,-33.333,2.985,-1.56,,0.007,-0.003,-30.0,1.816,350.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Other fossil,False,0.57,0.02,3.636,85.075,1.742,,0.375,0.013,3.591,97.288,657.895,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Net imports,False,4.05,0.07,1.759,604.478,1.448,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,"Hydro, bioenergy and other renewables",True,0.08,0.0,0.0,11.94,-0.181,,0.004,0.0,0.0,1.038,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Renewables,True,0.08,0.0,0.0,11.94,-0.181,,0.004,0.0,0.0,1.038,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Clean,True,0.08,0.0,0.0,11.94,-0.181,,0.004,0.0,0.0,1.038,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Fossil,True,0.59,0.01,1.724,88.06,0.181,,0.382,0.01,2.688,99.105,647.458,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Total generation,True,0.67,0.01,1.515,100.0,0.0,,0.385,0.009,2.394,99.883,574.627,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1993,Country or economy,Demand,True,4.72,0.08,1.724,704.478,1.448,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Hydro,False,0.09,0.02,28.571,15.254,4.806,,0.002,0.0,0.0,0.654,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Bioenergy,False,0.02,0.01,100.0,3.39,1.897,,0.004,0.002,100.0,1.308,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Gas,False,0.05,0.03,150.0,8.475,5.49,,0.016,0.009,128.571,5.232,320.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Other fossil,False,0.43,-0.14,-24.561,72.881,-12.194,,0.283,-0.092,-24.533,92.539,658.14,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Net imports,False,4.46,0.41,10.123,755.932,151.454,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,"Hydro, bioenergy and other renewables",True,0.11,0.03,37.5,18.644,6.704,,0.006,0.002,50.0,1.962,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Renewables,True,0.11,0.03,37.5,18.644,6.704,,0.006,0.002,50.0,1.962,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Clean,True,0.11,0.03,37.5,18.644,6.704,,0.006,0.002,50.0,1.962,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Fossil,True,0.48,-0.11,-18.644,81.356,-6.704,,0.299,-0.083,-21.728,97.77,622.917,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Total generation,True,0.59,-0.08,-11.94,100.0,0.0,,0.306,-0.079,-20.519,100.059,518.644,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1994,Country or economy,Demand,True,5.05,0.33,6.992,855.932,151.454,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Hydro,False,0.09,0.0,0.0,18.367,3.113,,0.002,0.0,0.0,0.966,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Bioenergy,False,0.02,0.0,0.0,4.082,0.692,,0.004,0.0,0.0,1.932,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Gas,False,0.15,0.1,200.0,30.612,22.137,,0.049,0.033,206.25,23.666,326.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Other fossil,False,0.23,-0.2,-46.512,46.939,-25.942,,0.151,-0.132,-46.643,72.929,656.522,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Net imports,False,5.0,0.54,12.108,1020.408,264.476,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,"Hydro, bioenergy and other renewables",True,0.11,0.0,0.0,22.449,3.805,,0.006,0.0,0.0,2.898,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Renewables,True,0.11,0.0,0.0,22.449,3.805,,0.006,0.0,0.0,2.898,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Clean,True,0.11,0.0,0.0,22.449,3.805,,0.006,0.0,0.0,2.898,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Fossil,True,0.38,-0.1,-20.833,77.551,-3.805,,0.201,-0.098,-32.776,97.078,528.947,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Total generation,True,0.49,-0.1,-16.949,100.0,0.0,,0.207,-0.099,-32.353,99.976,422.449,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1995,Country or economy,Demand,True,5.49,0.44,8.713,1120.408,264.476,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Hydro,False,0.06,-0.03,-33.333,13.333,-5.034,,0.001,-0.001,-50.0,0.536,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Bioenergy,False,0.02,0.0,0.0,4.444,0.362,,0.004,0.0,0.0,2.144,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Gas,False,0.19,0.04,26.667,42.222,11.61,,0.062,0.013,26.531,33.231,326.316,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Other fossil,False,0.18,-0.05,-21.739,40.0,-6.939,,0.118,-0.033,-21.854,63.247,655.556,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Net imports,False,4.9,-0.1,-2.0,1088.889,68.481,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,"Hydro, bioenergy and other renewables",True,0.08,-0.03,-27.273,17.778,-4.671,,0.006,0.0,0.0,3.216,75.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Renewables,True,0.08,-0.03,-27.273,17.778,-4.671,,0.006,0.0,0.0,3.216,75.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Clean,True,0.08,-0.03,-27.273,17.778,-4.671,,0.006,0.0,0.0,3.216,75.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Fossil,True,0.37,-0.01,-2.632,82.222,4.671,,0.181,-0.02,-9.95,97.015,489.189,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Total generation,True,0.45,-0.04,-8.163,100.0,0.0,,0.187,-0.02,-9.662,100.23,415.556,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1996,Country or economy,Demand,True,5.35,-0.14,-2.55,1188.889,68.481,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Wind,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Hydro,False,0.08,0.02,33.333,19.512,6.179,,0.002,0.001,100.0,1.326,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Bioenergy,False,0.02,0.0,0.0,4.878,0.434,,0.004,0.0,0.0,2.651,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Gas,False,0.18,-0.01,-5.263,43.902,1.68,,0.059,-0.003,-4.839,39.109,327.778,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Other fossil,False,0.13,-0.05,-27.778,31.707,-8.293,,0.086,-0.032,-27.119,57.006,661.538,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Net imports,False,5.19,0.29,5.918,1265.854,176.965,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Wind and solar,True,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,"Hydro, bioenergy and other renewables",True,0.1,0.02,25.0,24.39,6.612,,0.006,0.0,0.0,3.977,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Renewables,True,0.1,0.02,25.0,24.39,6.612,,0.006,0.0,0.0,3.977,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Clean,True,0.1,0.02,25.0,24.39,6.612,,0.006,0.0,0.0,3.977,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Fossil,True,0.31,-0.06,-16.216,75.61,-6.612,,0.145,-0.036,-19.89,96.114,467.742,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Total generation,True,0.41,-0.04,-8.889,100.0,0.0,,0.151,-0.036,-19.251,100.091,368.293,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1997,Country or economy,Demand,True,5.6,0.25,4.673,1365.854,176.965,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Wind,False,0.01,0.01,,2.703,2.703,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Hydro,False,0.12,0.04,50.0,32.432,12.92,,0.003,0.001,50.0,3.355,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Bioenergy,False,0.02,0.0,0.0,5.405,0.527,,0.004,0.0,0.0,4.473,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Gas,False,0.19,0.01,5.556,51.351,7.449,,0.062,0.003,5.085,69.337,326.316,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Other fossil,False,0.03,-0.1,-76.923,8.108,-23.599,,0.02,-0.066,-76.744,22.367,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Net imports,False,5.41,0.22,4.239,1462.162,196.308,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Wind and solar,True,0.01,0.01,,2.703,2.703,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,"Hydro, bioenergy and other renewables",True,0.14,0.04,40.0,37.838,13.448,,0.007,0.001,16.667,7.828,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Renewables,True,0.15,0.05,50.0,40.541,16.151,,0.007,0.001,16.667,7.828,46.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Clean,True,0.15,0.05,50.0,40.541,16.151,,0.007,0.001,16.667,7.828,46.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Fossil,True,0.22,-0.09,-29.032,59.459,-16.151,,0.082,-0.063,-43.448,91.704,372.727,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Total generation,True,0.37,-0.04,-9.756,100.0,0.0,,0.089,-0.062,-41.06,99.532,240.541,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1998,Country or economy,Demand,True,5.78,0.18,3.214,1562.162,196.308,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Wind,False,0.02,0.01,100.0,5.556,2.853,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Hydro,False,0.09,-0.03,-25.0,25.0,-7.432,,0.002,-0.001,-33.333,2.171,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Bioenergy,False,0.02,0.0,0.0,5.556,0.151,,0.004,0.0,0.0,4.343,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Gas,False,0.2,0.01,5.263,55.556,4.205,,0.066,0.004,6.452,71.652,330.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Other fossil,False,0.03,0.0,0.0,8.333,0.225,,0.02,0.0,0.0,21.713,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Net imports,False,5.56,0.15,2.773,1544.444,82.282,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Wind and solar,True,0.02,0.01,100.0,5.556,2.853,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,"Hydro, bioenergy and other renewables",True,0.11,-0.03,-21.429,30.556,-7.282,,0.006,-0.001,-14.286,6.514,54.545,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Renewables,True,0.13,-0.02,-13.333,36.111,-4.43,,0.007,0.0,0.0,7.599,53.846,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Clean,True,0.13,-0.02,-13.333,36.111,-4.43,,0.007,0.0,0.0,7.599,53.846,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Fossil,True,0.23,0.01,4.545,63.889,4.43,,0.085,0.003,3.659,92.279,369.565,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Total generation,True,0.36,-0.01,-2.703,100.0,0.0,,0.092,0.003,3.371,99.879,255.556,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,1999,Country or economy,Demand,True,5.92,0.14,2.422,1644.444,82.282,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Wind,False,0.02,0.0,0.0,5.0,-0.556,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Hydro,False,0.12,0.03,33.333,30.0,5.0,0.03,0.003,0.001,50.0,3.122,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Bioenergy,False,0.02,0.0,0.0,5.0,-0.556,0.0,0.004,0.0,0.0,4.162,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Gas,False,0.21,0.01,5.0,52.5,-3.056,0.0,0.069,0.003,4.545,71.795,328.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Other fossil,False,0.03,0.0,0.0,7.5,-0.833,0.0,0.02,0.0,0.0,20.81,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Net imports,False,5.71,0.15,2.698,1427.5,-116.944,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Wind and solar,True,0.02,0.0,0.0,5.0,-0.556,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,"Hydro, bioenergy and other renewables",True,0.14,0.03,27.273,35.0,4.444,0.03,0.007,0.001,16.667,7.284,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Renewables,True,0.16,0.03,23.077,40.0,3.889,0.04,0.007,0.0,0.0,7.284,43.75,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Clean,True,0.16,0.03,23.077,40.0,3.889,0.04,0.007,0.0,0.0,7.284,43.75,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Fossil,True,0.24,0.01,4.348,60.0,-3.889,0.0,0.089,0.004,4.706,92.605,370.833,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Total generation,True,0.4,0.04,11.111,100.0,0.0,0.04,0.096,0.004,4.348,99.888,240.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2000,Country or economy,Demand,True,6.11,0.19,3.209,1527.5,-116.944,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Wind,False,0.02,0.0,0.0,2.299,-2.701,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Hydro,False,0.12,0.0,0.0,13.793,-16.207,0.03,0.003,0.0,0.0,1.203,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Bioenergy,False,0.03,0.01,50.0,3.448,-1.552,0.0,0.006,0.002,50.0,2.407,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Gas,False,0.67,0.46,219.048,77.011,24.511,0.0,0.22,0.151,218.841,88.249,328.358,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Other fossil,False,0.03,0.0,0.0,3.448,-4.052,0.0,0.02,0.0,0.0,8.023,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Net imports,False,5.32,-0.39,-6.83,611.494,-816.006,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Wind and solar,True,0.02,0.0,0.0,2.299,-2.701,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,"Hydro, bioenergy and other renewables",True,0.15,0.01,7.143,17.241,-17.759,0.03,0.009,0.002,28.571,3.61,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Renewables,True,0.17,0.01,6.25,19.54,-20.46,0.04,0.01,0.003,42.857,4.011,58.824,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Clean,True,0.17,0.01,6.25,19.54,-20.46,0.04,0.01,0.003,42.857,4.011,58.824,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Fossil,True,0.7,0.46,191.667,80.46,20.46,0.0,0.24,0.151,169.663,96.271,342.857,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Total generation,True,0.87,0.47,117.5,100.0,0.0,0.04,0.249,0.153,159.375,99.881,286.207,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2001,Country or economy,Demand,True,6.19,0.08,1.309,711.494,-816.006,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Wind,False,0.02,0.0,0.0,0.714,-1.585,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Hydro,False,0.1,-0.02,-16.667,3.571,-10.222,0.03,0.002,-0.001,-33.333,0.225,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Bioenergy,False,0.03,0.0,0.0,1.071,-2.377,0.0,0.006,0.0,0.0,0.675,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Gas,False,2.62,1.95,291.045,93.571,16.56,0.0,0.86,0.64,290.909,96.733,328.244,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Other fossil,False,0.03,0.0,0.0,1.071,-2.377,0.0,0.02,0.0,0.0,2.25,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Net imports,False,3.47,-1.85,-34.774,123.929,-487.565,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Wind and solar,True,0.02,0.0,0.0,0.714,-1.585,0.01,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,"Hydro, bioenergy and other renewables",True,0.13,-0.02,-13.333,4.643,-12.598,0.03,0.009,0.0,0.0,1.012,69.231,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Renewables,True,0.15,-0.02,-11.765,5.357,-14.183,0.04,0.009,-0.001,-10.0,1.012,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Clean,True,0.15,-0.02,-11.765,5.357,-14.183,0.04,0.009,-0.001,-10.0,1.012,60.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Fossil,True,2.65,1.95,278.571,94.643,14.183,0.0,0.88,0.64,266.667,98.983,332.075,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Total generation,True,2.8,1.93,221.839,100.0,0.0,0.04,0.889,0.64,257.028,99.995,317.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2002,Country or economy,Demand,True,6.27,0.08,1.292,223.929,-487.565,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Solar,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Wind,False,0.03,0.01,50.0,1.075,0.361,0.02,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Hydro,False,0.08,-0.02,-20.0,2.867,-0.704,0.03,0.002,0.0,0.0,0.225,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Bioenergy,False,0.03,0.0,0.0,1.075,0.004,0.0,0.006,0.0,0.0,0.675,200.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Gas,False,2.62,0.0,0.0,93.907,0.336,0.0,0.86,0.0,0.0,96.772,328.244,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Other fossil,False,0.03,0.0,0.0,1.075,0.004,0.0,0.02,0.0,0.0,2.251,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Net imports,False,3.76,0.29,8.357,134.767,10.838,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Wind and solar,True,0.03,0.01,50.0,1.075,0.361,0.03,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,"Hydro, bioenergy and other renewables",True,0.11,-0.02,-15.385,3.943,-0.7,0.03,0.008,-0.001,-11.111,0.9,72.727,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Renewables,True,0.14,-0.01,-6.667,5.018,-0.339,0.06,0.009,0.0,0.0,1.013,64.286,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Clean,True,0.14,-0.01,-6.667,5.018,-0.339,0.06,0.009,0.0,0.0,1.013,64.286,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Fossil,True,2.65,0.0,0.0,94.982,0.339,0.0,0.88,0.0,0.0,99.022,332.075,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Total generation,True,2.79,-0.01,-0.357,100.0,0.0,0.06,0.889,0.0,0.0,100.035,318.638,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2003,Country or economy,Demand,True,6.55,0.28,4.466,234.767,10.838,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Solar,False,0.01,0.01,,0.297,0.297,0.02,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Wind,False,0.04,0.01,33.333,1.187,0.112,0.03,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Hydro,False,0.1,0.02,25.0,2.967,0.1,0.03,0.002,0.0,0.0,0.188,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Bioenergy,False,0.04,0.01,33.333,1.187,0.112,0.0,0.009,0.003,50.0,0.844,225.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Gas,False,3.15,0.53,20.229,93.472,-0.435,0.0,1.034,0.174,20.233,97.004,328.254,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Other fossil,False,0.03,0.0,0.0,0.89,-0.185,0.0,0.02,0.0,0.0,1.876,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Net imports,False,3.37,-0.39,-10.372,100.0,-34.767,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Wind and solar,True,0.05,0.02,66.667,1.484,0.409,0.05,0.001,0.001,,0.094,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,"Hydro, bioenergy and other renewables",True,0.14,0.03,27.273,4.154,0.211,0.03,0.011,0.003,37.5,1.032,78.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Renewables,True,0.19,0.05,35.714,5.638,0.62,0.08,0.012,0.003,33.333,1.126,63.158,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Clean,True,0.19,0.05,35.714,5.638,0.62,0.08,0.012,0.003,33.333,1.126,63.158,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Fossil,True,3.18,0.53,20.0,94.362,-0.62,0.0,1.054,0.174,19.773,98.881,331.447,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Total generation,True,3.37,0.58,20.789,100.0,0.0,0.08,1.066,0.177,19.91,100.006,316.32,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2004,Country or economy,Demand,True,6.74,0.19,2.901,200.0,-34.767,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Solar,False,0.02,0.01,100.0,0.597,0.3,0.02,0.001,0.001,,0.095,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Wind,False,0.05,0.01,25.0,1.493,0.306,0.03,0.001,0.001,,0.095,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Hydro,False,0.09,-0.01,-10.0,2.687,-0.28,0.03,0.002,0.0,0.0,0.19,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Bioenergy,False,0.05,0.01,25.0,1.493,0.306,0.0,0.011,0.002,22.222,1.042,220.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Gas,False,3.11,-0.04,-1.27,92.836,-0.636,0.0,1.021,-0.013,-1.257,96.748,328.296,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Other fossil,False,0.03,0.0,0.0,0.896,0.006,0.0,0.02,0.0,0.0,1.895,666.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Net imports,False,3.26,-0.11,-3.264,97.313,-2.687,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Wind and solar,True,0.07,0.02,40.0,2.09,0.606,0.05,0.002,0.001,100.0,0.19,28.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,"Hydro, bioenergy and other renewables",True,0.14,0.0,0.0,4.179,0.025,0.03,0.013,0.002,18.182,1.232,92.857,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Renewables,True,0.21,0.02,10.526,6.269,0.631,0.08,0.015,0.003,25.0,1.421,71.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Clean,True,0.21,0.02,10.526,6.269,0.631,0.08,0.015,0.003,25.0,1.421,71.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Fossil,True,3.14,-0.04,-1.258,93.731,-0.631,0.0,1.041,-0.013,-1.233,98.643,331.529,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Total generation,True,3.35,-0.02,-0.593,100.0,0.0,0.08,1.055,-0.011,-1.032,99.97,314.925,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2005,Country or economy,Demand,True,6.61,-0.13,-1.929,197.313,-2.687,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Solar,False,0.02,0.0,0.0,0.565,-0.032,0.02,0.001,0.0,0.0,0.09,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Wind,False,0.06,0.01,20.0,1.695,0.202,0.03,0.001,0.0,0.0,0.09,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Hydro,False,0.11,0.02,22.222,3.107,0.42,0.03,0.003,0.001,50.0,0.27,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Bioenergy,False,0.06,0.01,20.0,1.695,0.202,0.01,0.013,0.002,18.182,1.171,216.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Gas,False,3.25,0.14,4.502,91.808,-1.028,0.0,1.067,0.046,4.505,96.072,328.308,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Other fossil,False,0.04,0.01,33.333,1.13,0.234,0.0,0.026,0.006,30.0,2.341,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Net imports,False,3.56,0.3,9.202,100.565,3.252,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Wind and solar,True,0.08,0.01,14.286,2.26,0.17,0.05,0.002,0.0,0.0,0.18,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,"Hydro, bioenergy and other renewables",True,0.17,0.03,21.429,4.802,0.623,0.04,0.016,0.003,23.077,1.441,94.118,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Renewables,True,0.25,0.04,19.048,7.062,0.793,0.09,0.017,0.002,13.333,1.531,68.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Clean,True,0.25,0.04,19.048,7.062,0.793,0.09,0.017,0.002,13.333,1.531,68.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Fossil,True,3.29,0.15,4.777,92.938,-0.793,0.0,1.093,0.052,4.995,98.413,332.219,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Total generation,True,3.54,0.19,5.672,100.0,0.0,0.09,1.111,0.056,5.308,100.034,313.842,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2006,Country or economy,Demand,True,7.1,0.49,7.413,200.565,3.252,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Solar,False,0.02,0.0,0.0,0.627,0.062,0.02,0.001,0.0,0.0,0.101,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Wind,False,0.06,0.0,0.0,1.881,0.186,0.03,0.001,0.0,0.0,0.101,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Hydro,False,0.12,0.01,9.091,3.762,0.655,0.03,0.003,0.0,0.0,0.302,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Bioenergy,False,0.06,0.0,0.0,1.881,0.186,0.01,0.013,0.0,0.0,1.31,216.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Gas,False,2.89,-0.36,-11.077,90.596,-1.212,0.0,0.949,-0.118,-11.059,95.601,328.374,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Other fossil,False,0.04,0.0,0.0,1.254,0.124,0.0,0.026,0.0,0.0,2.619,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Net imports,False,3.96,0.4,11.236,124.138,23.573,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Wind and solar,True,0.08,0.0,0.0,2.508,0.248,0.05,0.002,0.0,0.0,0.201,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,"Hydro, bioenergy and other renewables",True,0.18,0.01,5.882,5.643,0.841,0.04,0.016,0.0,0.0,1.612,88.889,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Renewables,True,0.26,0.01,4.0,8.15,1.088,0.09,0.018,0.001,5.882,1.813,69.231,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Clean,True,0.26,0.01,4.0,8.15,1.088,0.09,0.018,0.001,5.882,1.813,69.231,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Fossil,True,2.93,-0.36,-10.942,91.85,-1.088,0.0,0.975,-0.118,-10.796,98.22,332.765,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Total generation,True,3.19,-0.35,-9.887,100.0,0.0,0.09,0.993,-0.118,-10.621,100.033,311.285,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2007,Country or economy,Demand,True,7.15,0.05,0.704,224.138,23.573,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Solar,False,0.02,0.0,0.0,0.735,0.108,0.02,0.001,0.0,0.0,0.12,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Wind,False,0.06,0.0,0.0,2.206,0.325,0.04,0.001,0.0,0.0,0.12,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Hydro,False,0.13,0.01,8.333,4.779,1.017,0.03,0.003,0.0,0.0,0.36,23.077,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Bioenergy,False,0.07,0.01,16.667,2.574,0.693,0.01,0.015,0.002,15.385,1.798,214.286,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Gas,False,2.4,-0.49,-16.955,88.235,-2.361,0.0,0.788,-0.161,-16.965,94.463,328.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Other fossil,False,0.04,0.0,0.0,1.471,0.217,0.0,0.026,0.0,0.0,3.117,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Net imports,False,4.35,0.39,9.848,159.926,35.788,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Wind and solar,True,0.08,0.0,0.0,2.941,0.433,0.06,0.002,0.0,0.0,0.24,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,"Hydro, bioenergy and other renewables",True,0.2,0.02,11.111,7.353,1.71,0.04,0.018,0.002,12.5,2.158,90.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Renewables,True,0.28,0.02,7.692,10.294,2.144,0.1,0.02,0.002,11.111,2.398,71.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Clean,True,0.28,0.02,7.692,10.294,2.144,0.1,0.02,0.002,11.111,2.398,71.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Fossil,True,2.44,-0.49,-16.724,89.706,-2.144,0.0,0.814,-0.161,-16.513,97.579,333.607,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Total generation,True,2.72,-0.47,-14.734,100.0,0.0,0.1,0.834,-0.159,-16.012,99.977,306.618,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2008,Country or economy,Demand,True,7.07,-0.08,-1.119,259.926,35.788,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Solar,False,0.02,0.0,0.0,0.635,-0.1,0.03,0.001,0.0,0.0,0.102,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Wind,False,0.06,0.0,0.0,1.905,-0.301,0.04,0.001,0.0,0.0,0.102,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Hydro,False,0.11,-0.02,-15.385,3.492,-1.287,0.03,0.003,0.0,0.0,0.306,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Bioenergy,False,0.08,0.01,14.286,2.54,-0.034,0.01,0.017,0.002,13.333,1.734,212.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Gas,False,2.84,0.44,18.333,90.159,1.924,0.0,0.932,0.144,18.274,95.069,328.169,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Other fossil,False,0.04,0.0,0.0,1.27,-0.201,0.0,0.026,0.0,0.0,2.652,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Net imports,False,3.42,-0.93,-21.379,108.571,-51.355,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Wind and solar,True,0.08,0.0,0.0,2.54,-0.401,0.07,0.002,0.0,0.0,0.204,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,"Hydro, bioenergy and other renewables",True,0.19,-0.01,-5.0,6.032,-1.321,0.04,0.02,0.002,11.111,2.04,105.263,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Renewables,True,0.27,-0.01,-3.571,8.571,-1.723,0.11,0.022,0.002,10.0,2.244,81.481,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Clean,True,0.27,-0.01,-3.571,8.571,-1.723,0.11,0.022,0.002,10.0,2.244,81.481,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Fossil,True,2.88,0.44,18.033,91.429,1.723,0.0,0.959,0.145,17.813,97.823,332.986,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Total generation,True,3.15,0.43,15.809,100.0,0.0,0.11,0.98,0.146,17.506,99.965,311.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2009,Country or economy,Demand,True,6.57,-0.5,-7.072,208.571,-51.355,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Solar,False,0.02,0.0,0.0,0.617,-0.018,0.03,0.001,0.0,0.0,0.099,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Wind,False,0.06,0.0,0.0,1.852,-0.053,0.04,0.001,0.0,0.0,0.099,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Hydro,False,0.11,0.0,0.0,3.395,-0.097,0.03,0.003,0.0,0.0,0.296,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Bioenergy,False,0.08,0.0,0.0,2.469,-0.071,0.01,0.017,0.0,0.0,1.678,212.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Gas,False,2.92,0.08,2.817,90.123,-0.036,0.0,0.959,0.027,2.897,94.652,328.425,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Other fossil,False,0.05,0.01,25.0,1.543,0.273,0.01,0.033,0.007,26.923,3.257,660.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Net imports,False,4.06,0.64,18.713,125.309,16.738,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Wind and solar,True,0.08,0.0,0.0,2.469,-0.071,0.07,0.002,0.0,0.0,0.197,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,"Hydro, bioenergy and other renewables",True,0.19,0.0,0.0,5.864,-0.168,0.05,0.02,0.0,0.0,1.974,105.263,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Renewables,True,0.27,0.0,0.0,8.333,-0.238,0.12,0.022,0.0,0.0,2.171,81.481,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Clean,True,0.27,0.0,0.0,8.333,-0.238,0.12,0.022,0.0,0.0,2.171,81.481,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Fossil,True,2.97,0.09,3.125,91.667,0.238,0.01,0.992,0.033,3.441,97.909,334.007,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Total generation,True,3.24,0.09,2.857,100.0,0.0,0.13,1.013,0.033,3.367,99.982,312.654,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2010,Country or economy,Demand,True,7.3,0.73,11.111,225.309,16.738,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Solar,False,0.03,0.01,50.0,1.136,0.519,0.04,0.001,0.0,0.0,0.12,33.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Wind,False,0.06,0.0,0.0,2.273,0.421,0.04,0.001,0.0,0.0,0.12,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Hydro,False,0.06,-0.05,-45.455,2.273,-1.122,0.03,0.001,-0.002,-66.667,0.12,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Bioenergy,False,0.09,0.01,12.5,3.409,0.94,0.01,0.019,0.002,11.765,2.287,211.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Gas,False,2.34,-0.58,-19.863,88.636,-1.487,0.0,0.768,-0.191,-19.917,92.442,328.205,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Other fossil,False,0.06,0.01,20.0,2.273,0.73,0.01,0.039,0.006,18.182,4.694,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Net imports,False,4.48,0.42,10.345,169.697,44.388,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Wind and solar,True,0.09,0.01,12.5,3.409,0.94,0.08,0.002,0.0,0.0,0.241,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,"Hydro, bioenergy and other renewables",True,0.15,-0.04,-21.053,5.682,-0.182,0.05,0.021,0.001,5.0,2.528,140.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Renewables,True,0.24,-0.03,-11.111,9.091,0.758,0.13,0.023,0.001,4.545,2.768,95.833,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Clean,True,0.24,-0.03,-11.111,9.091,0.758,0.13,0.023,0.001,4.545,2.768,95.833,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Fossil,True,2.4,-0.57,-19.192,90.909,-0.758,0.01,0.808,-0.184,-18.548,97.257,336.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Total generation,True,2.64,-0.6,-18.519,100.0,0.0,0.14,0.831,-0.182,-17.966,100.025,314.773,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2011,Country or economy,Demand,True,7.12,-0.18,-2.466,269.697,44.388,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Solar,False,0.04,0.01,33.333,1.449,0.313,0.07,0.002,0.001,100.0,0.236,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Wind,False,0.08,0.02,33.333,2.899,0.626,0.06,0.001,0.0,0.0,0.118,12.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Hydro,False,0.1,0.04,66.667,3.623,1.35,0.03,0.002,0.001,100.0,0.236,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Bioenergy,False,0.09,0.0,0.0,3.261,-0.148,0.01,0.019,0.0,0.0,2.238,211.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Gas,False,2.39,0.05,2.137,86.594,-2.042,0.0,0.785,0.017,2.214,92.475,328.452,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Other fossil,False,0.06,0.0,0.0,2.174,-0.099,0.01,0.039,0.0,0.0,4.594,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Net imports,False,4.11,-0.37,-8.259,148.913,-20.784,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Wind and solar,True,0.12,0.03,33.333,4.348,0.939,0.13,0.003,0.001,50.0,0.353,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,"Hydro, bioenergy and other renewables",True,0.19,0.04,26.667,6.884,1.202,0.05,0.022,0.001,4.762,2.592,115.789,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Renewables,True,0.31,0.07,29.167,11.232,2.141,0.18,0.025,0.002,8.696,2.945,80.645,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Clean,True,0.31,0.07,29.167,11.232,2.141,0.18,0.025,0.002,8.696,2.945,80.645,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Fossil,True,2.45,0.05,2.083,88.768,-2.141,0.01,0.824,0.016,1.98,97.069,336.327,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Total generation,True,2.76,0.12,4.545,100.0,0.0,0.19,0.849,0.018,2.166,100.014,307.609,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2012,Country or economy,Demand,True,6.87,-0.25,-3.511,248.913,-20.784,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Solar,False,0.07,0.03,75.0,3.804,2.355,0.1,0.003,0.001,50.0,0.564,42.857,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Wind,False,0.08,0.0,0.0,4.348,1.449,0.06,0.001,0.0,0.0,0.188,12.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Hydro,False,0.12,0.02,20.0,6.522,2.899,0.03,0.003,0.001,50.0,0.564,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Bioenergy,False,0.09,0.0,0.0,4.891,1.63,0.01,0.019,0.0,0.0,3.569,211.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Gas,False,1.42,-0.97,-40.586,77.174,-9.42,0.0,0.466,-0.319,-40.637,87.543,328.169,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Other fossil,False,0.06,0.0,0.0,3.261,1.087,0.01,0.039,0.0,0.0,7.327,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Net imports,False,4.94,0.83,20.195,268.478,119.565,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Wind and solar,True,0.15,0.03,25.0,8.152,3.804,0.16,0.004,0.001,33.333,0.751,26.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,"Hydro, bioenergy and other renewables",True,0.21,0.02,10.526,11.413,4.529,0.05,0.022,0.0,0.0,4.133,104.762,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Renewables,True,0.36,0.05,16.129,19.565,8.333,0.21,0.027,0.002,8.0,5.072,75.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Clean,True,0.36,0.05,16.129,19.565,8.333,0.21,0.027,0.002,8.0,5.072,75.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Fossil,True,1.48,-0.97,-39.592,80.435,-8.333,0.01,0.506,-0.318,-38.592,95.057,341.892,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Total generation,True,1.84,-0.92,-33.333,100.0,0.0,0.22,0.532,-0.317,-37.338,99.942,289.13,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2013,Country or economy,Demand,True,6.78,-0.09,-1.31,368.478,119.565,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Solar,False,0.09,0.02,28.571,4.712,0.908,0.11,0.004,0.001,33.333,0.728,44.444,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Wind,False,0.08,0.0,0.0,4.188,-0.16,0.06,0.001,0.0,0.0,0.182,12.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Hydro,False,0.11,-0.01,-8.333,5.759,-0.763,0.03,0.003,0.0,0.0,0.546,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Bioenergy,False,0.12,0.03,33.333,6.283,1.392,0.01,0.026,0.007,36.842,4.733,216.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Gas,False,1.45,0.03,2.113,75.916,-1.258,0.0,0.476,0.01,2.146,86.647,328.276,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Other fossil,False,0.06,0.0,0.0,3.141,-0.12,0.01,0.039,0.0,0.0,7.099,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Net imports,False,4.89,-0.05,-1.012,256.021,-12.457,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Wind and solar,True,0.17,0.02,13.333,8.901,0.749,0.1699999999999999,0.005,0.001,25.0,0.91,29.412,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,"Hydro, bioenergy and other renewables",True,0.23,0.02,9.524,12.042,0.629,0.05,0.029,0.007,31.818,5.279,126.087,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Renewables,True,0.4,0.04,11.111,20.942,1.377,0.22,0.034,0.007,25.926,6.189,85.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Clean,True,0.4,0.04,11.111,20.942,1.377,0.22,0.034,0.007,25.926,6.189,85.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Fossil,True,1.51,0.03,2.027,79.058,-1.377,0.01,0.516,0.01,1.976,93.928,341.722,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Total generation,True,1.91,0.07,3.804,100.0,0.0,0.23,0.549,0.017,3.195,99.935,287.435,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2014,Country or economy,Demand,True,6.8,0.02,0.295,356.021,-12.457,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Solar,False,0.1,0.01,11.111,7.463,2.751,0.12,0.005,0.001,25.0,1.395,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Wind,False,0.1,0.02,25.0,7.463,3.275,0.06,0.001,0.0,0.0,0.279,10.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Hydro,False,0.1,-0.01,-9.091,7.463,1.704,0.03,0.002,-0.001,-33.333,0.558,20.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Bioenergy,False,0.13,0.01,8.333,9.701,3.418,0.02,0.028,0.002,7.692,7.814,215.385,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Gas,False,0.84,-0.61,-42.069,62.687,-13.229,0.0,0.276,-0.2,-42.017,77.028,328.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Other fossil,False,0.07,0.01,16.667,5.224,2.083,0.01,0.046,0.007,17.949,12.838,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Net imports,False,5.6,0.71,14.519,417.91,161.889,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Wind and solar,True,0.2,0.03,17.647,14.925,6.024,0.18,0.006,0.001,20.0,1.675,30.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,"Hydro, bioenergy and other renewables",True,0.23,0.0,0.0,17.164,5.122,0.06,0.03,0.001,3.448,8.373,130.435,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Renewables,True,0.43,0.03,7.5,32.09,11.148,0.24,0.036,0.002,5.882,10.047,83.721,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Clean,True,0.43,0.03,7.5,32.09,11.148,0.24,0.036,0.002,5.882,10.047,83.721,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Fossil,True,0.91,-0.6,-39.735,67.91,-11.148,0.01,0.322,-0.194,-37.597,89.867,353.846,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Total generation,True,1.34,-0.57,-29.843,100.0,0.0,0.25,0.358,-0.191,-34.791,99.914,267.164,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2015,Country or economy,Demand,True,6.94,0.14,2.059,517.91,161.889,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Solar,False,0.1,0.0,0.0,12.658,5.195,0.12,0.005,0.0,0.0,2.932,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Wind,False,0.1,0.0,0.0,12.658,5.195,0.12,0.001,0.0,0.0,0.586,10.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Hydro,False,0.12,0.02,20.0,15.19,7.727,0.03,0.003,0.001,50.0,1.759,25.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Bioenergy,False,0.14,0.01,7.692,17.722,8.021,0.02,0.03,0.002,7.143,17.593,214.286,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Gas,False,0.26,-0.58,-69.048,32.911,-29.776,0.0,0.085,-0.191,-69.203,49.847,326.923,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Other fossil,False,0.07,0.0,0.0,8.861,3.637,0.01,0.046,0.0,0.0,26.976,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Net imports,False,6.3,0.7,12.5,797.468,379.558,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Wind and solar,True,0.2,0.0,0.0,25.316,10.391,0.24,0.006,0.0,0.0,3.519,30.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,"Hydro, bioenergy and other renewables",True,0.26,0.03,13.043,32.911,15.747,0.06,0.033,0.003,10.0,19.352,126.923,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Renewables,True,0.46,0.03,6.977,58.228,26.138,0.3,0.039,0.003,8.333,22.871,84.783,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Clean,True,0.46,0.03,6.977,58.228,26.138,0.3,0.039,0.003,8.333,22.871,84.783,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Fossil,True,0.33,-0.58,-63.736,41.772,-26.138,0.01,0.131,-0.191,-59.317,76.823,396.97,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Total generation,True,0.79,-0.55,-41.045,100.0,0.0,0.31,0.171,-0.187,-52.235,100.28,216.456,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2016,Country or economy,Demand,True,7.09,0.15,2.161,897.468,379.558,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Solar,False,0.11,0.01,10.0,12.222,-0.436,0.13,0.005,0.0,0.0,2.91,45.455,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Wind,False,0.23,0.13,130.0,25.556,12.898,0.12,0.003,0.002,200.0,1.746,13.043,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Hydro,False,0.09,-0.03,-25.0,10.0,-5.19,0.03,0.002,-0.001,-33.333,1.164,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Bioenergy,False,0.17,0.03,21.429,18.889,1.167,0.03,0.037,0.007,23.333,21.535,217.647,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Gas,False,0.22,-0.04,-15.385,24.444,-8.467,0.0,0.072,-0.013,-15.294,41.906,327.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Other fossil,False,0.08,0.01,14.286,8.889,0.028,0.01,0.053,0.007,15.217,30.847,662.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Net imports,False,6.18,-0.12,-1.905,686.667,-110.801,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Wind and solar,True,0.34,0.14,70.0,37.778,12.462,0.25,0.008,0.002,33.333,4.656,23.529,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,"Hydro, bioenergy and other renewables",True,0.26,0.0,0.0,28.889,-4.022,0.0699999999999999,0.039,0.006,18.182,22.699,150.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Renewables,True,0.6,0.14,30.435,66.667,8.439,0.32,0.047,0.008,20.513,27.355,78.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Clean,True,0.6,0.14,30.435,66.667,8.439,0.32,0.047,0.008,20.513,27.355,78.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Fossil,True,0.3,-0.03,-9.091,33.333,-8.439,0.01,0.125,-0.006,-4.58,72.753,416.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Total generation,True,0.9,0.11,13.924,100.0,0.0,0.3299999999999999,0.172,0.001,0.585,100.108,191.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2017,Country or economy,Demand,True,7.08,-0.01,-0.141,786.667,-110.801,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Solar,False,0.12,0.01,9.091,12.5,0.278,0.13,0.006,0.001,20.0,3.394,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Wind,False,0.25,0.02,8.696,26.042,0.486,0.12,0.003,0.0,0.0,1.697,12.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Hydro,False,0.09,0.0,0.0,9.375,-0.625,0.03,0.002,0.0,0.0,1.131,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Bioenergy,False,0.22,0.05,29.412,22.917,4.028,0.03,0.048,0.011,29.73,27.153,218.182,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Gas,False,0.2,-0.02,-9.091,20.833,-3.611,0.0,0.066,-0.006,-8.333,37.335,330.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Other fossil,False,0.08,0.0,0.0,8.333,-0.556,0.01,0.053,0.0,0.0,29.981,662.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Net imports,False,6.16,-0.02,-0.324,641.667,-45.0,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Wind and solar,True,0.37,0.03,8.824,38.542,0.764,0.25,0.009,0.001,12.5,5.091,24.324,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,"Hydro, bioenergy and other renewables",True,0.31,0.05,19.231,32.292,3.403,0.0699999999999999,0.05,0.011,28.205,28.284,161.29,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Renewables,True,0.68,0.08,13.333,70.833,4.166,0.32,0.058,0.011,23.404,32.809,85.294,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Clean,True,0.68,0.08,13.333,70.833,4.166,0.32,0.058,0.011,23.404,32.809,85.294,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Fossil,True,0.28,-0.02,-6.667,29.167,-4.166,0.01,0.118,-0.007,-5.6,66.75,421.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Total generation,True,0.96,0.06,6.667,100.0,0.0,0.3299999999999999,0.177,0.005,2.907,100.125,184.375,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2018,Country or economy,Demand,True,7.12,0.04,0.565,741.667,-45.0,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Solar,False,0.13,0.01,8.333,12.15,-0.35,0.16,0.006,0.0,0.0,3.195,46.154,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Wind,False,0.28,0.03,12.0,26.168,0.126,0.14,0.003,0.0,0.0,1.598,10.714,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Hydro,False,0.11,0.02,22.222,10.28,0.905,0.03,0.003,0.001,50.0,1.598,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Bioenergy,False,0.28,0.06,27.273,26.168,3.251,0.05,0.061,0.013,27.083,32.484,217.857,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Gas,False,0.19,-0.01,-5.0,17.757,-3.076,0.0,0.062,-0.004,-6.061,33.016,326.316,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Other fossil,False,0.08,0.0,0.0,7.477,-0.856,0.01,0.053,0.0,0.0,28.224,662.5,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Net imports,False,5.88,-0.28,-4.545,549.533,-92.134,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Wind and solar,True,0.41,0.04,10.811,38.318,-0.224,0.3,0.01,0.001,11.111,5.325,24.39,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,"Hydro, bioenergy and other renewables",True,0.39,0.08,25.806,36.449,4.157,0.09,0.063,0.013,26.0,33.549,161.538,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Renewables,True,0.8,0.12,17.647,74.766,3.933,0.39,0.073,0.015,25.862,38.874,91.25,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Clean,True,0.8,0.12,17.647,74.766,3.933,0.39,0.073,0.015,25.862,38.874,91.25,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Fossil,True,0.27,-0.01,-3.571,25.234,-3.933,0.01,0.115,-0.003,-2.542,61.24,425.926,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Total generation,True,1.07,0.11,11.458,100.0,0.0,0.4,0.188,0.011,6.215,100.114,175.701,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2019,Country or economy,Demand,True,6.95,-0.17,-2.388,649.533,-92.134,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Solar,False,0.16,0.03,23.077,13.115,0.965,0.19,0.008,0.002,33.333,4.016,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Wind,False,0.35,0.07,25.0,28.689,2.521,0.15,0.004,0.001,33.333,2.008,11.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Hydro,False,0.09,-0.02,-18.182,7.377,-2.903,0.03,0.002,-0.001,-33.333,1.004,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Bioenergy,False,0.37,0.09,32.143,30.328,4.16,0.05,0.08,0.019,31.148,40.163,216.216,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Gas,False,0.18,-0.01,-5.263,14.754,-3.003,0.0,0.059,-0.003,-4.839,29.62,327.778,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Other fossil,False,0.07,-0.01,-12.5,5.738,-1.739,0.01,0.046,-0.007,-13.208,23.093,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Net imports,False,5.46,-0.42,-7.143,447.541,-101.992,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Wind and solar,True,0.51,0.1,24.39,41.803,3.485,0.3399999999999999,0.012,0.002,20.0,6.024,23.529,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,"Hydro, bioenergy and other renewables",True,0.46,0.07,17.949,37.705,1.256,0.09,0.082,0.019,30.159,41.167,178.261,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Renewables,True,0.97,0.17,21.25,79.508,4.742,0.43,0.094,0.021,28.767,47.191,96.907,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Clean,True,0.97,0.17,21.25,79.508,4.742,0.43,0.094,0.021,28.767,47.191,96.907,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Fossil,True,0.25,-0.02,-7.407,20.492,-4.742,0.01,0.105,-0.01,-8.696,52.713,420.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Total generation,True,1.22,0.15,14.019,100.0,0.0,0.4399999999999999,0.199,0.011,5.851,99.904,163.115,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2020,Country or economy,Demand,True,6.68,-0.27,-3.885,547.541,-101.992,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Solar,False,0.18,0.02,12.5,14.634,1.519,0.28,0.009,0.001,12.5,4.474,50.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Wind,False,0.31,-0.04,-11.429,25.203,-3.486,0.14,0.004,0.0,0.0,1.988,12.903,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Hydro,False,0.11,0.02,22.222,8.943,1.566,0.03,0.003,0.001,50.0,1.491,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Bioenergy,False,0.39,0.02,5.405,31.707,1.379,0.05,0.084,0.004,5.0,41.757,215.385,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Gas,False,0.17,-0.01,-5.556,13.821,-0.933,0.0,0.056,-0.003,-5.085,27.838,329.412,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Other fossil,False,0.07,0.0,0.0,5.691,-0.047,0.01,0.046,0.0,0.0,22.867,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Net imports,False,5.72,0.26,4.762,465.041,17.5,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Wind and solar,True,0.49,-0.02,-3.922,39.837,-1.966,0.42,0.012,0.0,0.0,5.965,24.49,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,"Hydro, bioenergy and other renewables",True,0.5,0.04,8.696,40.65,2.945,0.09,0.087,0.005,6.098,43.248,174.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Renewables,True,0.99,0.02,2.062,80.488,0.98,0.51,0.099,0.005,5.319,49.213,100.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Clean,True,0.99,0.02,2.062,80.488,0.98,0.51,0.099,0.005,5.319,49.213,100.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Fossil,True,0.24,-0.01,-4.0,19.512,-0.98,0.01,0.102,-0.003,-2.857,50.704,425.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Total generation,True,1.23,0.01,0.82,100.0,0.0,0.52,0.201,0.002,1.005,99.917,163.415,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2021,Country or economy,Demand,True,6.95,0.27,4.042,565.041,17.5,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Solar,False,0.28,0.1,55.556,23.14,8.506,0.32,0.013,0.004,44.444,7.153,46.429,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Wind,False,0.31,0.0,0.0,25.62,0.417,0.17,0.004,0.0,0.0,2.201,12.903,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Hydro,False,0.06,-0.05,-45.455,4.959,-3.984,0.03,0.001,-0.002,-66.667,0.55,16.667,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Bioenergy,False,0.39,0.0,0.0,32.231,0.524,0.05,0.084,0.0,0.0,46.218,215.385,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Gas,False,0.1,-0.07,-41.176,8.264,-5.557,0.0,0.033,-0.023,-41.071,18.157,330.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Other fossil,False,0.07,0.0,0.0,5.785,0.094,0.01,0.046,0.0,0.0,25.31,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Net imports,False,5.51,-0.21,-3.671,455.372,-9.669,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Wind and solar,True,0.59,0.1,20.408,48.76,8.923,0.49,0.017,0.005,41.667,9.354,28.814,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,"Hydro, bioenergy and other renewables",True,0.45,-0.05,-10.0,37.19,-3.46,0.09,0.086,-0.001,-1.149,47.318,191.111,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Renewables,True,1.04,0.05,5.051,85.95,5.462,0.5800000000000001,0.103,0.004,4.04,56.672,99.038,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Clean,True,1.04,0.05,5.051,85.95,5.462,0.5800000000000001,0.103,0.004,4.04,56.672,99.038,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Fossil,True,0.17,-0.07,-29.167,14.05,-5.462,0.01,0.079,-0.023,-22.549,43.467,464.706,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Total generation,True,1.21,-0.02,-1.626,100.0,0.0,0.59,0.182,-0.019,-9.453,100.139,150.413,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2022,Country or economy,Demand,True,6.72,-0.23,-3.309,555.372,-9.669,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Solar,False,0.29,0.01,3.571,20.567,-2.573,0.39,0.014,0.001,7.692,8.081,48.276,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Wind,False,0.5,0.19,61.29,35.461,9.841,0.21,0.006,0.002,50.0,3.463,12.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Hydro,False,0.09,0.03,50.0,6.383,1.424,0.03,0.002,0.001,100.0,1.154,22.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Bioenergy,False,0.38,-0.01,-2.564,26.95,-5.281,0.08,0.082,-0.002,-2.381,47.332,215.789,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Gas,False,0.09,-0.01,-10.0,6.383,-1.881,0.0,0.03,-0.003,-9.091,17.317,333.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Other fossil,False,0.06,-0.01,-14.286,4.255,-1.53,0.01,0.039,-0.007,-15.217,22.512,650.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Net imports,False,5.2,-0.31,-5.626,368.794,-86.578,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Wind and solar,True,0.79,0.2,33.898,56.028,7.268,0.6,0.02,0.003,17.647,11.544,25.316,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,"Hydro, bioenergy and other renewables",True,0.47,0.02,4.444,33.333,-3.857,0.12,0.084,-0.002,-2.326,48.487,178.723,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Renewables,True,1.26,0.22,21.154,89.362,3.412,0.72,0.104,0.001,0.971,60.031,82.54,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Clean,True,1.26,0.22,21.154,89.362,3.412,0.72,0.104,0.001,0.971,60.031,82.54,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Fossil,True,0.15,-0.02,-11.765,10.638,-3.412,0.01,0.069,-0.01,-12.658,39.828,460.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Total generation,True,1.41,0.2,16.529,100.0,0.0,0.73,0.173,-0.009,-4.945,99.859,122.695,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2023,Country or economy,Demand,True,6.61,-0.11,-1.637,468.794,-86.578,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Solar,False,0.36,0.07,24.138,23.556,2.989,0.55,0.017,0.003,21.429,8.958,47.222,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Wind,False,0.478,-0.022,-4.4,31.277,-4.184,0.21,0.006,0.0,0.0,3.162,12.552,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Hydro,False,0.11,0.02,22.222,7.198,0.815,0.03,0.003,0.001,50.0,1.581,27.273,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Bioenergy,False,0.44,0.06,15.789,28.791,1.841,0.08,0.095,0.013,15.854,50.062,215.909,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Gas,False,0.07,-0.02,-22.222,4.58,-1.803,0.0,0.023,-0.007,-23.333,12.12,328.571,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Other fossil,False,0.07,0.01,16.667,4.58,0.325,0.01,0.046,0.007,17.949,24.241,657.143,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Net imports,False,5.25,0.05,0.962,343.528,-25.266,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Wind and solar,True,0.838,0.048,6.076,54.834,-1.194,0.76,0.023,0.003,15.0,12.12,27.446,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,"Hydro, bioenergy and other renewables",True,0.55,0.08,17.021,35.989,2.656,0.12,0.098,0.014,16.667,51.643,178.182,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Renewables,True,1.388,0.128,10.159,90.822,1.46,0.88,0.121,0.017,16.346,63.763,87.176,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Clean,True,1.388,0.128,10.159,90.822,1.46,0.88,0.121,0.017,16.346,63.763,87.176,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Fossil,True,0.14,-0.01,-6.667,9.161,-1.477,0.01,0.069,0.0,0.0,36.361,492.857,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Total generation,True,1.528,0.118,8.369,99.983,-0.017,0.89,0.19,0.017,9.827,100.124,124.346,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2024,Country or economy,Demand,True,6.778,0.168,2.542,443.511,-25.283,,,,,,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Solar,False,0.493,0.133,36.944,30.871,7.315,0.77,0.023,0.006,35.294,12.197,46.653,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Wind,False,0.478,0.0,0.0,29.931,-1.346,0.23,0.006,0.0,0.0,3.182,12.552,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Hydro,False,0.077,-0.033,-30.0,4.822,-2.376,0.03,0.002,-0.001,-33.333,1.061,25.974,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Bioenergy,False,0.413,-0.027,-6.136,25.861,-2.93,0.08,0.089,-0.006,-6.316,47.199,215.496,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Other renewables,False,0.0,0.0,,0.0,0.0,0.01,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Nuclear,False,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Coal,False,0.0,0.0,,0.0,0.0,,0.0,0.0,,0.0,,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Gas,False,0.066,-0.004,-5.714,4.133,-0.447,0.0,0.022,-0.001,-4.348,11.667,333.333,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Other fossil,False,0.071,0.001,1.429,4.446,-0.134,0.01,0.047,0.001,2.174,24.925,661.972,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Net imports,False,4.93,-0.32,-6.095,308.706,-34.822,,0.0,0.0,,0.0,0.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Wind and solar,True,0.971,0.133,15.871,60.802,5.968,1.0,0.029,0.006,26.087,15.379,29.866,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,"Hydro, bioenergy and other renewables",True,0.49,-0.06,-10.909,30.683,-5.306,0.12,0.091,-0.007,-7.143,48.259,185.714,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Renewables,True,1.461,0.073,5.259,91.485,0.663,1.12,0.12,-0.001,-0.826,63.639,82.136,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Clean,True,1.461,0.073,5.259,91.485,0.663,1.12,0.12,-0.001,-0.826,63.639,82.136,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Fossil,True,0.136,-0.004,-2.857,8.516,-0.645,0.01,0.068,-0.001,-1.449,36.062,500.0,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Total generation,True,1.597,0.069,4.516,100.001,0.018,1.13,0.189,-0.001,-0.526,100.231,118.347,Europe,Europe,True,True,False,False,False
+Luxembourg,LUX,2025,Country or economy,Demand,True,6.527,-0.251,-3.703,408.707,-34.804,,,,,,,Europe,Europe,True,True,False,False,False

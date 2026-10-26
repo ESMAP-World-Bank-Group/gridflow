@@ -102,6 +102,45 @@ def ctry_to_zone_format(countries):
     ctry_zone.index.name = "zone"
     return ctry_zone
   
+# Reader functions for power plant data
+def read_power_plants(path, countries, url=None):
+    """Load power plants for the ISO3 codes of interest as point geometries.
+
+    `path` is a powerplantmatching-style CSV with `ISO3`, `lat` and `lon`
+    columns. If it doesn't exist and `url` is given, the file is downloaded
+    there first.
+    """
+    if not os.path.exists(path):
+        if url is None:
+            raise FileNotFoundError(f"No power plant file at {path} and no url to download it from.")
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        response = requests.get(url, timeout=120)
+        response.raise_for_status()
+        with open(path, "wb") as f:
+            f.write(response.content)
+    plants = pd.read_csv(path, low_memory=False)
+    plants = plants[plants["ISO3"].isin(countries)]
+    return gpd.GeoDataFrame(plants,
+                            geometry=gpd.points_from_xy(plants["lon"], plants["lat"]),
+                            crs="EPSG:4326").reset_index(drop=True)
+
+
+# Reader functions for Ember yearly electricity data
+def read_country_demand(path, countries, year):
+    """Annual demand (TWh) per ISO3 country: its latest Ember year at or before `year`."""
+    ember = pd.read_csv(path, usecols=["ISO 3 code", "Year", "Area type",
+                                       "Electricity source", "Generation (TWh)"])
+    demand = ember[(ember["Electricity source"] == "Demand")
+                   & (ember["Area type"] == "Country or economy")
+                   & ember["ISO 3 code"].isin(countries)
+                   & (ember["Year"] <= year)
+                   & ember["Generation (TWh)"].notna()]
+    latest = demand.sort_values("Year").groupby("ISO 3 code").tail(1)
+    return (latest.set_index("ISO 3 code")
+                  .rename(columns={"Generation (TWh)": "demand_twh", "Year": "demand_year"})
+                  [["demand_twh", "demand_year"]])
+
+
 def read_boundaries(path, countries):
     boundaries = gpd.read_file(path, 
                                layer="globalADM1")
@@ -209,35 +248,68 @@ def get_reninja_data(location, start_date, end_date, api_key=None, type="pv", ve
     return df
 
 # Read from config file
+def get_config_path():
+    """Return the config.yaml gridflow uses: $GRIDFLOW_CONFIG if set, else the
+    repo's config.yaml, else the copy packaged with gridflow.
+
+    The repo copy is found relative to this package rather than the working
+    directory, so gridflow reads its own config when called from another
+    project (e.g. seer) via an editable install.
+    """
+    env_path = os.environ.get("GRIDFLOW_CONFIG")
+    if env_path:
+        return Path(env_path)
+    for path in (utils.REPO_ROOT / "config.yaml", Path(__file__).resolve().parent / "config.yaml"):
+        if path.exists():
+            return path
+    raise FileNotFoundError("No gridflow config.yaml found; set GRIDFLOW_CONFIG to its path.")
+
+
+def resolve_config_path(path):
+    """Resolve a (possibly relative) path from config.yaml against the
+    config file's folder, so it doesn't depend on the working directory."""
+    return str(get_config_path().parent / path)
+
+
 def get_config_data(category, key):
     """Read a specific key from the YAML config file."""
-    path = "config.yaml"
-    with open(path, 'r') as file:
+    with open(get_config_path(), 'r') as file:
         data = yaml.safe_load(file)
     return data[category][key]
 
 
-def get_global_datasets_path(fallback="data/global_datasets"):
-    """Return the global datasets folder configured in config.yaml."""
+def get_global_datasets_path(fallback=utils.REPO_ROOT / "data/sample"):
+    """Return the active root folder (config.yaml's input_data.roots[input_data.root])."""
     try:
-        return get_config_data("input_data", "global_datasets")
+        roots = get_config_data("input_data", "roots")
+        return resolve_config_path(roots[get_config_data("input_data", "root")])
     except (FileNotFoundError, KeyError, TypeError):
-        return fallback
+        return str(fallback)
 
 
-def get_global_dataset_file_path(name, default_relative, *, root=None):
-    """Return a dataset file path, preferring config overrides."""
+def get_global_dataset_url(name):
+    """Return dataset `name`'s download url from config.yaml's
+    `input_data.urls`, or None if it has none."""
     try:
-        files = get_config_data("input_data", "files")
+        return (get_config_data("input_data", "urls") or {}).get(name)
     except (FileNotFoundError, KeyError, TypeError):
-        files = None
+        return None
 
-    if isinstance(files, dict) and name in files:
-        return files[name]
+
+def get_global_dataset_file_path(name, *, root=None):
+    """Return `root` (or the active config.yaml root) joined with dataset
+    `name`'s relative filename, declared in config.yaml's `input_data.files`.
+    """
+    files = get_config_data("input_data", "files")
+    if name not in files:
+        raise KeyError(
+            f"No 'input_data.files.{name}' entry in config.yaml -- add one "
+            "(a relative filename) to declare where this dataset lives."
+        )
 
     if root is None:
         root = get_global_datasets_path()
-    return os.path.join(root, default_relative)
+    return os.path.join(root, files[name])
 
 
 def load_background_map(name, default_path=None):
@@ -255,7 +327,10 @@ def load_background_map(name, default_path=None):
 
     if not path:
         return None
-    file_path = Path(path)
+    try:
+        file_path = Path(resolve_config_path(path))
+    except FileNotFoundError:
+        file_path = utils.REPO_ROOT / path
     if not file_path.exists():
         return None
     try:
