@@ -31,7 +31,7 @@ from gridflow.data_readers import (
     read_power_plants,
     ctry_to_zone_format
 )
-from gridflow.utils import verbose_log, directional_zone_labels
+from gridflow.utils import verbose_log, directional_zone_labels, centroid_distance_km
 from gridflow.network_zones import build_network_zones
 
 
@@ -436,6 +436,7 @@ class region:
                 adjacency_weight=adjacency_weight, min_km2=min_km2,
                 verbose=verbose
             )
+            self.grid.set_link_lengths(self.zones)
             return
 
         if method is not None:
@@ -444,6 +445,7 @@ class region:
         zones = self.zones.assign(type="region-zone")
         neigh = ctry_to_zone_format(self.neighbors).assign(type="region-neighbor")
         self.grid.create_lines(pd.concat([zones, neigh]))
+        self.grid.set_link_lengths(self.zones, neigh)
 
 
 class network:
@@ -468,7 +470,11 @@ class network:
     flow : numpy matrix
        A square matrix representing the flow model. Dimensions are number of
        subregions; values are estimated total interconnect capacity between
-       regions. 
+       regions.
+
+    length : DataFrame
+       Same shape as `flow`; centroid-to-centroid distance in km between zones.
+       Use entries where `flow` > 0 as the link lengths.
 
     """
 
@@ -484,7 +490,17 @@ class network:
         self.flow = None
         # No flow model to neighbors
         self.flow_neighbor = None
-        
+        # No link lengths (km) yet; same shapes as flow / flow_neighbor
+        self.length = None
+        self.length_neighbor = None
+
+    def set_link_lengths(self, zones, neighbors=None):
+        """Set centroid-to-centroid km distances for zone-zone and zone-neighbor pairs."""
+        self.length = centroid_distance_km(zones.geometry, zones.geometry)
+        has_neigh = neighbors is not None and len(neighbors) > 0
+        self.length_neighbor = (centroid_distance_km(zones.geometry, neighbors.geometry)
+                                if has_neigh else pd.DataFrame(index=zones.index))
+
     def create_lines(self, zones, minkm=5):
         """Assign each power line to zone sequences and compute the flow model."""
         # Load the list of power lines - filter short lines

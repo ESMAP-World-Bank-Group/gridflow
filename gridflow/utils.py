@@ -60,6 +60,25 @@ def get_bb(gpdf, crs=None, buffer_degrees=0.1):
     return minx, miny, maxx, maxy
 
 
+def centroid_distance_km(from_geoms, to_geoms):
+    """Great-circle km between every from/to geometry centroid (rows x cols)."""
+    if len(to_geoms) == 0:
+        return pd.DataFrame(index=from_geoms.index)
+
+    def lonlat_rad(geoms):
+        # Centroids in an equal-area CRS (accurate at any latitude/extent), then back to lon/lat.
+        c = geoms.to_crs("EPSG:6933").centroid.to_crs("EPSG:4326")
+        return np.radians(c.x.to_numpy()), np.radians(c.y.to_numpy())
+
+    lon1, lat1 = lonlat_rad(from_geoms)
+    lon2, lat2 = lonlat_rad(to_geoms)
+    dlat = lat2[None, :] - lat1[:, None]
+    dlon = lon2[None, :] - lon1[:, None]
+    a = np.sin(dlat / 2) ** 2 + np.cos(lat1)[:, None] * np.cos(lat2)[None, :] * np.sin(dlon / 2) ** 2
+    km = 2 * 6371.0088 * np.arcsin(np.sqrt(a))
+    return pd.DataFrame(km, index=from_geoms.index, columns=to_geoms.index)
+
+
 def verbose_log(step, message, verbose):
     """Print the step name and message when verbose is requested."""
     if verbose:
